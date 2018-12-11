@@ -40,18 +40,18 @@ export default class Signup extends Component {
 	handleSubmit = async event => {
 		event.preventDefault();
 
-    this.setState({ isLoading: true });
-    var user = new Parse.User();
-    user.set("username", this.state.username);
-    user.set("email", this.state.email);
-    user.set("password", this.state.passwd);
-    try {
-      await user.signUp();
-      this.setState({ newUser: user });
-    } catch (error) {
-      alert("Error : " + error.code + " " + error.message);
-    }
-    this.setState({ isLoading: false });
+	    this.setState({ isLoading: true });
+	    var user = new Parse.User();
+	    user.set("username", this.state.username);
+	    user.set("email", this.state.email);
+	    user.set("password", this.state.passwd);
+	    try {
+	      await user.signUp();
+	      this.setState({ newUser: user });
+	    } catch (error) {
+	      alert("Error : " + error.code + " " + error.message);
+	    }
+	    this.setState({ isLoading: false });
 	}
 
 	handleConfirmationSubmit = async event => {
