@@ -10,6 +10,7 @@ export default class Signup extends Component {
 
 		this.state = {
 			isLoading: false,
+      username: "",
 			email: "",
 			passwd: "",
 			confirmPasswd: "",
@@ -41,7 +42,7 @@ export default class Signup extends Component {
 
     this.setState({ isLoading: true });
     var user = new Parse.User();
-    user.set("username", "test");
+    user.set("username", this.state.username);
     user.set("email", this.state.email);
     user.set("password", this.state.passwd);
     try {
@@ -97,6 +98,14 @@ export default class Signup extends Component {
 	  renderForm() {
 	    return (
 	      	<form onSubmit={this.handleSubmit}>
+            <FormGroup controlId="username" bsSize="large">
+              <ControlLabel>UserName</ControlLabel>
+              <FormControl
+                value={this.state.username}
+                onChange={this.handleChange}
+                type="text"
+              />
+            </FormGroup>
 		        <FormGroup controlId="email" bsSize="large">
 		          <ControlLabel>Email</ControlLabel>
 		          <FormControl
