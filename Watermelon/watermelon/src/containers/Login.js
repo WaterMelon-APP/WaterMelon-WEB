@@ -32,9 +32,9 @@ export default class Login extends Component {
 		this.setState({ isLoading: true });
 
 		try {
-			const user = await Parse.User.logIn(this.state.email, this.state.passwd);
+			await Parse.User.logIn(this.state.email, this.state.passwd);
 			this.props.userHasAuthenticated(true);
-			this.props.history.push("/");
+			this.props.history.push("/event");
 		} catch (e) {
 			alert(e.message);
 		}

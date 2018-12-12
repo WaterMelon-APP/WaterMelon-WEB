@@ -28,6 +28,10 @@ class App extends Component {
     this.props.history.push("/login");
   }
 
+  handleObjectList = event => {
+    this.props.history.push("/event");
+  }
+
   render() {
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,
@@ -46,7 +50,10 @@ class App extends Component {
           <Navbar.Collapse>
             <Nav pullRight>
               {this.state.isAuthenticated
-                ? <NavItem onClick={this.handleLogout}>Logout</NavItem>
+                ? <Fragment> 
+                    <NavItem onClick={this.handleObjectList}>My events</NavItem>
+                    <NavItem onClick={this.handleLogout}>Logout</NavItem>
+                  </Fragment>
                 : <Fragment>
                     <LinkContainer to="/signup">
                       <NavItem>Signup</NavItem>
