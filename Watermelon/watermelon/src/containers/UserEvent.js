@@ -4,52 +4,89 @@ var Parse = require('parse').Parse;
 export default class UserEvent extends Component {
     constructor(props) {
         super(props);
+
+        var Events = Parse.Object.extend("Event");
+        var query = new Parse.Query(Events);
+        query.equalTo("Owner", Parse.User.current());
+        let eventList = Parse.User.current().get("eventList") === undefined ? [] : Parse.User.current().get("eventList");
+
         this.state = {
-            items: []
+            events: eventList,
+            eventNames: []
         }
+
+        query.find().then((results) => {
+        	for (let i = 0; i < results.length; i++) {
+        		let tmp = this.state.eventNames;
+        		let obj = results[i].get("eventName");
+        		tmp.push(obj);
+        		this.setState({ eventNames: tmp });
+        	}
+        });
     }
 
-    addItem(event) {
-        let currentItems = this.state.items;
+    addEvent(event) {
+        let currentEvents = this.state.events;
+        let currentEventNames = this.state.eventNames;
         let textBox = event.target.previousElementSibling;
 
         if (textBox.value) {
-            currentItems.push(textBox.value);
-            textBox.value = '';
+        	const Event = Parse.Object.extend("Event");
+        	const event = new Event();
+        	var currentUser = Parse.User.current();
 
-            this.setState({
-                items: currentItems
-            });
-        }
+	        event.set("eventName", textBox.value);
+	        event.set("Owner", Parse.User.current());
+
+	        event.save().then((event) => {
+	           	currentEventNames.push(textBox.value);
+	           	currentEvents.push(event);
+	            textBox.value = '';
+	            	
+	            currentUser.set("eventList", this.state.events);
+	            currentUser.save().then((finish) => {
+	            	alert("Event correctly created");
+	            	this.setState({
+		            	eventNames: currentEventNames,
+		            	events: currentEvents
+	            	});
+		        });
+	        }, (error) => {
+	            alert("Error : failed to create event");
+	        });        
+	    }
     }
 
-    removeItem(event) {
-        let currentItem = event.target.textContent;
-        let updatedItems = this.state.items.filter((item) => {
-            return currentItem !== item;
+    removeEvent(event) {
+        let currentEvent = event.target.textContent;
+        let updatedEvents = this.state.events.filter((event) => {
+            return currentEvent !== event;
         });
 
         this.setState({
-            items: updatedItems
+            events: updatedEvents
         });
-        alert("Item successfully deleted")
+        alert("event successfully deleted")
+    }
+
+    goToEvent(event) {
+
     }
 
     render() {
-        let items = this.state.items.map((item, i) => {
-            return <li onClick={this.removeItem.bind(this)}
-                key={"Item" + i}>{item}</li>;
+        let events = this.state.eventNames.map((event, i) => {
+            return <li>{event}</li>;
         });
 
         return (
-            <div className="items-list">
+            <div className="events-list">
                 <ul>
-                    {items}
+                    {events}
                 </ul>
                 <nav className="nav-add">
                     <input type="text" id="input-add" />
-                    <button id="new-item"
-                        onClick={this.addItem.bind(this)}>New Item</button>
+                    <button id="new-event"
+                        onClick={this.addEvent.bind(this)}>Add Event</button>
                 </nav>
             </div>
         );
