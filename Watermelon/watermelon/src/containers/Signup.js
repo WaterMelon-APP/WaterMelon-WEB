@@ -10,7 +10,7 @@ export default class Signup extends Component {
 
 		this.state = {
 			isLoading: false,
-      username: "",
+      		username: "",
 			email: "",
 			passwd: "",
 			confirmPasswd: "",
@@ -59,14 +59,14 @@ export default class Signup extends Component {
 
 		this.setState({ isLoading: true });
 
-    try {
-      await Parse.User.logIn(this.state.email, this.state.passwd);
-      this.props.userHasAuthenticated(true);
-      this.props.history.push("/");
-    } catch (error) {
-      alert("Error : " + error.code + " " + error.message);
-      this.setState({ isLoading: false });
-    }
+	    try {
+	      await Parse.User.logIn(this.state.email, this.state.passwd);
+	      this.props.userHasAuthenticated(true);
+	      this.props.history.push("/");
+	    } catch (error) {
+	      alert("Error : " + error.code + " " + error.message);
+	      this.setState({ isLoading: false });
+	    }
 	}
 
 	renderConfirmationForm() {
