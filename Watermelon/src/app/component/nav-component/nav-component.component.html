@@ -1,0 +1,27 @@
+<mat-sidenav-container style="position: fixed; width: 100%; opacity: 0.9; overflow: hidden;">
+
+  <mat-sidenav-content>
+    <mat-toolbar color="dark">
+      <span>Watermelon</span>
+      <span class="example-spacer"></span>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>settings</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <div *ngIf="isLoggedIn">
+          <button mat-menu-item (click)="signOut()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Log Out</span>
+          </button>
+        </div>
+        <div *ngIf="!isLoggedIn">
+          <button mat-menu-item (click)="Login()">
+            <mat-icon>fingerprint</mat-icon>
+            <span>Login</span>
+          </button>
+        </div>
+      </mat-menu>
+    </mat-toolbar>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

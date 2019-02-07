@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Watermelon-WEB-ng';
+  title = 'poulet pied';
+  test = 'nichon';
 }
