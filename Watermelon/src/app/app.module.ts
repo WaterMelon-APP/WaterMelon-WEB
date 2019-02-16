@@ -11,9 +11,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatNativeDateModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material-module';
-import * as Parse from 'parse';
 
-let parse = require('parse');
+
+const parse = require('parse');
 
 
 
