@@ -13,6 +13,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material-module';
 import * as Parse from 'parse';
 
+let parse = require('parse');
+
 
 
 @NgModule({
@@ -42,7 +44,7 @@ import * as Parse from 'parse';
 export class AppModule {
 
   constructor() {
-    Parse.initialize('watermelon');
-    Parse.serverURL = 'http://watermelon-parse.herokuapp.com/parse';
+    parse.initialize('watermelon');
+    parse.serverURL = 'http://watermelon-parse.herokuapp.com/parse';
   }
 }
