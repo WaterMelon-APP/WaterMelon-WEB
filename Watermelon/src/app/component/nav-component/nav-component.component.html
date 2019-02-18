@@ -4,6 +4,13 @@
     <mat-toolbar color="dark">
       <span>Watermelon</span>
       <span class="example-spacer"></span>
+      <div *ngIf="isLoggedIn">
+        <button mat-icon-button (click)="createEvent()">
+          <mat-icon>list_alt</mat-icon>
+          <span>Add event</span>
+        </button>
+      </div>
+      <span class="example-spacer"></span>
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>settings</mat-icon>
       </button>

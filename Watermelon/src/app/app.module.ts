@@ -12,6 +12,7 @@ import {MatNativeDateModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material-module';
 import { RegisterFormComponent } from './component/services/register-form/register-form.component';
+import { CreateEventComponent } from './component/services/create-event/create-event.component';
 
 
 const parse = require('parse');
@@ -24,7 +25,8 @@ const parse = require('parse');
     HomePageComponent,
     NavComponentComponent,
     LoginFormComponent,
-    RegisterFormComponent
+    RegisterFormComponent,
+    CreateEventComponent
   ],
   imports: [
     ReactiveFormsModule,
