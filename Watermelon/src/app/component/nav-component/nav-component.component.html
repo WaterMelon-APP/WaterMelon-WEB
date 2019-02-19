@@ -10,6 +10,7 @@
         <div *ngIf="isLoggedIn">
             <a routerLink="/profile">
               <button  mat-menu-item>
+                <mat-icon>perm_identity</mat-icon>
                 Profile
               </button>
             </a>
@@ -24,6 +25,12 @@
           <button mat-menu-item (click)="Login()">
             <mat-icon>fingerprint</mat-icon>
             <span>Login</span>
+          </button>
+        </div>
+        <div>
+          <button mat-menu-item (click)="Register()">
+            <mat-icon>accessibility_new</mat-icon>
+            <span>Register</span>
           </button>
         </div>
       </mat-menu>

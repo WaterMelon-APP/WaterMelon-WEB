@@ -1,5 +1,7 @@
 import * as Parse from 'parse';
 import { Component, OnInit } from '@angular/core';
+import {MatDialog, MatDialogConfig} from '@angular/material';
+import {UpdateProfileComponent} from '../update-profile/update-profile.component';
 
 
 @Component({
@@ -14,17 +16,21 @@ export class ProfileComponent implements OnInit {
   username: string;
   email: string;
   facebook: string;
+  phone: string;
   creation_date: Date;
+  profile_picture: string;
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
     this.query.get(this.currentSession.id)
     .then((userInfo) => {
       this.username = userInfo.get('username');
       this.email = userInfo.get('email');
+      this.phone = userInfo.get('phone');
       this.facebook = userInfo.get('facebook');
       this.creation_date = userInfo.get('createdAt');
+      this.profile_picture = userInfo.get('profilPictureUrl');
 
       // The object was retrieved successfully.
     }, (error) => {
@@ -35,20 +41,9 @@ export class ProfileComponent implements OnInit {
     console.log(this.currentSession);
   }
 
-  postNewFacebook() {
-    const NewProfile = Parse.Object.extend('NewProfile');
-    const newProfile = new NewProfile();
-
-    newProfile.set('facebook', 'Test2');
-
-    newProfile.save()
-    .then((gameScore) => {
-      // Execute any logic that should take place after the object is saved.
-      alert('New object created with objectId: ' + gameScore.id);
-    }, (error) => {
-      // Execute any logic that should take place if the save fails.
-      // error is a Parse.Error with an error code and message.
-      alert('Failed to create new object, with error code: ' + error.message);
-    });
+  postNewProfile() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    this.dialog.open(UpdateProfileComponent, dialogConfig);
   }
 }

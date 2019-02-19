@@ -3,6 +3,7 @@ import {MatDialog, MatDialogConfig} from '@angular/material';
 
 import * as Parse from 'parse';
 import {LoginFormComponent} from '../login-form/login-form.component';
+import {RegisterFormComponent} from '../services/register-form/register-form.component';
 
 @Component({
   selector: 'app-nav-component',
@@ -36,5 +37,11 @@ export class NavComponentComponent implements OnInit {
       }
     });
 
+  }
+
+  Register() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    this.dialog.open(RegisterFormComponent, dialogConfig);
   }
 }
