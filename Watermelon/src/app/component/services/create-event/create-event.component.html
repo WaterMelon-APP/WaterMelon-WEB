@@ -3,9 +3,9 @@
       <input matInput placeholder="Name your event !" [formControl]="eventname" required>
   </mat-form-field>
   <mat-form-field>
-      <input [matDatepicker]="eventdate" required>
-      <mat-datepicker-toggle matSuffix [for]="eventdate"></mat-datepicker-toggle>
-      <mat-datepicker #eventdate></mat-datepicker>
+      <input matInput [(ngModel)]="dateEvent" [matDatepicker]="picker" required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
   <button mat-button color="primary"(click)="createEvent(event)">Create the event</button>
 </div>

@@ -15,28 +15,30 @@ export class CreateEventComponent implements OnInit {
   eventname = new FormControl('', [Validators.required, Validators.requiredTrue]);
   eventdate = new FormControl('', [Validators.required, Validators.requiredTrue]);
   constructor(private dialogRef: MatDialogRef<CreateEventComponent>) { }
+  dateEvent;
 
   ngOnInit() {
+    this.dateEvent = new Date();
   }
 
   async createEvent() {
     const eventnameVal = this.eventname.value as string;
-    const eventdateVal = this.eventdate.value as Date;
+    const eventdateVal = this.dateEvent;
 
     if (eventnameVal != null || eventdateVal != null) {
       var event = Parse.Object.extend('Event');
       var newEvent = new event();
 
+      newEvent.set('Owner', Parse.User.current());
       newEvent.set('eventName', eventnameVal);
       newEvent.set('dateEvent', eventdateVal);
-      newEvent.set('owner', Parse.User.current());
 
       newEvent.save()
       .then(res => {
         alert('Congratulations ! Your event has been created !');
         this.dialogRef.close();
       }, err => {
-        alert('Oops ! Something goes wrong !');
+        alert(err);
       })
     }
   }
