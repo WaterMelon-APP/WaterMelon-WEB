@@ -1,0 +1,13 @@
+<p>
+
+    <mat-form-field>
+      <input matInput placeholder="0" [formControl]="itemquantity" required>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Name of your item" [formControl]="itemname" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="0,00" [formControl]="itemprice" required>
+    </mat-form-field>
+  <button mat-button color="primary"(click)="addItem(item)">Add an item </button>
+</p>

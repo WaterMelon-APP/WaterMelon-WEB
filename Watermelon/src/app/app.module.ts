@@ -44,7 +44,8 @@ const parse = require('parse');
   entryComponents: [
     LoginFormComponent,
     RegisterFormComponent,
-    CreateEventComponent
+    CreateEventComponent,
+    ItemListComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
