@@ -20,7 +20,7 @@ export class RegisterFormComponent implements OnInit {
     verifPasswd = new FormControl('', [Validators.required, Validators.requiredTrue]);
 
     constructor(private dialogRef: MatDialogRef<RegisterFormComponent>) { }
-    
+
     ngOnInit() {
     }
 

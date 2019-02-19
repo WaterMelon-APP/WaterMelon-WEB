@@ -11,9 +11,12 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatNativeDateModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material-module';
+import { ProfileComponent } from './component/profile/profile.component';
+
 import { RegisterFormComponent } from './component/services/register-form/register-form.component';
 import { CreateEventComponent } from './component/services/create-event/create-event.component';
 import { ItemListComponent } from './component/services/item-list/item-list.component';
+import { UpdateProfileComponent } from './component/update-profile/update-profile.component';
 
 
 const parse = require('parse');
@@ -28,7 +31,8 @@ const parse = require('parse');
     LoginFormComponent,
     RegisterFormComponent,
     CreateEventComponent,
-    ItemListComponent
+    ItemListComponent,
+    ProfileComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -45,7 +49,8 @@ const parse = require('parse');
     LoginFormComponent,
     RegisterFormComponent,
     CreateEventComponent,
-    ItemListComponent
+    ItemListComponent,
+    UpdateProfileComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

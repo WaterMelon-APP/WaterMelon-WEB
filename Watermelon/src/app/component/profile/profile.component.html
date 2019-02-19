@@ -1,0 +1,30 @@
+<app-nav-component></app-nav-component>
+
+<div style="padding-top: 5em;">
+  <h1>Profile</h1>
+
+<mat-card class="profile-card">
+  <mat-card-header>
+    <mat-card-title>{{ username }}</mat-card-title>
+    <mat-card-subtitle>{{ email }}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image *ngIf="profile_picture" [src]="profile_picture" alt="Profil Picture">
+    <mat-card-content>
+      <p>
+        You, {{username}} are a proud member of the watermelon gang since {{ creation_date  | date:'medium' }}.
+      </p>
+      <p>
+        Your phone number : {{ phone }}.
+      </p>
+      <p>
+        Your facebook : {{ facebook }}.
+      </p>
+      <p>
+        If any of this information are outdated, please consider changing them below.
+      </p>
+      <button mat-raised-button style="float: left"  color="warn" (click)="postNewProfile()">UPDATE PROFIL</button>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+
