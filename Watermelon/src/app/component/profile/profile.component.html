@@ -1,0 +1,28 @@
+<app-nav-component></app-nav-component>
+
+<h1>Profile</h1>
+
+<mat-card class="example-card">
+  <mat-card-header>
+    <div mat-card-avatar class="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"></div>
+    <mat-card-title>{{ username }}</mat-card-title>
+    <mat-card-subtitle>{{ email }}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="Profil Picture">
+    <mat-card-content>
+      <p>
+        You, {{username}} are a proud member of the watermelon gang since {{ creation_date  | date:'medium' }}.
+      </p>
+      <p>
+        Your facebook : {{ facebook }}.
+      </p>
+      <p>
+        If any of this information are outdated, please consider changing them below.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button style="float: right">CHANGE EMAIL</button>
+      <button mat-button style="float: left" (click)="postNewFacebook()">CHANGE FACEBOOK</button>
+      <button mat-raised-button color="warn">CHANGE PASSEWORD</button>
+    </mat-card-actions>
+</mat-card>

@@ -11,6 +11,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatNativeDateModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material-module';
+import { ProfileComponent } from './component/profile/profile.component';
 
 
 const parse = require('parse');
@@ -23,6 +24,7 @@ const parse = require('parse');
     HomePageComponent,
     NavComponentComponent,
     LoginFormComponent,
+    ProfileComponent,
   ],
   imports: [
     ReactiveFormsModule,
