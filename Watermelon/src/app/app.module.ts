@@ -17,6 +17,7 @@ import { RegisterFormComponent } from './component/services/register-form/regist
 import { CreateEventComponent } from './component/services/create-event/create-event.component';
 import { ItemListComponent } from './component/services/item-list/item-list.component';
 import { UpdateProfileComponent } from './component/update-profile/update-profile.component';
+import {ListEventUserPageComponent} from './page/list-event-user-page/list-event-user-page.component';
 
 
 const parse = require('parse');
@@ -33,6 +34,7 @@ const parse = require('parse');
     CreateEventComponent,
     ItemListComponent,
     ProfileComponent,
+    ListEventUserPageComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -43,7 +45,7 @@ const parse = require('parse');
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   entryComponents: [
     LoginFormComponent,

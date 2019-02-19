@@ -1,0 +1,14 @@
+<app-nav-component style="margin-bottom: 5em"></app-nav-component>
+
+
+  <div *ngFor="let event of eventList" style="padding-top: 1em;">
+    <mat-card style="padding-top: 1em;">
+      <mat-card-content>
+        <p>
+          <a href=eventList>
+            {{event.get('eventName')}}
+          </a>
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
