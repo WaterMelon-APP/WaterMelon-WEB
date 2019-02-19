@@ -17,6 +17,9 @@ export class CreateEventComponent implements OnInit {
   constructor(private dialogRef: MatDialogRef<CreateEventComponent>) { }
 
   ngOnInit() {
+  }
+
+  async createEvent() {
     const eventnameVal = this.eventname.value as string;
     const eventdateVal = this.eventdate.value as Date;
 
