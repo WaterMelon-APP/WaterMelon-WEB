@@ -34,7 +34,12 @@ const parse = require('parse');
     CreateEventComponent,
     ItemListComponent,
     ProfileComponent,
-    ListEventUserPageComponent
+    ListEventUserPageComponent,
+    UpdateProfileComponent,
+    LoginFormComponent,
+    RegisterFormComponent,
+    CreateEventComponent,
+    ItemListComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -52,7 +57,6 @@ const parse = require('parse');
     RegisterFormComponent,
     CreateEventComponent,
     ItemListComponent,
-    UpdateProfileComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
@@ -60,7 +64,7 @@ const parse = require('parse');
 export class AppModule {
 
   constructor() {
-    parse.initialize('watermelon');
-    parse.serverURL = 'http://watermelon-parse.herokuapp.com/parse';
+    parse.initialize("OwSChGtDD8UV6I0F1MApF8V40KZfl9ex26rLyctc", "4RETRc4i3ILpP2X8dPjXbHJpAZw4rMGNI4BD24e2");
+    parse.serverURL = 'http://watermelonserver.herokuapp.com/parse';
   }
 }

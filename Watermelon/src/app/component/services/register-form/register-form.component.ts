@@ -24,6 +24,10 @@ export class RegisterFormComponent implements OnInit {
     ngOnInit() {
     }
 
+    getErrorMessage() {
+
+    }
+
     async register(user: User) {
         const usernameVal = this.username.value as string;
         const emailVal = this.email.value as string;
@@ -54,7 +58,8 @@ export class RegisterFormComponent implements OnInit {
                             msg = 'Account already exists.';
                             break;
                         default:
-                            msg = 'Something goes wrong.';
+                            //msg = 'Something goes wrong.';
+                            msg = err;
                     }
                     alert(msg);
                 });

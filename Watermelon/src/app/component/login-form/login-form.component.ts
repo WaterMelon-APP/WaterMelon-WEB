@@ -20,6 +20,10 @@ export class LoginFormComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<LoginFormComponent>) { }
 
+getErrorMessage() {
+  
+}
+
   ngOnInit() {
   }
 

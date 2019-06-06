@@ -6,8 +6,8 @@ import "./App.css";
 import Routes from "./Routes";
 import Parse from 'parse';
 
-Parse.serverURL = 'https://watermelon-parse.herokuapp.com/parse';
-Parse.initialize("watermelon", "pinsEv-3gukfu-vuckut");
+Parse.initialize("OwSChGtDD8UV6I0F1MApF8V40KZfl9ex26rLyctc", "4RETRc4i3ILpP2X8dPjXbHJpAZw4rMGNI4BD24e2");
+Parse.serverURL = 'https://watermelonserver.herokuapp.com/parse';
 
 class App extends Component {
   constructor(props) {
