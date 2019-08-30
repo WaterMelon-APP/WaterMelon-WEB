@@ -1,9 +1,7 @@
 <app-nav-component></app-nav-component>
 
-<div style="padding-top: 5em;">
-  <h1>Profile</h1>
-
-<mat-card class="profile-card">
+<div style="padding-top: 0.01em;">
+<!-- <mat-card class="profile-card">
   <mat-card-header>
     <mat-card-title>{{ username }}</mat-card-title>
     <mat-card-subtitle>{{ email }}</mat-card-subtitle>
@@ -24,7 +22,45 @@
       </p>
       <button mat-raised-button style="float: left"  color="warn" (click)="postNewProfile()">UPDATE PROFIL</button>
     </mat-card-content>
-  </mat-card>
-</div>
+  </mat-card> -->
 
+<div style="padding-top: 4em;">
+    <div class="col-md-7 header-right">
+      <h6>Profile page</h6>
+    </div>
 
+    <img src="/assets/avatar_placeholder_large.png" class="profile-picture">
+
+    <form class="form-style-7">
+        <ul>
+        <li>
+            <label for="name">Name</label>
+            <input type="text" name="name" value="{{username}}" maxlength="100">
+        </li>
+        <li>
+            <label for="email">Email</label>
+            <input type="email" name="email" value={{email}} maxlength="100">
+        </li>
+        <li>
+            <label for="phone">Phone number</label>
+            <input type="phone" name="url" maxlength="100">
+        </li>
+        <li>
+            <label for="bio">About You</label>
+            <textarea name="bio" onkeyup="adjust_textarea(this)"></textarea>
+            <span>Say something about yourself</span>
+        </li>
+        <li>
+            <label for="facebook">Facebook linked</label>
+            <input type="text" name="facebook" value="No"  maxlength="100" disabled>
+        </li>
+        <li>
+            <label for="date">Date joined</label>
+            <input type="text" name="date" value="{{ creation_date  | date:'medium' }}"  maxlength="100" disabled>
+        </li>
+        <li>
+            <input type="submit" (click)="postNewProfile()" value="Save changes">
+        </li>
+        </ul>
+        </form>
+      </div>
