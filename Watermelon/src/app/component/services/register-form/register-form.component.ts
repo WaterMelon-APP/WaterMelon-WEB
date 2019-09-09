@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
-import {User} from '../../../Model/Users';
 import * as Parse from 'parse';
 import {MatDialogRef} from '@angular/material';
+
+import { User } from '../../../Model/User';
 
 @Component ({
     selector: 'app-register-form',
