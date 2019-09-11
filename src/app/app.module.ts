@@ -8,17 +8,20 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material-module';
 
 import { AppComponent } from './app.component';
-import { LoginFormComponent } from './component/login-form/login-form.component';
-import { HomePageComponent } from './page/home-page/home-page.component';
-import { NavComponentComponent } from './component/nav-component/nav-component.component';
-import { ProfileComponent } from './component/profile/profile.component';
-import { UpdateProfileComponent } from './component/update-profile/update-profile.component';
-import { ListEventUserPageComponent } from './page/list-event-user-page/list-event-user-page.component';
-import { EventComponent } from './component/event/event.component';
+import { LoginFormComponent } from '@components/login-form/login-form.component';
+import { HomePageComponent } from '@components/home-page/home-page.component';
+import { NavComponentComponent } from '@components/nav-component/nav-component.component';
+import { ProfileComponent } from '@components/profile/profile.component';
+import { UpdateProfileComponent } from '@components/update-profile/update-profile.component';
+import { ListEventUserPageComponent } from '@components/profile/list-event-user-page.component';
+import { EventComponent } from '@components/event/event.component';
+import { RegisterFormComponent } from '@components/register/register-form.component';
+import { CreateEventComponent } from '@components/event/create-event.component';
+import { ItemListComponent } from '@components/item/item-list.component';
 
-import { RegisterFormComponent } from './component/services/register-form/register-form.component';
-import { CreateEventComponent } from './component/services/create-event/create-event.component';
-import { ItemListComponent } from './component/services/item-list/item-list.component';
+import { EventService } from '@services/event.service';
+import { ItemService } from '@services/item.service';
+import { UserService } from '@services/user.service';
 
 const parse = require('parse');
 

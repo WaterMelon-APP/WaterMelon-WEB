@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import * as Parse from 'parse';
 import {MatDialogRef} from '@angular/material';
-import { User } from '../../../Model/User';
-import { Event } from '../../../Model/Event';
 
 @Component({
   selector: 'app-create-event',

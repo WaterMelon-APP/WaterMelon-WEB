@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 
 import * as Parse from 'parse';
-import {LoginFormComponent} from '../login-form/login-form.component';
-import {RegisterFormComponent} from '../services/register-form/register-form.component';
-import {CreateEventComponent} from '../services/create-event/create-event.component';
+import { LoginFormComponent} from '@components/login-form/login-form.component';
+import { RegisterFormComponent } from '@components/register/register-form.component';
+import { CreateEventComponent} from '@components/event/create-event.component';
 
 @Component({
   selector: 'app-nav-component',
