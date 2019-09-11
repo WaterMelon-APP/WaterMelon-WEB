@@ -1,8 +1,8 @@
 import * as Parse from 'parse';
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material';
-import {UpdateProfileComponent} from '../update-profile/update-profile.component';
 
+import { UpdateProfileComponent } from '@components/update-profile/update-profile.component';
 
 @Component({
   selector: 'app-profile',

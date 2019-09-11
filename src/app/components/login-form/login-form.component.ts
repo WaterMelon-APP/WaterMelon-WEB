@@ -3,7 +3,7 @@ import {FormControl, Validators} from '@angular/forms';
 import * as Parse from 'parse';
 import {MatDialogRef} from '@angular/material';
 
-import { User } from '../../Model/User';
+import { User } from '@models/user';
 
 @Component({
   selector: 'app-login-form',

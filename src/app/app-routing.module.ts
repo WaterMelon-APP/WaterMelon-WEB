@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import {HomePageComponent} from './page/home-page/home-page.component';
-import {ListEventUserPageComponent} from './page/list-event-user-page/list-event-user-page.component';
-import { ProfileComponent } from './component/profile/profile.component';
-import { EventComponent } from './component/event/event.component';
+import { HomePageComponent } from '@components/home-page/home-page.component';
+import { ListEventUserPageComponent } from '@components/profile/list-event-user-page.component';
+import { ProfileComponent } from '@components/profile/profile.component';
+import { EventComponent } from '@components/event/event.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
