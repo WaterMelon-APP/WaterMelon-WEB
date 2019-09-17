@@ -25,7 +25,6 @@ export class RegisterFormComponent implements OnInit {
     }
 
     getErrorMessage() {
-
     }
 
     async register(user: User) {

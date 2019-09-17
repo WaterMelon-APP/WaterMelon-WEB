@@ -146,3 +146,7 @@
 	box-shadow: 0 0 5px #5994FF;
 	border: 1px solid #5994FF;
 }
+
+body {
+	background-color: #5dad5d;
+}

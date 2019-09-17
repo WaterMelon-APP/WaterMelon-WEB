@@ -62,13 +62,13 @@ export default class Login extends Component {
 						/>
 					</FormGroup>
 					<LoaderButton
-					  block
-					  bsSize="large"
-					  disabled={!this.validateForm()}
-					  type="submit"
-					  isLoading={this.state.isLoading}
-					  text="Login"
-					  loadingText="Logging in…"
+						block
+						bsSize="large"
+						disabled={!this.validateForm()}
+						type="submit"
+						isLoading={this.state.isLoading}
+						text="Login"
+						loadingText="Logging in…"
 					/>
 				</form>
 			</div>

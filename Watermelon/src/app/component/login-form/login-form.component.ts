@@ -11,7 +11,6 @@ import {MatDialogRef} from '@angular/material';
 })
 
 export class LoginFormComponent implements OnInit {
-
   hide = true;
 
   user = {} as User;
@@ -20,9 +19,8 @@ export class LoginFormComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<LoginFormComponent>) { }
 
-getErrorMessage() {
-  
-}
+  getErrorMessage() {
+  }
 
   ngOnInit() {
   }

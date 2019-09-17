@@ -1,14 +1,27 @@
+<body>
 <app-nav-component style="margin-bottom: 5em"></app-nav-component>
 
-
-  <div *ngFor="let event of eventList" style="padding-top: 1em;">
-    <mat-card style="padding-top: 1em;">
-      <mat-card-content>
-        <p>
+<div style="padding-top: 4em;"></div>
+<div *ngFor="let event of eventList">
+  <mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                          (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
           <a href=eventList>
             {{event.get('eventName')}}
           </a>
-        </p>
-      </mat-card-content>
-    </mat-card>
-  </div>
+        </mat-panel-title>
+        <mat-panel-description>
+          <button mat-stroked-button mat-icon-button (click)="delEvent(event.get('eventName'))">
+            <mat-icon>delete_sweep</mat-icon>
+          </button>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>
+        {{event.get('dateEvent')}}
+      </p>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+</body>

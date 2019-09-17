@@ -1,0 +1,97 @@
+.container {
+    height: 100%;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.cont2 {
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.cont3 {
+    flex: 0 0 83.33333%;
+    max-width: 83.33333%;
+    align-self: flex-end;
+}
+
+.cont4 {
+    flex: 0 0 66.66667%;
+    max-width: 66.66667%;
+    align-self: baseline;
+}
+
+.cont5 {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    justify-content: center;
+}
+
+.cont6 {
+    flex: 0 0 66.66667%;
+    max-width: 66.66667%;
+    text-align: center;
+}
+
+.text1 {
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 300;
+    margin-bottom: 3rem;
+}
+
+.text2 {
+    color: white;
+    margin-top: 0;
+}
+
+.text3 {
+    color: rgba(255, 255, 255, 0.50);
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+}
+
+.masthead {
+    padding-top: 10rem;
+    padding-bottom: calc(10rem - 72px);
+    background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url("../../../assets/img/friendly_party.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+}
+
+.page-section {
+    padding: 8rem 0;
+    background-color: #5dad5d;
+}
+
+h1 {
+    text-transform: uppercase;
+    font-weight: 700;
+    color: white;
+    font-size: 2.25rem;
+}
+
+hr {
+    max-width: 3.25rem;
+    border-width: 0.2rem;
+    border-color: #f4623a;
+    margin-bottom: 1.5rem;
+    border-color: #fff;
+    margin-top: 1.5rem;
+}
+
+button {
+    text-align: center;
+}
