@@ -34,21 +34,37 @@
     <form class="form-style-7">
         <ul>
         <li>
-            <label for="name">Name</label>
-            <input type="text" name="name" value="{{username}}" maxlength="100">
+            <label for="pseudo">Pseudonyme</label>
+            <input type="text" name="pseudo" value={{username}} maxlength="100">
+        </li>
+        <li>
+            <label for="name">Nom</label>
+            <input type="text" name="name" value={{name}} maxlength="100">
+        </li>
+        <li>
+            <label for="surname">Prénom</label>
+            <input type="text" name="surname" value={{surname}} maxlength="100">
         </li>
         <li>
             <label for="email">Email</label>
             <input type="email" name="email" value={{email}} maxlength="100">
         </li>
         <li>
-            <label for="phone">Phone number</label>
+            <label for="birth date">Date de naissance</label>
+            <input type="date" name="birthdate" value={{birthdate}}>
+        </li>
+        <li>
+            <label for="phone">Numéro de téléphone</label>
             <input type="phone" name="url" maxlength="100">
         </li>
         <li>
             <label for="bio">About You</label>
             <textarea name="bio" onkeyup="adjust_textarea(this)"></textarea>
             <span>Say something about yourself</span>
+        </li>
+        <li>
+            <label for="website">Votre site web</label>
+            <input type="text" name="website" value={{website}} maxlength="100">
         </li>
         <li>
             <label for="facebook">Facebook linked</label>

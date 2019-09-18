@@ -14,7 +14,11 @@ export class ProfileComponent implements OnInit {
   currentSession = Parse.User.current();
   query = new Parse.Query('User');
   username: string;
+  name: string;
+  surname: string;
   email: string;
+  birthdate: Date;
+  website: string;
   facebook: string;
   phone: string;
   creation_date: Date;
@@ -26,8 +30,12 @@ export class ProfileComponent implements OnInit {
     this.query.get(this.currentSession.id)
     .then((userInfo) => {
       this.username = userInfo.get('username');
+      this.name = userInfo.get('name');
+      this.surname = userInfo.get('surname');
       this.email = userInfo.get('email');
+      this.birthdate = userInfo.get('birthdate');
       this.phone = userInfo.get('phone');
+      this.website = userInfo.get('website');
       this.facebook = userInfo.get('facebook');
       this.creation_date = userInfo.get('createdAt');
       this.profile_picture = userInfo.get('profilPictureUrl');
