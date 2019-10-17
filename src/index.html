@@ -12,7 +12,22 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 </head>
+
 <body>
+  <!-- Auth with Google -->
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <!-- Auth with Facebook -->
+  <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId            : '398629654187568',
+          autoLogAppEvents : true,
+          xfbml            : true,
+          version          : 'v4.0'
+        });
+      };
+    </script>
+    <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
   <app-root></app-root>
 </body>
 </html>

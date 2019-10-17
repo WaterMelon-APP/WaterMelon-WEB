@@ -19,3 +19,8 @@
   input.example-right-align {
     -moz-appearance: textfield;
   }
+
+  .google {
+    width: 50%;
+    margin: 0 auto;
+  }
