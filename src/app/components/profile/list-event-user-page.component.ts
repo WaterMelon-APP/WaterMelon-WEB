@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import * as Parse from 'parse';
-import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-list-event-user-page',
