@@ -1,3 +1,13 @@
 a {
-  color: white;
-}
+    outline: none;
+    text-decoration: none;
+    color: white;
+  }
+  
+  body {
+      background-color: #5dad5d;
+  }
+  
+  button {
+      background-color: red; 
+  } 

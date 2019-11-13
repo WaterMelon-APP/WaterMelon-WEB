@@ -3,9 +3,14 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatNativeDateModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material-module';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatNativeDateModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { LoginFormComponent } from '@components/login-form/login-form.component';
@@ -18,10 +23,6 @@ import { EventComponent } from '@components/event/event.component';
 import { RegisterFormComponent } from '@components/register/register-form.component';
 import { CreateEventComponent } from '@components/event/create-event.component';
 import { ItemListComponent } from '@components/item/item-list.component';
-
-import { EventService } from '@services/event.service';
-import { ItemService } from '@services/item.service';
-import { UserService } from '@services/user.service';
 
 import { GoogleSignInComponent } from 'angular-google-signin';
 import { EmailComponent } from './components/email/email.component';

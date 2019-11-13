@@ -1,11 +1,11 @@
 <div class="newEvent-container">
   <mat-form-field style="padding-right: 3em;">
-      <input style matInput placeholder="Name your event !" [formControl]="eventname" required>
+      <input style matInput placeholder="Nommez votre événement" [formControl]="eventname" required>
   </mat-form-field>
   <mat-form-field style="padding-right: 3em;">
       <input matInput [(ngModel)]="dateEvent" [matDatepicker]="picker" required>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
-  <button mat-button color="primary"(click)="createEvent(event)">Create the event</button>
+  <button mat-button color="primary"(click)="createEvent(event)">Créez votre événement</button>
 </div>

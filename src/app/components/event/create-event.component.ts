@@ -33,7 +33,7 @@ export class CreateEventComponent implements OnInit {
 
       newEvent.save()
       .then(res => {
-        alert('Congratulations ! Your event has been created !');
+        alert('Votre événement a été créé avec succès!');
         this.dialogRef.close();
       }, err => {
         alert(err);

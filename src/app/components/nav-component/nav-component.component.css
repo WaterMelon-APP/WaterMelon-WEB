@@ -20,6 +20,22 @@ a {
   padding: 0 14px;
 }
 
-.example-spacer {
+.spacer {
   flex: 1 1 auto;
 }
+
+
+.spacer-left {
+  flex: 1.15 1 auto;
+}
+
+a {
+  outline: none;
+  text-decoration: none;
+  color: white;
+}
+
+.picture {
+  width: 35px;
+  height: auto;
+} 

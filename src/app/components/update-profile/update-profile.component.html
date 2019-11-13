@@ -3,6 +3,20 @@
       <input matInput placeholder="Enter your facebook" [formControl]='facebook' required>
       <mat-error *ngIf='facebook.invalid'>{{getErrorMessage()}}</mat-error>
     </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Enter your email" [formControl]='email' required>
+      <mat-error *ngIf='email.invalid'>{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Enter your phone" [formControl]='phone' required>
+      <mat-error *ngIf='phone.invalid'>{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <p>Your birth date :</p>
+    <mat-form-field>
+      <input matInput [(ngModel)]="datebirth" [matDatepicker]="picker" required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
     <!-- <mat-form-field>
       <input matInput placeholder="Enter your email" [formControl]='email' required>
       <mat-error *ngIf='email.invalid'>{{getErrorMessage()}}</mat-error>

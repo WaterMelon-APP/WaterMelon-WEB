@@ -19,3 +19,10 @@ input.example-right-align::-webkit-inner-spin-button {
 input.example-right-align {
   -moz-appearance: textfield;
 }
+
+a {
+  outline: none;
+  text-decoration: none;
+  color: gray;
+  text-align: center;
+} 
