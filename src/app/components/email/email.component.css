@@ -1,0 +1,30 @@
+h3 {
+    margin-top: 2em;
+    margin-left: 5em;
+    margin-bottom: 2em;
+}
+
+a {
+    margin-left: 5em;
+    text-decoration: none;
+}
+
+a.invite {
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    padding: 1em 2em;
+    border: none;
+    border-radius: 15px;
+    background-color: #47D278;
+    color: white;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+
+a.invite:hover {
+    background-color: #FF7676;
+    transition: 0.3s;    
+}
+
+a.invite:active {
+    transform: translateY(2px);
+}

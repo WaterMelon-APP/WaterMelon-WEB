@@ -5,6 +5,8 @@ import {MatDialogRef} from '@angular/material';
 
 import { User } from '@models/user';
 
+import {GoogleSignInSuccess} from 'angular-google-signin';
+
 @Component ({
     selector: 'app-register-form',
     templateUrl: './register-form.component.html',
@@ -22,6 +24,33 @@ export class RegisterFormComponent implements OnInit {
 
     constructor(private dialogRef: MatDialogRef<RegisterFormComponent>) { }
 
+    // Auth with Google
+    private myClientId: string = '975933495379-5b34kdfvm2hieivc1iol4ndj76biq7d9.apps.googleusercontent.com';
+
+    onGoogleSignInSuccess(event: GoogleSignInSuccess) {
+      const user = new Parse.User();
+
+      let googleUser: gapi.auth2.GoogleUser = event.googleUser;
+      let id: string = googleUser.getId();
+      let profile: gapi.auth2.BasicProfile = googleUser.getBasicProfile();
+
+      // Register user with info
+      const usernameVal = profile.getName();
+      console.log(usernameVal);
+      const emailVal = profile.getEmail();
+      console.log(emailVal);
+      user.set("email", emailVal);
+
+      // Generate login session token 
+      const token_id = googleUser.getAuthResponse().id_token;
+      console.log(token_id);
+      Parse.User.signUp(usernameVal, "", null); // comment passer token_id en session ?
+    }
+
+    // Auth with Facebook
+
+    // Local registration
+
     ngOnInit() {
     }
 
@@ -36,7 +65,7 @@ export class RegisterFormComponent implements OnInit {
         const verifPasswdVal = this.verifPasswd.value as string;
         if (usernameVal != null || emailVal != null || firstPasswdVal != null || verifPasswdVal != null) {
             if (firstPasswdVal.localeCompare(verifPasswdVal)) {
-                alert("Passwords doesn't match");
+                alert("Passwords don't match");
             } else {
                 Parse.User.signUp(usernameVal, firstPasswdVal, null)
                 .then(res => {

@@ -14,6 +14,14 @@
         <mat-icon>settings</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
+          <div *ngIf="isLoggedIn">
+              <a routerLink="/email">
+                <button  mat-menu-item>
+                  <mat-icon>alternate_email</mat-icon>
+                  Invitations
+                </button>
+              </a>
+          </div>
         <div *ngIf="isLoggedIn">
             <a routerLink="/profile">
               <button  mat-menu-item>
