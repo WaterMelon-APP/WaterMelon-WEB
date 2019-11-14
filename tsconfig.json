@@ -15,11 +15,6 @@
       "node_modules/@types"
     ],
     "paths": {
-      "@constants/*": ["src/app/constants/*"],
-      "@components/*": ["src/app/components/*"],
-      "@models/*": ["src/app/models/*"],
-      "@services/*": ["src/app/services/*"],
-      "@states/*": ["src/app/state-management/*"]
     },
     "lib": [
       "es2018",
