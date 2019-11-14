@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import * as Parse from 'parse';
 
-import { RegisterFormComponent } from '../nav/components/register-form.component';
-import { CreateEventComponent } from '../event/components/create-event.component';
+import { RegisterFormComponent } from './../register/register-form.component';
+import { CreateEventComponent } from './../event/create-event.component';
 
 @Component({
   selector: 'app-home-page',

@@ -3,7 +3,7 @@ import {FormControl, Validators} from '@angular/forms';
 import * as Parse from 'parse';
 import {MatDialogRef} from '@angular/material';
 
-import { User } from './../../profile/user';
+import { User } from '@models/user';
 
 import {GoogleSignInSuccess} from 'angular-google-signin';
 
