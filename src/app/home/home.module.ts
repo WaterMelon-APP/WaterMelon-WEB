@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { HomeComponent } from './home.component';
+import { HomePageComponent } from './home-page.component';
 import { HomeRoutingModule } from './home.router';
 import { CommonModule } from '@angular/common';
 
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
         CommonModule
     	],
 	declarations: [
-		HomeComponent,
+		HomePageComponent,
 	],
 })
 export class HomeModule {}

@@ -3,7 +3,7 @@ import {FormControl, Validators} from '@angular/forms';
 import * as Parse from 'parse';
 import {MatDialogRef} from '@angular/material';
 
-import { User } from '@models/user';
+import { User } from './../../profile/user';
 
 @Component({
   selector: 'app-login-form',
@@ -42,15 +42,15 @@ getErrorMessage() {
           let msg;
           switch (err.code) {
             case 101:
-              msg = 'Email or Password is wrong.';
+              msg = 'Email ou mot de passe incorrect.';
               break;
 
             case 200:
-              msg = 'Username/email is required.';
+              msg = 'Username requis.';
               break;
 
             default:
-              msg = 'Something goes wrong';
+              msg = 'Erreur!';
               break;
 
           }

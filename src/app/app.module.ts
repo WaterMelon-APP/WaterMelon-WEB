@@ -13,16 +13,14 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatNativeDateModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
-import { LoginFormComponent } from '@components/login-form/login-form.component';
-import { HomePageComponent } from '@components/home-page/home-page.component';
-import { NavComponentComponent } from '@components/nav-component/nav-component.component';
-import { ProfileComponent } from '@components/profile/profile.component';
-import { UpdateProfileComponent } from '@components/update-profile/update-profile.component';
-import { ListEventUserPageComponent } from '@components/profile/list-event-user-page.component';
-import { EventComponent } from '@components/event/event.component';
-import { RegisterFormComponent } from '@components/register/register-form.component';
-import { CreateEventComponent } from '@components/event/create-event.component';
-import { ItemListComponent } from '@components/item/item-list.component';
+import { HomeModule } from './home';
+import { EventModule } from './event';
+import { NavModule } from './nav';
+
+// import { ProfileComponent } from '@components/profile/profile.component';
+// import { UpdateProfileComponent } from '@components/update-profile/update-profile.component';
+// import { ListEventUserPageComponent } from '@components/profile/list-event-user-page.component';
+// import { ItemListComponent } from '@components/item/item-list.component';
 
 import { GoogleSignInComponent } from 'angular-google-signin';
 import { EmailComponent } from './components/email/email.component';
@@ -32,20 +30,9 @@ const parse = require('parse');
 @NgModule({
   declarations: [
     AppComponent,
-    HomePageComponent,
-    NavComponentComponent,
-    LoginFormComponent,
-    RegisterFormComponent,
-    CreateEventComponent,
-    ItemListComponent,
-    ProfileComponent,
-    ListEventUserPageComponent,
-    UpdateProfileComponent,
-    LoginFormComponent,
-    RegisterFormComponent,
-    CreateEventComponent,
-    ItemListComponent,
-    EventComponent,
+    HomeModule,
+    EventModule,
+    NavModule,
     GoogleSignInComponent,
     EmailComponent
   ],
@@ -60,12 +47,7 @@ const parse = require('parse');
     AppRoutingModule,
     BrowserAnimationsModule,
   ],
-  entryComponents: [
-    LoginFormComponent,
-    RegisterFormComponent,
-    CreateEventComponent,
-    ItemListComponent,
-  ],
+  entryComponents: [],
   providers: [],
   bootstrap: [AppComponent]
 })
