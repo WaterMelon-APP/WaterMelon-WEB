@@ -34,7 +34,7 @@ export class RegisterFormComponent implements OnInit {
       let id: string = googleUser.getId();
       let profile: gapi.auth2.BasicProfile = googleUser.getBasicProfile();
 
-      // Register user with info
+      // Print user with info to console
       const usernameVal = profile.getName();
       console.log(usernameVal);
       const emailVal = profile.getEmail();
@@ -45,6 +45,16 @@ export class RegisterFormComponent implements OnInit {
       const token_id = googleUser.getAuthResponse().id_token;
       console.log(token_id);
       Parse.User.signUp(usernameVal, "", null); // comment passer token_id en session ?
+
+      // Enter data into database
+      var userClass = Parse.Object.extend('User');
+      var newUser = new userClass();
+      newUser.set('username', usernameVal);
+      newUser.set('email', emailVal);
+      newUser.set('keyGoogle', token_id);
+      newUser.set('password', 'google');
+
+      newUser.save();
     }
 
     // Auth with Facebook

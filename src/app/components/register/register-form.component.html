@@ -72,17 +72,16 @@
         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
       </mat-form-field>
     <button mat-button color="primary"(click)="register(user)">Sign Up</button>
- 
-    <!-- Auth with Google 
-    <button mat-button color="primary"(click)="onSignIn(user)">Or Signup with Google</button> -->
-<google-signin class="google"
-[clientId]="myClientId"
-[width]="myWidth"
-[theme]="myTheme"
-[scope]="myScope"
-[longTitle]="myLongTitle"
-(googleSignInSuccess)="onGoogleSignInSuccess($event)">
-</google-signin>
+
+
+    <google-signin class="google"
+        [clientId]="myClientId"
+        [width]="myWidth"
+        [theme]="myTheme"
+        [scope]="myScope"
+        [longTitle]="myLongTitle"
+        (googleSignInSuccess)="onGoogleSignInSuccess($event)">
+    </google-signin>
 
      <!-- Auth with Facebook
     <div id="fb-root"></div>
