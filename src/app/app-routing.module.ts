@@ -6,12 +6,14 @@ import { ListEventUserPageComponent } from '@components/profile/list-event-user-
 import { ProfileComponent } from '@components/profile/profile.component';
 import { EventComponent } from '@components/event/event.component';
 import { EmailComponent } from '@components/email/email.component';
+import { EditEventComponent } from '@components/event/edit-event.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'list-user', component: ListEventUserPageComponent},
-  {path: 'event', component: EventComponent },
+  {path: 'event/:id', component: EventComponent },
+  {path: 'event-edit/:id', component: EditEventComponent},
   {path: 'email', component: EmailComponent }
 ];
 
@@ -20,3 +22,9 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+export const routingComponent = [HomePageComponent,
+                                ProfileComponent,
+                                ListEventUserPageComponent,
+                                EventComponent,
+                                EditEventComponent,
+                                EmailComponent]

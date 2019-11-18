@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import * as Parse from 'parse';
-import { Button } from 'protractor';
 
 @Component({
   selector: 'app-list-event-user-page',
@@ -14,7 +15,7 @@ export class ListEventUserPageComponent implements OnInit {
   queryEvent;
   private AllEvents: string;
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
   ngOnInit() {
@@ -34,7 +35,7 @@ export class ListEventUserPageComponent implements OnInit {
     }
   }
 
-  async delEvent(name) {
+  async delEvent(id) {
     const user = Parse.User.current();
     const eventList = Parse.Object.extend('Event');
     const query = new Parse.Query(eventList);
@@ -43,9 +44,8 @@ export class ListEventUserPageComponent implements OnInit {
 
     for (let item of this.eventList)
     {
-      this.queryEvent = item.get('eventName');
-      if (this.queryEvent == name) {
-        console.log('this.queryEvent :', this.queryEvent);
+      this.queryEvent = item.id;
+      if (this.queryEvent == id) {
         item.destroy().then((item) => {
           alert("L'événement " + item.get('eventName') + " a bien été supprimé.");
           location.reload();
@@ -54,5 +54,13 @@ export class ListEventUserPageComponent implements OnInit {
         });
       }
     }
+  }
+
+  async editEvent(id) {
+    this.router.navigate(['/event-edit', id])
+  }
+
+  async goToEvent(id) {
+    this.router.navigate(['/event', id])
   }
 }

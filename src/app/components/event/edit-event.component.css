@@ -1,0 +1,51 @@
+.container {
+    height: 100%;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.cont2 {
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.cont3 {
+    flex: 0 0 83.33333%;
+    max-width: 83.33333%;
+    align-self: flex-end;
+}
+
+.cont4 {
+    flex: 0 0 66.66667%;
+    max-width: 66.66667%;
+    align-self: baseline;
+}
+
+.masthead {
+    height: 75%;
+    padding-top: 10rem;
+    padding-bottom: calc(10rem - 72px);
+    background-color: #5dad5d;
+}
+
+hr {
+    max-width: 98%;
+    border-width: 0.2rem;
+    border-color: #f4623a;
+    margin-bottom: 1.5rem;
+    border-color: #fff;
+    margin-top: 1.5rem;
+}
+
+mat-form-field {
+    padding-right: 3em;
+}

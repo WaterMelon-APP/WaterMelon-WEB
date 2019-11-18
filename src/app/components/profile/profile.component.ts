@@ -18,6 +18,7 @@ export class ProfileComponent implements OnInit {
   surname: string;
   email: string;
   birthdate: Date;
+  localisation: string;
   website: string;
   facebook: string;
   phone: string;
@@ -35,6 +36,7 @@ export class ProfileComponent implements OnInit {
       this.email = userInfo.get('email');
       this.birthdate = userInfo.get('birthdate');
       this.phone = userInfo.get('phone');
+      this.localisation = userInfo.get('localisation');
       this.website = userInfo.get('website');
       this.facebook = userInfo.get('facebook');
       this.creation_date = userInfo.get('createdAt');

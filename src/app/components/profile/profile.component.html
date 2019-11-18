@@ -1,29 +1,7 @@
 <app-nav-component></app-nav-component>
 
 <div style="padding-top: 0.01em;">
-<!-- <mat-card class="profile-card">
-  <mat-card-header>
-    <mat-card-title>{{ username }}</mat-card-title>
-    <mat-card-subtitle>{{ email }}</mat-card-subtitle>
-  </mat-card-header>
-  <img mat-card-image *ngIf="profile_picture" [src]="profile_picture" alt="Profil Picture">
-    <mat-card-content>
-      <p>
-        You, {{username}} are a proud member of the watermelon gang since {{ creation_date  | date:'medium' }}.
-      </p>
-      <p>
-        Your phone number : {{ phone }}.
-      </p>
-      <p>
-        Your facebook : {{ facebook }}.
-      </p>
-      <p>
-        If any of this information are outdated, please consider changing them below.
-      </p>
-      <button mat-raised-button style="float: left"  color="warn" (click)="postNewProfile()">UPDATE PROFIL</button>
-    </mat-card-content>
-  </mat-card> -->
-
+<body>
 <div style="padding-top: 4em;">
     <div class="col-md-7 header-right">
       <h6>Profile page</h6>
@@ -58,9 +36,13 @@
             <input type="phone" name="url" maxlength="100">
         </li>
         <li>
-            <label for="bio">About You</label>
+            <label for="bio">A propos de vous</label>
             <textarea name="bio" onkeyup="adjust_textarea(this)"></textarea>
-            <span>Say something about yourself</span>
+            <span>Dites quelques chose qui vous décrit</span>
+        </li>
+        <li>
+            <label for="localisation">Localisation</label>
+            <input type="text" value={{localisation}} maxlength="100">
         </li>
         <li>
             <label for="website">Votre site web</label>
@@ -80,3 +62,4 @@
         </ul>
         </form>
       </div>
+</body>

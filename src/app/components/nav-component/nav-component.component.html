@@ -1,7 +1,7 @@
 <mat-sidenav-container style="position: fixed; width: 100%; opacity: 0.9; overflow: hidden;">
   <mat-sidenav-content>
     <mat-toolbar color="dark">
-      <img class="picture" src="assets/img/android-chrome-256x256.png">
+      <img class="picture" src="assets/android-chrome-256x256.png">
       <span><a routerLink="/">Watermelon</a></span>
       <span class="spacer"></span>
       <div *ngIf="isLoggedIn">
@@ -51,7 +51,7 @@
             <span>Se connecter</span>
           </button>
         </div>
-        <div>
+        <div *ngIf="!isLoggedIn">
           <button mat-menu-item (click)="Register()">
             <mat-icon>accessibility_new</mat-icon>
             <span>S'enregistrer</span>
