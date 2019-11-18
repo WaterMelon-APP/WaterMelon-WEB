@@ -1,0 +1,31 @@
+<body>
+  <app-nav-component></app-nav-component>
+  <section class="masthead">
+    <div class="container">
+      <div class="cont3">
+        <h1>{{nameEvent}}</h1>
+        <hr>
+      </div>
+      <div class="cont4">
+          <mat-form-field>
+            <input style matInput placeholder="{{nameEvent}}" [formControl]="eventname" required>
+          </mat-form-field>
+          <button mat-button color="primary" (click)="editName(event)">Modifier le nom</button>
+      </div>
+      <div class="cont4">
+        <mat-form-field>
+          <input matInput [(ngModel)]="dateEvent" [matDatepicker]="picker" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <button mat-button color="primary" (click)="editDate(event)">Modifier la date</button>
+      </div>
+      <div class="cont4">
+        <mat-form-field>
+          <input style matInput placeholder="{{addressEvent}}" [formControl]="eventaddress" required>
+        </mat-form-field>
+        <button mat-button color="primary" (click)="editAddress(event)">Modifier l'adresse</button>
+      </div>
+    </div>
+  </section>
+</body>

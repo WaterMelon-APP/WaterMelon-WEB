@@ -8,20 +8,24 @@
                             (closed)="panelOpenState = false">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <a href=eventList>
+            <button class="event" mat-stroked-button (click)="goToEvent(event.id)">
               {{event.get('eventName')}}
-            </a>
+            </button>
           </mat-panel-title>
           <mat-panel-description>
-            <button mat-stroked-button mat-icon-button (click)="delEvent(event.get('eventName'))">
+            <button class="delete" mat-stroked-button mat-icon-button (click)="delEvent(event.id)">
               <mat-icon>delete_sweep</mat-icon>
+            </button>
+            <button class="edit" mat-stroked-button mat-icon-button (click)="editEvent(event.id)">
+              <mat-icon>edit</mat-icon>
             </button>
           </mat-panel-description>
         </mat-expansion-panel-header>
         <p>
-          {{event.get('dateEvent')}}
+          {{event.get('dateEvent')}}<br>
+          {{event.get('address')}}
         </p>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
-  </body>
+</body>
