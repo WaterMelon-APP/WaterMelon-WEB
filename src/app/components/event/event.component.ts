@@ -53,10 +53,9 @@ export class EventComponent implements OnInit {
         if (!this.needsEvent) {
           this.needsEvent = [];
         }
-
         for (let item of this.needsEvent)
         {
-          this.queryNeeds.get(item)
+          await this.queryNeeds.get(item)
           .then(res => {
             this.itemList.push(res);
           }, err => {
