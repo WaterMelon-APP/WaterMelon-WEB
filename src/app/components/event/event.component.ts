@@ -112,7 +112,7 @@ export class EventComponent implements OnInit {
       if (this.queryEvent == this.eventId) {
         item.destroy().then((item) => {
           alert("L'événement " + item.get('eventName') + " a bien été supprimé.");
-          location.reload();
+          this.router.navigate(['/list-user']);
         }, (error) => {
           alert(error);
         });
