@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Parse from 'parse';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import {FormControl, Validators} from '@angular/forms';
 
 @Component({
@@ -14,7 +15,7 @@ export class EventComponent implements OnInit {
   needsprice = new FormControl('', [Validators.required, Validators.requiredTrue]);
   needsquant = new FormControl('', [Validators.required, Validators.requiredTrue]);
   needsname = new FormControl('', [Validators.required, Validators.requiredTrue]);
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private router: Router) { }
   eventId;
   eventList;
   itemList;
@@ -96,5 +97,30 @@ export class EventComponent implements OnInit {
         alert(err);
       })
     }
+  }
+
+  async delEvent() {
+    const user = Parse.User.current();
+    const eventList = Parse.Object.extend('Event');
+    const query = new Parse.Query(eventList);
+    query.equalTo('Owner', user);
+    this.eventList = await query.find();
+
+    for (let item of this.eventList)
+    {
+      this.queryEvent = item.id;
+      if (this.queryEvent == this.eventId) {
+        item.destroy().then((item) => {
+          alert("L'événement " + item.get('eventName') + " a bien été supprimé.");
+          location.reload();
+        }, (error) => {
+          alert(error);
+        });
+      }
+    }
+  }
+
+  async editEvent() {
+    this.router.navigate(['/event-edit', this.eventId])
   }
 }

@@ -4,17 +4,23 @@
             <div class="container">
                 <div class="cont3">
                     <h1>{{nameEvent}}</h1>
+                    <button class="delete" mat-stroked-button mat-icon-button (click)="delEvent()">
+                        <mat-icon>delete_sweep</mat-icon>
+                    </button>
+                    <button class="edit" mat-stroked-button mat-icon-button (click)="editEvent()">
+                        <mat-icon>edit</mat-icon>
+                    </button>          
                     <hr>
                 </div>
-            <div class="cont4">
+                <div class="cont4">
                 <mat-form-field>
                     <input style matInput placeholder="Nom de l'objet" [formControl]="needsname" required>
                 </mat-form-field>
                 <mat-form-field>
-                    <input style matInput placeholder="Prix" [formControl]="needsprice" required>
+                    <input type="number" min="1" value="1" style matInput placeholder="Prix" [formControl]="needsprice" required>
                 </mat-form-field>
                 <mat-form-field>
-                    <input style matInput placeholder="Quantité" [formControl]="needsquant" required>
+                    <input type="number" min="1" value="1" style matInput placeholder="Quantité" [formControl]="needsquant" required>
                 </mat-form-field>
                 <button mat-button color="primary" (click)="createNeeds()">Ajouter l'objet</button>
             </div>

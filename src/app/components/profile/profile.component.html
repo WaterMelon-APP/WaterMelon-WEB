@@ -1,65 +1,64 @@
 <app-nav-component></app-nav-component>
 
 <div style="padding-top: 0.01em;">
-<body>
-<div style="padding-top: 4em;">
-    <div class="col-md-7 header-right">
-      <h6>Profile page</h6>
-    </div>
-
-    <img src="/assets/avatar_placeholder_large.png" class="profile-picture">
-
-    <form class="form-style-7">
-        <ul>
-        <li>
-            <label for="pseudo">Pseudonyme</label>
-            <input type="text" name="pseudo" value={{username}} maxlength="100">
-        </li>
-        <li>
-            <label for="name">Nom</label>
-            <input type="text" name="name" value={{name}} maxlength="100">
-        </li>
-        <li>
-            <label for="surname">Prénom</label>
-            <input type="text" name="surname" value={{surname}} maxlength="100">
-        </li>
-        <li>
-            <label for="email">Email</label>
-            <input type="email" name="email" value={{email}} maxlength="100">
-        </li>
-        <li>
-            <label for="birth date">Date de naissance</label>
-            <input type="date" name="birthdate" value={{birthdate}}>
-        </li>
-        <li>
-            <label for="phone">Numéro de téléphone</label>
-            <input type="phone" name="url" maxlength="100">
-        </li>
-        <li>
-            <label for="bio">A propos de vous</label>
-            <textarea name="bio" onkeyup="adjust_textarea(this)"></textarea>
-            <span>Dites quelques chose qui vous décrit</span>
-        </li>
-        <li>
-            <label for="localisation">Localisation</label>
-            <input type="text" value={{localisation}} maxlength="100">
-        </li>
-        <li>
-            <label for="website">Votre site web</label>
-            <input type="text" name="website" value={{website}} maxlength="100">
-        </li>
-        <li>
-            <label for="facebook">Facebook linked</label>
-            <input type="text" name="facebook" value="No"  maxlength="100" disabled>
-        </li>
-        <li>
-            <label for="date">Date joined</label>
-            <input type="text" name="date" value="{{ creation_date  | date:'medium' }}"  maxlength="100" disabled>
-        </li>
-        <li>
-            <input type="submit" (click)="postNewProfile()" value="Save changes">
-        </li>
-        </ul>
-        </form>
-      </div>
-</body>
+    <body>
+        <div style="padding-top: 4em;">
+            <div class="col-md-7 header-right">
+                <h6>Profile page</h6>
+            </div>     
+            <img src="/assets/avatar_placeholder_large.png" class="profile-picture">
+            <form class="form-style-7">
+                <ul>
+                    <li>
+                        <label for="pseudo">Pseudonyme</label>
+                        <input type="text" [formControl]="fUsername" value={{username}} maxlength="100">
+                    </li>
+                    <li>
+                        <label for="name">Nom</label>
+                        <input type="text" [formControl]="fName" value={{name}} maxlength="100">
+                    </li>
+                    <li>
+                        <label for="surname">Prénom</label>
+                        <input type="text" [formControl]="fSurname" value={{surname}} maxlength="100">
+                    </li>
+                    <li>
+                        <label for="email">Email</label>
+                        <input type="email" [formControl]="fEmail" value={{email}} maxlength="100">
+                    </li>
+                    <!--<li>
+                        <label for="birth date">Date de naissance</label>
+                        <input type="date" [formControl]="fBirthdate" [(ngModel)]="birthdate">
+                    </li>-->
+                    <li>
+                        <label for="phone">Numéro de téléphone</label>
+                        <input type="phone" [formControl]="fPhone" value={{phone}} maxlength="100">
+                    </li>
+                    <li>
+                        <label for="bio">A propos de vous</label>
+                        <textarea [formControl]="fBio" value={{bio}} onkeyup="adjust_textarea(this)"></textarea>
+                        <span>Dites quelques chose qui vous décrit</span>
+                    </li>
+                    <li>
+                        <label for="localisation">Localisation</label>
+                        <input type="text" [formControl]="fLocal" value={{localisation}} maxlength="100">
+                    </li>
+                    <li>
+                        <label for="website">Votre site web</label>
+                        <input type="text" value="No" maxlength="100" disabled>
+                    </li>
+                    <li>
+                        <label for="facebook">Facebook linked</label>
+                        <input type="text" value="No"  maxlength="100" disabled>
+                    </li>
+                    <li>
+                        <label for="date">Date joined</label>
+                        <input type="text" value="{{ creation_date  | date:'medium' }}"  maxlength="100" disabled>
+                    </li>
+                    <li>
+                        <input type="submit" (click)="postNewProfile()" value="Save changes">
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </body>
+</div>
