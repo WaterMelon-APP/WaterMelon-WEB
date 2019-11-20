@@ -25,20 +25,21 @@
                 <button mat-button color="primary" (click)="createNeeds()">Ajouter l'objet</button>
             </div>
             <ul>
-                <li class="item-list-strike" *ngFor="let item of itemList">
-                    <mat-checkbox class="checkbox-item"></mat-checkbox>
-                    <p class="linetrought">
-                    {{item.get('Name')}}
-                    {{item.get('Price')}}
-                    {{item.get('Quantity')}}
-                    </p>
+                <tr class="item-list-strike" *ngFor="let item of itemList">
+                    <mat-checkbox class="selected-pay"> Paye </mat-checkbox>
+                    <mat-checkbox class="selected-bring"> Apporte </mat-checkbox>
+                    <button mat-button color="primary"> Comfirmer</button>
+                    <th class="linetrought"> {{item.get('Name')}} </th>
+                    <th class="linetrought"> {{item.get('Price')}} </th>
+                    <th class="linetrought"> {{item.get('Quantity')}} </th>
+
                     <button class="delete" mat-stroked-button mat-icon-button (click)="delItem(item.id)">
                       <mat-icon>delete_sweep</mat-icon>
                     </button>
                     <button class="edit" mat-stroked-button mat-icon-button (click)="editItem(item.id)">
                       <mat-icon>edit</mat-icon>
                     </button>
-                </li>
+                </tr>
             </ul>
         </div>
     </section>
