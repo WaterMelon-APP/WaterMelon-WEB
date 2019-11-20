@@ -1,1 +1,49 @@
-{{nameEvent}}
+<body>
+    <app-nav-component></app-nav-component>
+        <section class="masthead">
+            <div class="container">
+                <div class="cont3">
+                    <h1>{{nameEvent}}</h1>
+                    <button class="delete" mat-stroked-button mat-icon-button (click)="delEvent()">
+                        <mat-icon>delete_sweep</mat-icon>
+                    </button>
+                    <button class="edit" mat-stroked-button mat-icon-button (click)="editEvent()">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <hr>
+                </div>
+                <div class="cont4">
+                <mat-form-field>
+                    <input style matInput placeholder="Nom de l'objet" [formControl]="needsname" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <input type="number" min="1" value="1" style matInput placeholder="Prix" [formControl]="needsprice" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <input type="number" min="1" value="1" style matInput placeholder="Quantité" [formControl]="needsquant" required>
+                </mat-form-field>
+                <button mat-button color="primary" (click)="createNeeds()">Ajouter l'objet</button>
+            </div>
+            <table>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
+                </tr>
+                <tr class="item-list-strike" *ngFor="let item of itemList">
+
+                    <td class="linetrought"> {{item.get('Name')}} </td>
+                    <td class="linetrought"> {{item.get('Price')}} </td>
+                    <td class="linetrought"> {{item.get('Quantity')}} </td>
+                    <mat-checkbox class="selected-pay" [(ngModel)]="payed[item.id]"> Paye </mat-checkbox>
+                    <mat-checkbox class="selected-bring" [(ngModel)]="gived[item.id]"> Apporte </mat-checkbox>
+                    <button mat-button color="primary" (click)="bringItem(item)"> Confirmer</button>
+
+                    <button class="delete" mat-stroked-button mat-icon-button (click)="delItem(item)">
+                        <mat-icon>delete_sweep</mat-icon>
+                    </button>
+                </tr>
+            </table>
+        </div>
+    </section>
+</body>
