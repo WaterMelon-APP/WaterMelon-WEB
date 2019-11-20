@@ -27,9 +27,11 @@
             <ul>
                 <li class="item-list-strike" *ngFor="let item of itemList">
                     <mat-checkbox class="checkbox-item"></mat-checkbox>
+                    <p class="linetrought">
                     {{item.get('Name')}}
                     {{item.get('Price')}}
                     {{item.get('Quantity')}}
+                    </p>
                     <button class="delete" mat-stroked-button mat-icon-button (click)="delItem(item.id)">
                       <mat-icon>delete_sweep</mat-icon>
                     </button>

@@ -50,6 +50,10 @@ mat-form-field {
     padding-right: 3em;
 }
 
-mat-checkbox:mat-checkbox-checked{
+p {
+  display: inline;
+}
+
+.mat-checkbox-checked.mat-accent + .linetrought{
   text-decoration: line-through;
 }
