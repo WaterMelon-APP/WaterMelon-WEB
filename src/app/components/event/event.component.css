@@ -50,15 +50,27 @@ mat-form-field {
     padding-right: 3em;
 }
 
+table {
+   border-collapse: collapse;
+}
+tr {
+  border-bottom: 1pt solid black;
+  border-top: 1pt solid black;
+}
 th {
   text-align: left;
   white-space: pre-wrap;
+  padding-right: 2em;
 }
 
-.mat-checkbox-checked.selected-pay + .linetrought{
+.mat-checkbox-checked.selected-pay + .mat-checkbox.selected-bring + .mat-button + .linetrought{
   text-decoration: line-through;
 }
 
-.mat-checkbox-checked.selected-bring + .linetrought{
+.mat-checkbox.selected-pay + .mat-checkbox-checked.selected-bring + .mat-button + .linetrought{
   text-decoration: line-through;
+}
+
+.mat-checkbox{
+  margin-right: 1em;
 }
