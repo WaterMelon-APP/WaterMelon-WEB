@@ -28,12 +28,16 @@ export class EventComponent implements OnInit {
   priceNeeds;
   namesNeeds;
   quantNeeds;
+  payed;
+  gived;
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
     this.eventId = id;
     this.itemList = [];
     this.queryNeeds = new Parse.Query('Needs');
+    this.payed = new Array();
+    this.gived = new Array();
     this.findEvent();
     console.log('this.itemList :', this.itemList);
   }
@@ -60,6 +64,14 @@ export class EventComponent implements OnInit {
           await this.queryNeeds.get(item)
           .then(res => {
             this.itemList.push(res);
+            this.payed[res.id] = false;
+            if (res.get("Pay") != null && res.get("Pay")[0] != "") {
+              this.payed[res.id] = true;
+            }
+            this.gived[res.id] = false;
+            if (res.get("Give") != null && res.get("Give")[0] != "") {
+              this.gived[res.id] = true;
+            }
           }, err => {
             alert(err);
           })
@@ -125,27 +137,68 @@ export class EventComponent implements OnInit {
     this.router.navigate(['/event-edit', this.eventId])
   }
 
-  async delItem(){
-
-    const itemId = 1; //J'arrive pas trouver l'id de l'item que je dois comparer a i.id
-
-    console.log(itemId);
-
-    for (let i of this.itemList) {
-      this.queryItem = i.id;
-      if (this.queryItem == itemId) {
-        item.destroy().then((i) => {
-          alert("L'item " + i.get('Name') + " a bien été supprimé.");
-        }, (error) => {
-          alert(error);
-        });
+  async delItem(item){
+    let a = 0;
+    for (let i of this.needsEvent)
+    {
+      if (i == item.id) {
+        this.needsEvent.splice(a, 1);
+        break;
       }
+      a = a + 1;
     }
+    this.event.set('itemList', this.needsEvent);
+    this.event.save()
+    .then(res => {
+      console.log('Maj item list');
+    }, err=> {
+      alert(err);
+    });
+
+    item.destroy().then((item) => {
+      alert("L'item a bien été supprimé.");
+      location.reload();
+    }, (error) => {
+      alert(error);
+    });
   }
 
-  async editItem(){
+  async bringItem(item) {
+    const user = Parse.User.current();
+    let payTab = item.get("Pay");
+    if (!payTab) {
+      payTab = new Array();
+    }
+    let giveTab = item.get("Give");
+    if (!giveTab) {
+      giveTab = new Array();
+    }
+
+    if (this.payed[item.id] == true) {
+      payTab[0] = user.id;
+    }
+    else {
+      payTab[0] = "";
+    }
+    if (this.gived[item.id] == true) {
+      giveTab[0] = user.id;
+    }
+    else {
+      giveTab[0] = "";
+    }
+    item.set("Pay", payTab);
+    item.set("Give", giveTab);
+    item.save()
+    .then(res => {
+      console.log('Maj item list');
+    }, err=> {
+      alert(err);
+    });
+  }
+
+/*  async editItem(){
     const quantity = this.quantNeeds;
     const price = this.priceNeeds;
     const name = this.namesNeeds;
-  }
+  }*/
 }

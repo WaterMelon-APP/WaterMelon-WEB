@@ -26,21 +26,21 @@
             </div>
             <table>
                 <tr>
-                  <th>Nom</th>
-                  <th>Prix</th>
-                  <th>Quantité</th>
+                    <th>Nom</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
                 </tr>
                 <tr class="item-list-strike" *ngFor="let item of itemList">
 
                     <td class="linetrought"> {{item.get('Name')}} </td>
                     <td class="linetrought"> {{item.get('Price')}} </td>
                     <td class="linetrought"> {{item.get('Quantity')}} </td>
-                    <mat-checkbox class="selected-pay"> Paye </mat-checkbox>
-                    <mat-checkbox class="selected-bring"> Apporte </mat-checkbox>
-                    <button mat-button color="primary"> Comfirmer</button>
+                    <mat-checkbox class="selected-pay" [(ngModel)]="payed[item.id]"> Paye </mat-checkbox>
+                    <mat-checkbox class="selected-bring" [(ngModel)]="gived[item.id]"> Apporte </mat-checkbox>
+                    <button mat-button color="primary" (click)="bringItem(item)"> Confirmer</button>
 
                     <button class="delete" mat-stroked-button mat-icon-button (click)="delItem(item)">
-                      <mat-icon>delete_sweep</mat-icon>
+                        <mat-icon>delete_sweep</mat-icon>
                     </button>
                 </tr>
             </table>
