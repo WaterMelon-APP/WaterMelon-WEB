@@ -49,3 +49,7 @@ hr {
 mat-form-field {
     padding-right: 3em;
 }
+
+mat-checkbox:mat-checkbox-checked{
+  text-decoration: line-through;
+}

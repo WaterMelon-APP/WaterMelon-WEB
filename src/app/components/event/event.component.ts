@@ -24,6 +24,7 @@ export class EventComponent implements OnInit {
   needsEvent;
   queryEvent;
   queryNeeds;
+  queryItem;
   priceNeeds;
   namesNeeds;
   quantNeeds;
@@ -69,7 +70,7 @@ export class EventComponent implements OnInit {
 
   async createNeeds() {
     const needsnameVal = this.needsname.value as string;
-    const needspriceVal = parseInt(this.needsprice.value as string);
+    const needspriceVal = parseFloat(this.needsprice.value as string);
     const needsquantVal = parseInt(this.needsquant.value as string);
 
     if (needsnameVal != null && needspriceVal != null && needsquantVal != null) {
@@ -122,5 +123,29 @@ export class EventComponent implements OnInit {
 
   async editEvent() {
     this.router.navigate(['/event-edit', this.eventId])
+  }
+
+  async delItem(){
+
+    const itemId = 1; //J'arrive pas trouver l'id de l'item que je dois comparer a i.id
+
+    console.log(itemId);
+
+    for (let i of this.itemList) {
+      this.queryItem = i.id;
+      if (this.queryItem == itemId) {
+        item.destroy().then((i) => {
+          alert("L'item " + i.get('Name') + " a bien été supprimé.");
+        }, (error) => {
+          alert(error);
+        });
+      }
+    }
+  }
+
+  async editItem(){
+    const quantity = this.quantNeeds;
+    const price = this.priceNeeds;
+    const name = this.namesNeeds;
   }
 }
