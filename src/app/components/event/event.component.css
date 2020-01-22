@@ -30,9 +30,21 @@
     align-self: baseline;
 }
 
+.grayBand{
+  text-align: center;
+  background-color: gray;
+  font-size: 1.17em;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  color: #2d2d2d;
+  visibility: hidden;
+}
+
 .masthead {
     height: 75%;
-    padding-top: 10rem;
+    padding-top: 2.85em;
     padding-bottom: calc(10rem - 72px);
     background-color: #5dad5d;
 }
@@ -73,4 +85,9 @@ th {
 
 .mat-checkbox{
   margin-right: 1em;
+}
+
+.cost{
+  padding-left: 35em;
+  font-size: large;
 }

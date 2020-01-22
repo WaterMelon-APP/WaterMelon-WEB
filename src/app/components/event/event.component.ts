@@ -28,8 +28,10 @@ export class EventComponent implements OnInit {
   priceNeeds;
   namesNeeds;
   quantNeeds;
+  totalCost;
   payed;
   gived;
+  isPrivate;
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
@@ -38,7 +40,7 @@ export class EventComponent implements OnInit {
     this.queryNeeds = new Parse.Query('Needs');
     this.payed = new Array();
     this.gived = new Array();
-    this.findEvent();
+    this.findEvent().then(() => {this.privateBand();})
     console.log('this.itemList :', this.itemList);
   }
 
@@ -56,6 +58,7 @@ export class EventComponent implements OnInit {
         this.event = item;
         this.nameEvent = this.event.get('eventName');
         this.needsEvent = this.event.get('itemList');
+        this.totalCost = 0;
         if (!this.needsEvent) {
           this.needsEvent = [];
         }
@@ -196,9 +199,20 @@ export class EventComponent implements OnInit {
     });
   }
 
-/*  async editItem(){
-    const quantity = this.quantNeeds;
-    const price = this.priceNeeds;
-    const name = this.namesNeeds;
-  }*/
+  async privateBand()
+  {
+    const isPriv = this.event.get('isPrivate');
+    const band = document.getElementById("grayBandPrivacy");
+    if(isPriv == true)
+    {
+      band.style.visibility="visible";
+      console.log("visible");
+    }
+    if(isPriv == false)
+    {
+      band.style.visibility="hidden";
+      console.log("hidden");
+    }
+  }
+
 }

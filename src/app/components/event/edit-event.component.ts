@@ -13,6 +13,7 @@ export class EditEventComponent implements OnInit {
   eventdate = new FormControl('', [Validators.required, Validators.requiredTrue]);
   eventaddress = new FormControl('', [Validators.required, Validators.requiredTrue]);
   eventname = new FormControl('', [Validators.required, Validators.requiredTrue]);
+
   constructor(private route: ActivatedRoute) { }
   dateEvent;
   addressEvent;
@@ -21,6 +22,7 @@ export class EditEventComponent implements OnInit {
   eventList;
   queryEvent;
   event;
+  isPrivate;
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
@@ -42,6 +44,7 @@ export class EditEventComponent implements OnInit {
         this.event = item;
         this.dateEvent = this.event.get('dateEvent');
         this.nameEvent = this.event.get('eventName');
+        this.isPrivate = this.event.get('isPrivate');
         this.addressEvent = this.event.get('address');
         if (!this.addressEvent) {
           this.addressEvent = "Modifiez l'adresse"
@@ -89,6 +92,46 @@ export class EditEventComponent implements OnInit {
       }, err => {
         alert(err);
       })
+    }
+  }
+
+  async getPrivacy() {
+    const checkbox = document.getElementById('priv') as HTMLInputElement;
+    const isPriv = this.event.get('isPrivate');
+
+    if(isPriv == true)
+    {
+      checkbox.checked = false;
+    }
+    if(isPriv == false)
+    {
+      checkbox.checked = true;
+    }
+  }
+
+  async editPrivacy() {
+    const checkbox = document.getElementById('priv') as HTMLInputElement;
+    if(checkbox.checked == true)
+    {
+      this.event.set('isPrivate', false);
+      this.event.save()
+      .then(res => {
+        alert("L'événement a bien été modifié");
+      }, err=>{
+        alert(err);
+      })
+      checkbox.checked = true;
+    }
+    else if (checkbox.checked == false)
+    {
+      this.event.set('isPrivate', true);
+      this.event.save()
+      .then(res => {
+        alert("L'événement a bien été modifié");
+      }, err=>{
+        alert(err);
+      })
+      checkbox.checked = false;
     }
   }
 }
