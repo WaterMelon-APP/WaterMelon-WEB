@@ -1,6 +1,9 @@
 <body>
     <app-nav-component></app-nav-component>
         <section class="masthead">
+            <div class="grayBand" id="grayBandPrivacy">
+              Cet événement est privé
+              </div>
             <div class="container">
                 <div class="cont3">
                     <h1>{{nameEvent}}</h1>
@@ -11,6 +14,9 @@
                         <mat-icon>edit</mat-icon>
                     </button>
                     <hr>
+                </div>
+                <div class="cost">
+                  <td> Coût total: {{totalCost}} </td>
                 </div>
                 <div class="cont4">
                 <mat-form-field>
