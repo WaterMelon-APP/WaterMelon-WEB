@@ -5,7 +5,7 @@ import {MatDialogRef} from '@angular/material';
 
 import { User } from '@models/user';
 
-import {GoogleSignInSuccess} from 'angular-google-signin';
+//import {GoogleSignInSuccess} from 'angular-google-signin';
 
 @Component ({
     selector: 'app-register-form',
@@ -24,7 +24,7 @@ export class RegisterFormComponent implements OnInit {
 
     constructor(private dialogRef: MatDialogRef<RegisterFormComponent>) { }
 
-    // Auth with Google
+    /*// Auth with Google
     private myClientId: string = '975933495379-5b34kdfvm2hieivc1iol4ndj76biq7d9.apps.googleusercontent.com';
 
     onGoogleSignInSuccess(event: GoogleSignInSuccess) {
@@ -41,7 +41,7 @@ export class RegisterFormComponent implements OnInit {
       console.log(emailVal);
       user.set("email", emailVal);
 
-      // Generate login session token 
+      // Generate login session token
       const token_id = googleUser.getAuthResponse().id_token;
       console.log(token_id);
       Parse.User.signUp(usernameVal, "", null); // comment passer token_id en session ?
@@ -55,7 +55,7 @@ export class RegisterFormComponent implements OnInit {
       newUser.set('password', 'google');
 
       newUser.save();
-    }
+    }*/
 
     // Auth with Facebook
 

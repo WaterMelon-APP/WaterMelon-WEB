@@ -25,7 +25,7 @@ import { CreateEventComponent } from '@components/event/create-event.component';
 import { EditEventComponent } from '@components/event/edit-event.component';
 import { ItemListComponent } from '@components/item/item-list.component';
 
-import { GoogleSignInComponent } from 'angular-google-signin';
+//import { GoogleSignInComponent } from 'angular-google-signin';
 import { EmailComponent } from './components/email/email.component';
 
 const parse = require('parse');
@@ -48,7 +48,7 @@ const parse = require('parse');
     CreateEventComponent,
     ItemListComponent,
     EventComponent,
-    GoogleSignInComponent,
+    //GoogleSignInComponent,
     EmailComponent
   ],
   imports: [
