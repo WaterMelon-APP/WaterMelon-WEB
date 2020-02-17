@@ -2,6 +2,7 @@
   <app-nav-component style="margin-bottom: 5em"></app-nav-component>
   
   <div style="padding-top: 4em;"></div>
+  <h1>Mes event</h1>
   <div *ngFor="let event of eventList">
     <mat-accordion>
       <mat-expansion-panel (opened)="panelOpenState = true"
@@ -18,6 +19,30 @@
             </button>
             <button class="edit" mat-stroked-button mat-icon-button (click)="editEvent(event.id)">
               <mat-icon>edit</mat-icon>
+            </button>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>
+          {{event.get('dateEvent')}}<br>
+          {{event.get('address')}}
+        </p>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <h1>Mes invitations</h1>
+  <div *ngFor="let event of inviteList">
+    <mat-accordion>
+      <mat-expansion-panel (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <button class="event" mat-stroked-button (click)="goToEvent(event.id)">
+              {{event.get('eventName')}}
+            </button>
+          </mat-panel-title>
+          <mat-panel-description>
+            <button class="delete" mat-stroked-button (click)="quitEvent(event.id)">
+              Quitter l'event
             </button>
           </mat-panel-description>
         </mat-expansion-panel-header>

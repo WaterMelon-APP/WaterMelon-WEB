@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import * as Parse from 'parse';
-import {MatDialogRef} from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-create-event',
@@ -22,22 +22,25 @@ export class CreateEventComponent implements OnInit {
   async createEvent() {
     const eventnameVal = this.eventname.value as string;
     const eventdateVal = this.dateEvent;
+    const checkbox = document.getElementById('privCreate') as HTMLInputElement;
 
-    if (eventnameVal != null || eventdateVal != null) {
+
+    if (eventnameVal != null ||  eventdateVal != null) {
       var event = Parse.Object.extend('Event');
       var newEvent = new event();
+
 
       newEvent.set('Owner', Parse.User.current());
       newEvent.set('eventName', eventnameVal);
       newEvent.set('dateEvent', eventdateVal);
-
+      newEvent.set('isPrivate', checkbox.checked);
       newEvent.save()
-      .then(res => {
-        alert('Votre événement a été créé avec succès!');
-        this.dialogRef.close();
-      }, err => {
-        alert(err);
-      })
+        .then(res => {
+          alert('Votre événement a été créé avec succès!');
+          this.dialogRef.close();
+        }, err => {
+          alert(err);
+        })
     }
   }
 }

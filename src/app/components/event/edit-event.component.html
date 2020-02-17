@@ -7,10 +7,10 @@
         <hr>
       </div>
       <div class="cont4">
-          <mat-form-field>
-            <input style matInput placeholder="{{nameEvent}}" [formControl]="eventname" required>
-          </mat-form-field>
-          <button mat-button color="primary" (click)="editName(event)">Modifier le nom</button>
+        <mat-form-field>
+          <input style matInput placeholder="{{nameEvent}}" [formControl]="eventname" required>
+        </mat-form-field>
+        <button mat-button color="primary" (click)="editName()">Modifier le nom</button>
       </div>
       <div class="cont4">
         <mat-form-field>
@@ -18,13 +18,21 @@
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-        <button mat-button color="primary" (click)="editDate(event)">Modifier la date</button>
+        <button mat-button color="primary" (click)="editDate()">Modifier la date</button>
       </div>
       <div class="cont4">
         <mat-form-field>
           <input style matInput placeholder="{{addressEvent}}" [formControl]="eventaddress" required>
         </mat-form-field>
-        <button mat-button color="primary" (click)="editAddress(event)">Modifier l'adresse</button>
+        <button mat-button color="primary" (click)="editAddress()">Modifier l'adresse</button>
+      </div>
+      <div>
+        L'évenement est t'il publique ?
+        <!-- Rounded switch -->
+        <label class="switch">
+          <input type="checkbox" id= "priv" value="getPrivacy()" (change)="editPrivacy()">
+          <span class="slider round"></span>
+        </label>
       </div>
     </div>
   </section>
