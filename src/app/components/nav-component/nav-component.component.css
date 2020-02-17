@@ -1,3 +1,4 @@
+
 a {
   text-decoration: none;
 }
@@ -37,8 +38,4 @@ a {
 .picture {
   width: 35px;
   height: auto;
-}
-
-.example-margin {
-  margin: 0 10px;
-}
+} 
