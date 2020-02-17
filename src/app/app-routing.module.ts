@@ -8,6 +8,7 @@ import { EventComponent } from '@components/event/event.component';
 import { EmailComponent } from '@components/email/email.component';
 import { EditEventComponent } from '@components/event/edit-event.component';
 import { SearchComponent } from '@components/search/search-page.component';
+import { ResetComponent } from '@components/reset/reset.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path: 'event/:id', component: EventComponent },
   {path: 'event-edit/:id', component: EditEventComponent},
   {path: 'email', component: EmailComponent },
-  {path: 'search/:id', component: SearchComponent}
+  {path: 'search/:id', component: SearchComponent},
+  {path: 'reset', component: ResetComponent}
 ];
 
 @NgModule({
@@ -29,4 +31,6 @@ export const routingComponent = [HomePageComponent,
                                 ListEventUserPageComponent,
                                 EventComponent,
                                 EditEventComponent,
-                                EmailComponent]
+                                EmailComponent,
+                                SearchComponent,
+                                ResetComponent]

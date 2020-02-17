@@ -1,0 +1,21 @@
+<app-nav-component></app-nav-component>
+
+<div style="padding-top: 0.01em;">
+
+  <body>
+    <div style="padding-top: 4em;">
+      <div class="col-md-7 header-right">
+        <h3>Réinitialiser ses identifiants</h3>
+
+      <h4>Veuillez entrez votre email</h4>
+      <form class="form-style-7">
+        <ul>
+          <li>
+            <label for="email">Email</label>
+            <input type="email" value="">
+          </li>
+          <li>
+            <input type="submit" (click)="resetIdentifier()" value="Envoyer">
+          </li>
+        </ul>
+      </form>

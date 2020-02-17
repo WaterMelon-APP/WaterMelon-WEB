@@ -24,6 +24,7 @@ import { RegisterFormComponent } from '@components/register/register-form.compon
 import { CreateEventComponent } from '@components/event/create-event.component';
 import { EditEventComponent } from '@components/event/edit-event.component';
 import { SearchComponent } from '@components/search/search-page.component';
+import { ResetComponent } from '@components/reset/reset.component';
 
 //import { GoogleSignInComponent } from 'angular-google-signin';
 import { EmailComponent } from './components/email/email.component';
@@ -48,7 +49,8 @@ const parse = require('parse');
     EventComponent,
     //GoogleSignInComponent,
     EmailComponent,
-    SearchComponent
+    SearchComponent,
+    ResetComponent
 
   ],
   imports: [
