@@ -17,6 +17,8 @@ import { CreateEventComponent} from '@components/event/create-event.component';
 export class NavComponentComponent implements OnInit {
 
   isLoggedIn = false;
+  lieu = true;
+  nom = true;
   constructor(public dialog: MatDialog, private router: Router) {
     if (Parse.User.current()) {
       this.isLoggedIn = true;
@@ -63,6 +65,20 @@ export class NavComponentComponent implements OnInit {
     research = research.replace(reg, "_");
     if (research == "") {
       research = "_";
+    }
+    else {
+      if (this.lieu) {
+        research = "1".concat(research);
+      }
+      else {
+        research = "0".concat(research);
+      }
+      if (this.nom) {
+        research = "1".concat(research);
+      }
+      else {
+        research = "0".concat(research);
+      }
     }
     this.router.navigate(['/search', research]);
   }

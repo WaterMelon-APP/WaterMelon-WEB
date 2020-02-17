@@ -32,25 +32,58 @@ export class SearchComponent implements OnInit {
   }
 
   async EventListPublic() {
+    let nom: boolean;
+    let lieu: boolean;
+    if (this.research.length > 2) {
+      if (this.research[0] == '1') {
+        nom = true;
+      }
+      else {
+        nom = false;
+      }
+      if (this.research[1] == '1') {
+        lieu = true;
+      }
+      else {
+        lieu = false;
+      }
+      this.research = this.research.slice(2);
+    }
+    else if (this.research.length == 0) {
+      nom = true;
+      lieu = true;
+    }
+    else {
+      nom = false;
+      lieu = false;
+    }
+
     this.user = Parse.User.current();
     const eventList = Parse.Object.extend('Event');
     const query = new Parse.Query(eventList);
     query.equalTo('isPrivate', false);
     let eventL = await query.find();
     this.eventList = [];
+    let i = 0;
     for (let event of eventL) {
+      if (i >= 10) {
+        break;
+      }
       if (event.get("Owner") != this.user && !this.isIn(event)) {
         let eventName = event.get("eventName").toLowerCase();
         let eventPlace = event.get("address");
         if (eventPlace) {
           eventPlace = eventPlace.toLowerCase();
         }
-        if (eventName.includes(this.research)) {
+        if (nom && eventName.includes(this.research)) {
           this.eventList.push(event);
+          ++i;
         }
-        else if (eventPlace && eventPlace.includes(this.research)) {
+        else if (lieu && eventPlace && eventPlace.includes(this.research)) {
           this.eventList.push(event);
+          ++i;
         }
+
       }
     }
   }
