@@ -1,85 +1,64 @@
-<mat-sidenav-container class="top-toolbar">
+<mat-sidenav-container style="position: fixed; width: 100%; opacity: 0.9; overflow: hidden;">
   <mat-sidenav-content>
-    <mat-toolbar class="top-nav">
-      <img src="../../../../assets/logo_watermelon.png" style="padding-right: 10px; padding-left: 30px" height="25px" width="25px"/>
-      <span>Watermelon</span>
-      <span class="example-spacer"></span>
-      <!-- Search bar -->
-      <mat-form-field class="example-form-field">
-        <mat-icon style="float: right">search</mat-icon>
-        <input class="search-bar" matInput type="text" placeholder="Rechercher" [(ngModel)]="value">
-        <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
-          <mat-icon>close</mat-icon>
+    <mat-toolbar color="dark">
+      <img class="picture" src="assets/android-chrome-256x256.png">
+      <span><a routerLink="/">Watermelon</a></span>
+      <span class="spacer"></span>
+      <div *ngIf="isLoggedIn">
+        <button mat-icon-button (click)="createEvent()">
+          <mat-icon>list_alt</mat-icon>
+          <span>Nouvel événement</span>
         </button>
-      </mat-form-field>
-    </mat-toolbar>
-  </mat-sidenav-content>
-</mat-sidenav-container>
-
-<mat-sidenav-container class="main-nav">
-  <mat-sidenav-content class="example-sidenav">
-    <mat-toolbar class="mat-toolbar-main">
-
-      <mat-toolbar-row style="height: 2em">
-        <div *ngIf="isLoggedIn">
-          <a routerLink="/profile">
-            <button mat-menu-item>
-              <mat-icon>perm_identity</mat-icon>
-              Mon profil
-            </button>
-          </a>
       </div>
-      </mat-toolbar-row>
-
-      <mat-toolbar-row style="height: 2em">
-        <div *ngIf="isLoggedIn">
-          <a routerLink="/list-user">
-            <button mat-menu-item>
-              <mat-icon>event_note</mat-icon>
-              Mes événements
-            </button>
-          </a>
-        </div>
-      </mat-toolbar-row>
-    
-      <mat-toolbar-row style="height: 2em">
-        <div *ngIf="isLoggedIn">
-          <a routerLink="/email">
-            <button mat-menu-item>
-              <mat-icon>alternate_email</mat-icon>
-              Invitations
-            </button>
-          </a>
-      </div>
-      </mat-toolbar-row>
-
-      <mat-toolbar-row style="height: 2em">
-        <div *ngIf="!isLoggedIn">
-          <button mat-menu-item (click)="Login()">
-            <mat-icon>fingerprint</mat-icon>
-            <span>Login</span>
-          </button>
-        </div>
-      </mat-toolbar-row>
-
-      <mat-toolbar-row style="height: 2em">
-        <div *ngIf="!isLoggedIn">
-          <button mat-menu-item (click)="Register()">
-            <mat-icon>accessibility_new</mat-icon>
-            <span>Register</span>
-          </button>
-        </div>
-      </mat-toolbar-row>
-
-      <mat-toolbar-row style="height: 2em">
+      <span class="spacer-left"></span>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>settings</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+          <div *ngIf="isLoggedIn">
+              <a routerLink="/email">
+                <button  mat-menu-item>
+                  <mat-icon>alternate_email</mat-icon>
+                  Invitations
+                </button>
+              </a>
+          </div>
+          <div *ngIf="isLoggedIn">
+            <a routerLink="/profile">
+              <button  mat-menu-item>
+                <mat-icon>perm_identity</mat-icon>
+                Profil
+              </button>
+            </a>
+          </div>
+          <div *ngIf="isLoggedIn">
+            <a routerLink="/list-user">
+              <button mat-menu-item>
+                <mat-icon>list</mat-icon>
+                Mes événements
+              </button>
+            </a>
+          </div>
         <div *ngIf="isLoggedIn">
           <button mat-menu-item (click)="signOut()">
             <mat-icon>exit_to_app</mat-icon>
-            <span>Log Out</span>
+            <span>Déconnexion</span>
           </button>
         </div>
-      </mat-toolbar-row>
-
+        <div *ngIf="!isLoggedIn">
+          <button mat-menu-item (click)="Login()">
+            <mat-icon>fingerprint</mat-icon>
+            <span>Se connecter</span>
+          </button>
+        </div>
+        <div *ngIf="!isLoggedIn">
+          <button mat-menu-item (click)="Register()">
+            <mat-icon>accessibility_new</mat-icon>
+            <span>S'enregistrer</span>
+          </button>
+        </div>
+      </mat-menu>
     </mat-toolbar>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
