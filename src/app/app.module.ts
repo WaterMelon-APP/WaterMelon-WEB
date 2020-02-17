@@ -23,7 +23,6 @@ import { EventComponent } from '@components/event/event.component';
 import { RegisterFormComponent } from '@components/register/register-form.component';
 import { CreateEventComponent } from '@components/event/create-event.component';
 import { EditEventComponent } from '@components/event/edit-event.component';
-import { ItemListComponent } from '@components/item/item-list.component';
 import { SearchComponent } from '@components/search/search-page.component';
 
 //import { GoogleSignInComponent } from 'angular-google-signin';
@@ -40,14 +39,12 @@ const parse = require('parse');
     RegisterFormComponent,
     CreateEventComponent,
     EditEventComponent,
-    ItemListComponent,
     ProfileComponent,
     ListEventUserPageComponent,
     UpdateProfileComponent,
     LoginFormComponent,
     RegisterFormComponent,
     CreateEventComponent,
-    ItemListComponent,
     EventComponent,
     //GoogleSignInComponent,
     EmailComponent,
@@ -69,7 +66,6 @@ const parse = require('parse');
     LoginFormComponent,
     RegisterFormComponent,
     CreateEventComponent,
-    ItemListComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
