@@ -24,6 +24,7 @@ import { RegisterFormComponent } from '@components/register/register-form.compon
 import { CreateEventComponent } from '@components/event/create-event.component';
 import { EditEventComponent } from '@components/event/edit-event.component';
 import { ItemListComponent } from '@components/item/item-list.component';
+import { SearchComponent } from '@components/search/search-page.component';
 
 //import { GoogleSignInComponent } from 'angular-google-signin';
 import { EmailComponent } from './components/email/email.component';
@@ -49,7 +50,9 @@ const parse = require('parse');
     ItemListComponent,
     EventComponent,
     //GoogleSignInComponent,
-    EmailComponent
+    EmailComponent,
+    SearchComponent
+
   ],
   imports: [
     ReactiveFormsModule,

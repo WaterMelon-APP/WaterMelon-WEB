@@ -1,0 +1,21 @@
+a {
+    outline: none;
+    text-decoration: none;
+    color: white;
+}
+
+body {
+    background-color: #5dad5d;
+}
+
+.join {
+    background-color: rgb(69, 161, 16); 
+}
+
+.edit {
+    background-color: rgb(58, 58, 194); 
+}
+
+mat-expansion-panel {
+    margin-bottom: 1em;
+}

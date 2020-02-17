@@ -4,13 +4,24 @@
       <img class="picture" src="assets/android-chrome-256x256.png">
       <span><a routerLink="/">Watermelon</a></span>
       <span class="spacer"></span>
+
       <div *ngIf="isLoggedIn">
         <button mat-icon-button (click)="createEvent()">
           <mat-icon>list_alt</mat-icon>
           <span>Nouvel événement</span>
         </button>
       </div>
+
       <span class="spacer-left"></span>
+      <mat-checkbox class="example-margin" [(ngModel)]="nom">Nom</mat-checkbox>
+      <mat-checkbox class="example-margin" [(ngModel)]="lieu">Lieu</mat-checkbox>
+      <mat-form-field>
+        <input style matInput placeholder="Recherche" [formControl]="search">
+      </mat-form-field>
+      <button class="search" mat-stroked-button mat-icon-button (click)="searchEvents()">
+        <mat-icon>search</mat-icon>
+      </button>
+
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>settings</mat-icon>
       </button>

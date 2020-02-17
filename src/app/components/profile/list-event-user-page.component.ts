@@ -12,14 +12,28 @@ import * as Parse from 'parse';
 export class ListEventUserPageComponent implements OnInit {
 
   eventList;
-  queryEvent;
-  private AllEvents: string;
+  inviteList;
 
   constructor(private router: Router) {
   }
 
   ngOnInit() {
     this.EvenTListByUsr();
+    this.createInviteList();
+  }
+
+  async createInviteList() {
+    const user = Parse.User.current();
+    const eventList = Parse.Object.extend('Event');
+    const query = new Parse.Query(eventList);
+    this.inviteList = [];
+    var allEvent = await query.find();
+    for (let event of allEvent) {
+      if ((event.get("usersAdmin") && event.get("usersAdmin").includes(user.id))
+      || (event.get("usersGuest") && event.get("usersGuest").includes(user.id))) {
+        this.inviteList.push(event);
+      }
+    }
   }
 
   async EvenTListByUsr() {
@@ -28,32 +42,71 @@ export class ListEventUserPageComponent implements OnInit {
     const query = new Parse.Query(eventList);
     query.equalTo('Owner', user);
     this.eventList = await query.find();
-
-    for (let item of this.eventList)
-    {
-      this.queryEvent = item.get('eventName');
-    }
   }
 
   async delEvent(id) {
+    const eventList = Parse.Object.extend('Event');
+    const query = new Parse.Query(eventList);
+    query.equalTo('objectId', id);
+    let item = await query.find();
+
+    item[0].destroy().then((item) => {
+      alert("L'événement " + item.get('eventName') + " a bien été supprimé.");
+      location.reload();
+    }, (error) => {
+      alert(error);
+    });
+  }
+
+  async quitEvent(id) {
     const user = Parse.User.current();
     const eventList = Parse.Object.extend('Event');
     const query = new Parse.Query(eventList);
-    query.equalTo('Owner', user);
-    this.eventList = await query.find();
+    query.equalTo('objectId', id);
+    let event = await query.find();
 
-    for (let item of this.eventList)
-    {
-      this.queryEvent = item.id;
-      if (this.queryEvent == id) {
-        item.destroy().then((item) => {
-          alert("L'événement " + item.get('eventName') + " a bien été supprimé.");
-          location.reload();
-        }, (error) => {
-          alert(error);
-        });
-      }
+    let memberList = event[0].get('usersGuest');
+    let adminList = event[0].get('usersAdmin');
+    if (!memberList) {
+      memberList = [];
     }
+    if (!adminList) {
+      adminList = [];
+    }
+
+    let a = 0;
+    for (let i of memberList) {
+      if (i == user.id) {
+        memberList.splice(a, 1);
+        break;
+      }
+      ++a;
+    }
+    a = 0;
+    for (let i of adminList) {
+      if (i == user.id) {
+        adminList.splice(a, 1);
+        break;
+      }
+      ++a;
+    }
+
+    event[0].set('usersGuest', memberList);
+    event[0].save()
+    .then(res => {
+      console.log("Membre supprimé de l'event");
+    }, err=> {
+      alert(err);
+    })
+    event[0].set('usersAdmin', adminList);
+    event[0].save()
+    .then(res => {
+      console.log("Admin supprimé de l'event");
+      alert("Vous avez quitté l'event");
+      location.reload();
+    }, err=> {
+      alert(err);
+    })
   }
 
   async editEvent(id) {
