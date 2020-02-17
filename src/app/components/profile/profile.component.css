@@ -1,51 +1,56 @@
-.all {
-	background-color: #fff;
-	position: absolute;
-	top: 4em;
-	left: 500px;
+body {
+	background-color: #5dad5d;
 }
 
 .profile-card {
   max-width: 400px;
 }
 
+/*--Profile page title--*/
+.header-left {
+  padding: 3em;
+}
+.header-right {
+  padding: 3em;
+}
+.header-right h6 {
+     font-size: 1em;
+  color: #C7C7C7;
+  margin-top: 0.8em;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
 /*-- Profile picture centered --*/
 .profile-picture {
-  height: 125px; 
-  width: 125px; 
+  height: 100px;
+  width: 100px;
   margin-left: auto;
   margin-right: auto;
   display: block;
-  border-radius: 100%;
 }
 
 /*--Form style--*/
-
-input {
-	background-color: #fff;
-	font-family: Arial, Helvetica, sans-serif;
-}
-
 .form-style-7{
 	max-width:400px;
 	margin:50px auto;
-	background:#fff;
+	background:#5dad5d;
 	border-radius:2px;
 	padding:20px;
-	font-family:  Arial, Helvetica, sans-serif;
+	font-family: Georgia, "Times New Roman", Times, serif;
 }
 .form-style-7 h1{
 	display: block;
 	text-align: center;
 	padding: 0;
 	margin: 0px 0px 20px 0px;
-	color: #5C5C5C;
+	color: #5dad5d;
 	font-size:x-large;
 }
 .form-style-7 ul{
 	list-style:none;
 	padding:0;
-	margin:0;	
+	margin:0;
 }
 .form-style-7 li{
 	display: block;
@@ -63,10 +68,10 @@ input {
 	display: block;
 	float: left;
 	margin-top: -19px;
-	background: #FFFFFF;
+	background: #5dad5d;
 	height: 14px;
 	padding: 2px 5px 2px 5px;
-	color: #FD5757;
+	color: #262626;
 	font-size: 14px;
 	overflow: hidden;
 	font-family: Arial, Helvetica, sans-serif;
@@ -81,7 +86,7 @@ input {
 .form-style-7 input[type="phone"],
 .form-style-7 input[type="password"],
 .form-style-7 textarea,
-.form-style-7 select 
+.form-style-7 select
 {
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -90,11 +95,12 @@ input {
 	display: block;
 	outline: none;
 	border: none;
+	background-color: #5dad5d;
 	height: 25px;
 	line-height: 25px;
 	font-size: 16px;
 	padding: 0;
-	font-family: Arial, Helvetica, sans-serif;;
+	font-family: Georgia, "Times New Roman", Times, serif;
 }
 .form-style-7 input[type="text"]:focus,
 .form-style-7 input[type="date"]:focus,
@@ -106,43 +112,42 @@ input {
 .form-style-7 input[type="phone"]:focus,
 .form-style-7 input[type="password"]:focus,
 .form-style-7 textarea:focus,
-.form-style-7 select:focus 
+.form-style-7 select:focus
 {
 }
 .form-style-7 li > span{
-	background: #FF7676;
+	background: #F3F3F3;
 	display: block;
 	padding: 3px;
 	margin: 0 -9px -9px -9px;
 	text-align: center;
-	color: #fff;
+	color: #C0C0C0;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
 }
 .form-style-7 textarea{
 	resize:none;
 }
 .form-style-7 input[type="submit"],
 .form-style-7 input[type="button"]{
-	background: #FD5757;
+	background: #FA617A;
 	border: none;
 	padding: 10px 20px 10px 20px;
+	border-bottom: 3px solid #FA617A;
 	border-radius: 3px;
-	color: #fff;
+	color: #262626;
 }
 .form-style-7 input[type="submit"]:hover,
 .form-style-7 input[type="button"]:hover{
-	background: #FF7676;
-	color:#fff;
+	background: #FA617A;
+	color:#595959;
 }
 .form-style-7 input:focus,
 .form-style-7 input:focus
 {
   border: none;
-  border-bottom: 3px solid #FD5757;
+  border-bottom: 3px solid #FA617A;
 	border-radius: 3px;
-	box-shadow: 0 0 5px #FD5757;
-	border: 1px solid #FD5757;
+	box-shadow: 0 0 5px #FA617A;
+	border: 1px solid #FA617A;
 }
