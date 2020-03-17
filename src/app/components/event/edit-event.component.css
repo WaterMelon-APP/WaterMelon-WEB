@@ -1,3 +1,10 @@
+body {
+  height: auto;
+  width: 79%;
+  margin-top: 6em;
+  margin-left: 300px;
+  background-color: #fff;
+}
 .container {
     height: 100%;
     width: 100%;

@@ -8,10 +8,7 @@
             <!-- Search bar -->
             <div class="search-bar">
               <mat-form-field class="example-form-field">
-                <input matInput type="text" placeholder="Rechercher" [(ngModel)]="value">
-                <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="searchEvents()">
-                  <mat-icon>close</mat-icon>
-                </button>
+                <input matInput type="text" placeholder="Rechercher" [formControl]="search">
               </mat-form-field>
               <button class="search" mat-stroked-button mat-icon-button (click)="searchEvents()">
                 <mat-icon>search</mat-icon>

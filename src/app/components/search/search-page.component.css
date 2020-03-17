@@ -1,15 +1,19 @@
+body {
+    height: auto;
+    width: 79%;
+    margin-top: 6em;
+    margin-left: 300px;
+    background-color: #fff;
+}
+
 a {
     outline: none;
     text-decoration: none;
     color: white;
 }
 
-body {
-    background-color: #5dad5d;
-}
-
 .join {
-    background-color: rgb(69, 161, 16); 
+    background-color: #47D278; 
 }
 
 .edit {
