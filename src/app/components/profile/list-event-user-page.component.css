@@ -1,22 +1,29 @@
+body {
+    height: auto;
+    width: 79%;
+    margin-top: 6em;
+    margin-left: 300px;
+    background-color: #fff;
+}
+
 a {
     outline: none;
     text-decoration: none;
     color: white;
 }
 
-body {
-    margin-left: 15%;
-    background-color: #fff;
-}
-
 .delete {
-    background-color: red; 
+    background-color: #FD5757; 
 }
 
 .edit {
-    background-color: rgb(58, 58, 194); 
+    background-color: #47D278; 
 }
 
 mat-expansion-panel {
     margin-bottom: 1em;
+}
+
+.event {
+    background-color: #47D278;
 }

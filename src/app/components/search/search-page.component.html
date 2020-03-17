@@ -1,7 +1,7 @@
-<body>
-  <app-nav-component style="margin-bottom: 5em"></app-nav-component>
+<app-nav-component ></app-nav-component>
 
-  <div style="padding-top: 4em;"></div>
+<body>
+
   <div *ngFor="let event of eventList">
     <mat-accordion>
       <mat-expansion-panel (opened)="panelOpenState = true"

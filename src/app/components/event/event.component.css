@@ -1,14 +1,30 @@
-.container {
-    height: 100%;
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
+body {
+  height: auto;
+  width: 79%;
+  margin-top: 6em;
+  margin-left: 300px;
+  background-color: #fff;
+}
+
+#title .col-sm-3 {
+  width: 33%;
+}
+
+#title #pink {
+  color: #fff;
+  width: 33%;
+  background-color: #FD5757;
+  text-align: center;
+  padding: 15px 0px;
+  border-radius: 10px;
+}
+
+#attributes .col-sm-6 {
+  width: 50%;
 }
 
 .cont2 {
-    height: 100%;
+    height: auto;
     display: flex;
     flex-wrap: wrap;
     margin-right: -15px;
@@ -42,11 +58,15 @@
   visibility: hidden;
 }
 
+input, mat-label, mat-select {
+  background-color: #FD5757;
+}
+
 .masthead {
     height: 75%;
-    padding-top: 2.85em;
+
     padding-bottom: calc(10rem - 72px);
-    background-color: #5dad5d;
+  /* background-color: #5dad5d; */
 }
 
 hr {

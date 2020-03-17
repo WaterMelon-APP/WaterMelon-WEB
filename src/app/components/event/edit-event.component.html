@@ -1,5 +1,6 @@
+<app-nav-component></app-nav-component>
+
 <body>
-  <app-nav-component></app-nav-component>
   <section class="masthead">
     <div class="container">
       <div class="cont3">
@@ -26,8 +27,8 @@
         </mat-form-field>
         <button mat-button color="primary" (click)="editAddress()">Modifier l'adresse</button>
       </div>
-      <div>
-        L'évenement est t'il publique ?
+      <div class="public">
+        L'événement est-il public ?
         <!-- Rounded switch -->
         <label class="switch">
           <input type="checkbox" id= "priv" value="getPrivacy()" (change)="editPrivacy()">
