@@ -5,6 +5,13 @@
   width: 100%;
 }
 
+a.watermelon {
+  text-decoration: none;
+  color: #fff;
+  font-size: 24px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
 .sidenav-container {
   height: 100%;
 }

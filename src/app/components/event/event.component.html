@@ -1,23 +1,39 @@
 <app-nav-component></app-nav-component>
 <body>
     
-    <section class="masthead">
-        <div class="grayBand" id="grayBandPrivacy">
-            Cet événement est privé
-        </div>
-
-        <div class="container">
-            <div class="cont3">
-                <h1>{{nameEvent}}</h1>
-                <button *ngIf="isOwner" class="delete" mat-stroked-button mat-icon-button (click)="delEvent()">
-                    <mat-icon>delete_sweep</mat-icon>
-                </button>
-                <button *ngIf="isOwner" class="edit" mat-stroked-button mat-icon-button (click)="editEvent()">
-                    <mat-icon>edit</mat-icon>
-                </button>
-                <hr>
+    <div class="container" align="center">
+        <div class="row" id="title">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6" id="pink">
+                <mat-icon>event</mat-icon>
+                <p>{{nameEvent}}</p>
             </div>
+            <div class="col-sm-3"></div>
+        </div>
+        <div class="row" id="title">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <div class="row" id="attributes">
+                    <div class="col-sm-6">
+                        privé
+                    </div>
+                    <div class="col-sm-6">
+                        <button *ngIf="isOwner" class="delete" mat-stroked-button mat-icon-button (click)="delEvent()">
+                            <mat-icon>delete_sweep</mat-icon>
+                        </button>
+                        <button *ngIf="isOwner" class="edit" mat-stroked-button mat-icon-button (click)="editEvent()">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3"></div>           
+        </div>        
+    </div>
+    
+    <br><br>
 
+    <section class="masthead">
             <div class="cont4" *ngIf="isAdmin">
                 Ajouter quelqu'un à l'évènement :
                 <mat-form-field>
@@ -88,6 +104,5 @@
                     </button>
                 </tr>
             </table>
-        </div>
     </section>
 </body>

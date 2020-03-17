@@ -1,23 +1,14 @@
 body {
-	margin-top: 4em;
-	margin-left: 15%;
-}
-
-.container {
-    height: 100%;
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-}
+    height: auto;
+    margin-top: 6em;
+    margin-left: 280px;
+    background-color: #fff;
+  }
 
 .cont2 {
-    height: 100%;
+    height: auto;
     display: flex;
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
     align-items: center;
     justify-content: center;
     text-align: center;
