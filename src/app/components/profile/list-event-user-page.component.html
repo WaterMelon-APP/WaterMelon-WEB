@@ -1,8 +1,8 @@
-<app-nav-component style="margin-bottom: 5em"></app-nav-component>
+<app-nav-component></app-nav-component>
+
 <body>
   
-  <div style="padding-top: 4em;"></div>
-  <h1>Mes event</h1>
+  <h2>Mes événements</h2>
   <div *ngFor="let event of eventList">
     <mat-accordion>
       <mat-expansion-panel (opened)="panelOpenState = true"
@@ -29,7 +29,7 @@
       </mat-expansion-panel>
     </mat-accordion>
   </div>
-  <h1>Mes invitations</h1>
+  <h2>Mes invitations</h2>
   <div *ngFor="let event of inviteList">
     <mat-accordion>
       <mat-expansion-panel (opened)="panelOpenState = true"
