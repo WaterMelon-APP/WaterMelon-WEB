@@ -1,40 +1,52 @@
 <app-nav-component></app-nav-component>
 
 <body>
-  <section class="masthead">
+
     <div class="container">
-      <div class="cont3">
-        <h1>{{nameEvent}}</h1>
-        <hr>
+
+      <div align="center">
+        <div class="row" id="event-name">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6" id="pink">
+                <mat-icon>event</mat-icon>
+                <p class="event-name">{{nameEvent}}</p>
+                <p>{{dateEvent}}</p>
+                <p>{{addressEvent}}</p>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+        
       </div>
+
       <div class="cont4">
+        <h3>Modifier les infos</h3>
         <mat-form-field>
           <input style matInput placeholder="{{nameEvent}}" [formControl]="eventname" required>
         </mat-form-field>
-        <button mat-button color="primary" (click)="editName()">Modifier le nom</button>
+        <button mat-button color="#FD5757" (click)="editName()">Modifier le nom</button>
       </div>
       <div class="cont4">
         <mat-form-field>
           <input matInput [(ngModel)]="dateEvent" [matDatepicker]="picker" required>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker-toggle color="#FD5757" matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-        <button mat-button color="primary" (click)="editDate()">Modifier la date</button>
+        <button mat-button color="#FD5757" (click)="editDate()">Modifier la date</button>
       </div>
       <div class="cont4">
         <mat-form-field>
           <input style matInput placeholder="{{addressEvent}}" [formControl]="eventaddress" required>
         </mat-form-field>
-        <button mat-button color="primary" (click)="editAddress()">Modifier l'adresse</button>
-      </div>
-      <div class="public">
-        L'événement est-il public ?
+        <button mat-button color="#FD5757" (click)="editAddress()">Modifier l'adresse</button>
+
+        <p>L'événement est-il public ?</p>
         <!-- Rounded switch -->
         <label class="switch">
           <input type="checkbox" id= "priv" value="getPrivacy()" (change)="editPrivacy()">
           <span class="slider round"></span>
         </label>
       </div>
+      <br>
     </div>
-  </section>
+
 </body>
