@@ -1,9 +1,38 @@
 body {
     height: auto;
-    margin-top: 4em;
-    margin-left: 250px;
+    width: 79%;
+    margin-top: 8em;
+    margin-left: 200px;
     background-color: #fff;
-  }
+}
+
+.event-name {
+    font-weight: bold;
+    font-size: larger;
+    padding-bottom: 2em;
+}
+
+.col-sm-1 {
+    width: 10%;
+}
+
+#event-name #pink {
+    color: #fff;
+    width: 33%;
+    background-color: #FD5757;
+    text-align: center;
+    padding: 15px 0px;
+    border-radius: 10px;
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
 
 .cont2 {
     height: auto;

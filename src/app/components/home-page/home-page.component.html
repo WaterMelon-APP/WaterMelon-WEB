@@ -1,6 +1,30 @@
 <app-nav-component></app-nav-component>
 
 <body>
+
+    <div align="center">
+        <div class="row" id="event-name">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10" id="pink">
+                <mat-icon>event</mat-icon>
+                <p>Bienvenue sur</p>
+                <p class="event-name">WATERMELON</p>
+                <img src="favicon.ico" height="75px"/>
+                <br><br>
+                <div *ngIf="isLoggedIn">
+                    <button mat-raised-button (click)="createEvent()">
+                      Créer un événement
+                    </button>
+                </div>
+                <br>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>  
+    </div>
+
+</body>
+
+<!--
 <header class="masthead">
     <div class="container">
         <div class="cont2">
@@ -37,3 +61,4 @@
     </div>
 </section>
 </body>
+-->
