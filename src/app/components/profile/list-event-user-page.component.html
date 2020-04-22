@@ -12,7 +12,7 @@
       </mat-card-title>
 
       <p>
-        {{event.get('dateEvent')}}
+        {{event.get('dateEvent')  | date: 'short'}}
       </p>
       <p>
         {{event.get('address')}}

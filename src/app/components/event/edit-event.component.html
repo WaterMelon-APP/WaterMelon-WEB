@@ -10,7 +10,7 @@
             <div class="col-sm-6" id="pink">
                 <mat-icon>event</mat-icon>
                 <p class="event-name">{{nameEvent}}</p>
-                <p>{{dateEvent}}</p>
+                <p>{{dateEvent | date:'short'}}</p>
                 <p>{{addressEvent}}</p>
             </div>
             <div class="col-sm-3"></div>
