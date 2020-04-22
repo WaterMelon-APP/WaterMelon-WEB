@@ -28,6 +28,17 @@
       
         <mat-toolbar-row style="height: 2em">
           <div *ngIf="isLoggedIn">
+            <a routerLink="/list-user">
+              <button mat-menu-item>
+                <mat-icon>event_note</mat-icon>
+                    Mes événements
+              </button>
+            </a>
+          </div>
+        </mat-toolbar-row>
+
+        <mat-toolbar-row style="height: 2em">
+          <div *ngIf="isLoggedIn">
             <a routerLink="/profile">
               <button mat-menu-item>
                 <mat-icon>perm_identity</mat-icon>
@@ -36,13 +47,13 @@
             </a>
           </div>
         </mat-toolbar-row>
-      
+
         <mat-toolbar-row style="height: 2em">
           <div *ngIf="isLoggedIn">
-            <a routerLink="/list-user">
+            <a routerLink="/search/_">
               <button mat-menu-item>
-                <mat-icon>event_note</mat-icon>
-                    Mes événements
+                <mat-icon>add_location</mat-icon>
+                    Découvrir
               </button>
             </a>
           </div>
