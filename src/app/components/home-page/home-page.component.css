@@ -35,11 +35,9 @@ body {
 }
 
 .cont2 {
-    height: 100%;
+    height: auto;
     display: flex;
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
     align-items: center;
     justify-content: center;
     text-align: center;
