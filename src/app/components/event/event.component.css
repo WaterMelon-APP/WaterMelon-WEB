@@ -41,8 +41,8 @@ body {
 }
 
 .cont4 {
-    flex: 0 0 66.66667%;
-    max-width: 66.66667%;
+    flex: 0 0 80%;
+    max-width: 80%;
     align-self: baseline;
 }
 
@@ -59,7 +59,9 @@ body {
 }
 
 input, mat-label, mat-select {
-  background-color: #FD5757;
+  color: grey;
+  border: solid 1px grey;
+  padding: 5px;
 }
 
 .masthead {
@@ -95,6 +97,32 @@ th {
   padding-right: 2em;
 }
 
+#square-pink {
+  color: #fff;
+  background-color: #FD5757;
+  border: solid 1px #FD5757 !important;
+}
+
+#square-green {
+  color: #fff;
+  background-color: #5dad5d;
+  border: solid 1px #5dad5d !important;
+}
+
+#object-list {
+  color: #000;
+}
+
+.button-delete {
+  background-color: grey;
+  color: #fff;
+}
+
+.button-edit {
+  background-color: #5dad5d; 
+  color: #fff;
+}
+
 .mat-checkbox-checked.selected-pay + .mat-checkbox.selected-bring + .mat-button + .linetrought{
   text-decoration: line-through;
 }
@@ -108,6 +136,5 @@ th {
 }
 
 .cost{
-  padding-left: 35em;
-  font-size: large;
+  text-align: right;
 }
