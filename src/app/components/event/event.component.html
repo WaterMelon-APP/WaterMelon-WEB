@@ -6,7 +6,10 @@
             <div class="col-sm-3"></div>
             <div class="col-sm-6" id="pink">
                 <mat-icon>event</mat-icon>
-                <p>{{nameEvent}}</p>
+                <p style="font-size: large;">{{nameEvent}}</p>
+                <p>{{event.get('dateEvent')  | date: 'short'}}</p>
+                <br>
+                <mat-icon>lock</mat-icon>
             </div>
             <div class="col-sm-3"></div>
         </div>
@@ -14,14 +17,12 @@
             <div class="col-sm-3"></div>
             <div class="col-sm-6">
                 <div class="row" id="attributes">
+
                     <div class="col-sm-6">
-                        privé
-                    </div>
-                    <div class="col-sm-6">
-                        <button *ngIf="isOwner" class="delete" mat-stroked-button mat-icon-button (click)="delEvent()">
+                        <button *ngIf="isOwner" class="button-delete" mat-stroked-button mat-icon-button (click)="delEvent()">
                             <mat-icon>delete_sweep</mat-icon>
                         </button>
-                        <button *ngIf="isOwner" class="edit" mat-stroked-button mat-icon-button (click)="editEvent()">
+                        <button *ngIf="isOwner" class="button-edit" mat-stroked-button mat-icon-button (click)="editEvent()">
                             <mat-icon>edit</mat-icon>
                         </button>
                     </div>
@@ -35,14 +36,14 @@
 
     <section class="masthead">
             <div class="cont4" *ngIf="isAdmin">
-                Ajouter quelqu'un à l'évènement :
+                <b>Ajouter un participant</b><br>
                 <mat-form-field>
-                    <input style matInput placeholder="Pseudo" [formControl]="pseudoInvit" required>
+                    <input style matInput id="input-pseudo" placeholder="Pseudo" [formControl]="pseudoInvit" required>
                 </mat-form-field>
-                <button mat-button mat-stroked-button color="primary" (click)="addPerson()">Ajouter à l'évènement</button>
+                <button mat-button mat-stroked-button id="square-green" (click)="addPerson()">Ajouter à l'évènement</button>
             </div>
             <div class="cont4" *ngIf="isOwner">
-                Admins de l'event : 
+                <b>Administrateurs</b><br>
                 <mat-form-field>
                     <mat-label>Admin</mat-label>
                     <mat-select [(value)]="selectedAdmin">
@@ -51,11 +52,11 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <button mat-button mat-stroked-button color="primary" (click)="downAdmin()">Rétrograder</button>
-                <button mat-button mat-stroked-button color="primary" (click)="delAdmin()">Retirer de l'event</button>
+                <button mat-button mat-stroked-button id="square-green" (click)="downAdmin()">Rétrograder</button>
+                <button mat-button mat-stroked-button id="square-pink" (click)="delAdmin()">Retirer de l'event</button>
             </div>
             <div class="cont4" *ngIf="isAdmin">
-                Membres de l'event : 
+                <b>Participants</b><br> 
                 <mat-form-field>
                     <mat-label>Membre</mat-label>
                     <mat-select [(value)]="selectedMember">
@@ -64,16 +65,13 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <button mat-button mat-stroked-button color="primary" (click)="upMember()">Passer Admin</button>
-                <button mat-button mat-stroked-button color="primary" (click)="delMember()">Retirer de l'event</button>
+                <button mat-button mat-stroked-button id="square-green" (click)="upMember()">Passer "Admin"</button>
+                <button mat-button mat-stroked-button id="square-pink" (click)="delMember()">Retirer de l'event</button>
                 <hr>
             </div>
 
-            <div class="cost">
-                <td> Coût total: {{totalCost}} </td>
-            </div>
-
             <div class="cont4" *ngIf="isAdmin">
+                <b>Ajouter un objet</b><br>
                 <mat-form-field>
                     <input style matInput placeholder="Nom de l'objet" [formControl]="needsname" required>
                 </mat-form-field>
@@ -83,10 +81,11 @@
                 <mat-form-field>
                     <input type="number" min="1" value="1" style matInput placeholder="Quantité" [formControl]="needsquant" required>
                 </mat-form-field>
-                <button mat-button mat-stroked-button color="primary" (click)="createNeeds()">Ajouter l'objet</button>
+                <button mat-button mat-stroked-button id="square-green" (click)="createNeeds()">Ajouter l'objet</button>
+                <div id="cost"><b>Coût total = {{totalCost}}</b></div><br>
             </div>
 
-            <table>
+            <table id="object-list">
                 <tr>
                     <th>Nom</th>
                     <th>Prix</th>
