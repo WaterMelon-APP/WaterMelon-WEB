@@ -3,6 +3,49 @@ import * as Parse from 'parse';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import {FormControl, Validators} from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
+import { HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+
+import { LoginFormComponent } from '@components/login-form/login-form.component';
+
+export interface EventResponse {
+  Id: string;
+  Name: string;
+  Owner: string;
+  Date: Date;
+  Adress: string;
+  Guests: Array<string>;
+  Public: boolean;
+  ItemList: Array<string>;
+}
+
+export interface ItemResponse {
+  Id: string;
+  Name: string;
+  Quantity: number;
+  Price: number;
+  About: string;
+  FromEvent: string;
+  QuantityLeft: number;
+}
+
+export interface UserResponse {
+  Id: string;
+  Name: string;
+  Username: string;
+  Password: string;
+  Email: string;
+  Token: string;
+  FirstName: string;
+  LastName: string;
+  Phone: string;
+  Birthdate: Date;
+  ProfilePicture: string;
+  Events: Array<string>;
+}
 
 @Component({
   selector: 'app-event',
@@ -12,7 +55,7 @@ import {FormControl, Validators} from '@angular/forms';
 
 export class EventComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private data: LoginFormComponent) { }
 
   needsprice = new FormControl('', [Validators.required, Validators.requiredTrue]);
   needsquant = new FormControl('', [Validators.required, Validators.requiredTrue]);
@@ -43,6 +86,10 @@ export class EventComponent implements OnInit {
   selectedAdmin;
   isOwner;
   isAdmin;
+  header;
+  token:string;
+  id:string;
+
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
@@ -52,12 +99,86 @@ export class EventComponent implements OnInit {
     this.gived = new Array();
     this.isOwner = false;
     this.isAdmin = false;
+    this.data.currentToken.subscribe(token => this.token = token)
+    this.data.currentId.subscribe(id => this.id = id)
     this.findEvent().then(() => {this.privateBand();})
     console.log('this.itemList :', this.itemList);
   }
 
   async findEvent() {
-    const eventList = Parse.Object.extend('Event');
+    this.header = {
+      headers: new HttpHeaders({
+          Accept: 'application/json',
+          'Content-Type':  'application/json',
+          'Authorization': 'Bearer ' + this.token,
+      })
+    };
+    this.http.get<EventResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + this.eventId, this.header)
+    .subscribe(eventResponse => {
+        this.needsEvent = eventResponse.ItemList;
+        this.nameEvent = eventResponse.Name;
+        this.isPrivate = eventResponse.Public;
+        this.memberList = eventResponse.Guests;
+        this.adminList = eventResponse.Admin;
+        if (!this.needsEvent) {
+          this.needsEvent = [];
+        }
+        if (!this.memberList) {
+          this.memberList = [];
+        }
+        if (!this.adminList) {
+          this.adminList = [];
+        }
+
+        this.membres = [];
+        this.admins = [];
+        for (let me of this.memberList) {
+          this.http.get<UserResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + me, this.header)
+          .subscribe(userResponse => {
+                this.membres.push(userResponse.Name);
+              },
+              error => { 
+                alert("Une erreur est survenue");
+            }
+          );
+        }
+        for (let me of this.adminList) {
+          this.http.get<UserResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + me, this.header)
+          .subscribe(userResponse => {
+                this.admins.push(userResponse.Name);
+              },
+              error => { 
+                alert("Une erreur est survenue");
+            }
+          );
+        }
+
+        for (let item of this.needsEvent) {
+          this.http.get<ItemResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/items/" + item, this.header)
+          .subscribe(userResponse => {
+              this.itemList.push(userResponse);
+              this.payed[userResponse.Id] = false;
+
+              if (userResponse.get("Pay") != null && userResponse.get("Pay")[0] != "") {
+                this.payed[userResponse.Id] = true;
+              }
+              this.gived[userResponse.Id] = false;
+              if (userResponse.get("Give") != null && userResponse.get("Give")[0] != "") {
+                this.gived[userResponse.Id] = true;
+              }
+  
+            },
+              error => { 
+                alert("Une erreur est survenue");
+            }
+          );
+        }
+      },
+      error => { 
+          alert("Une erreur est survenue");
+      }
+    );
+    /*const eventList = Parse.Object.extend('Event');
     const query = new Parse.Query(eventList);
     query.equalTo('objectId', this.eventId);
     let events = await query.find();
@@ -119,7 +240,7 @@ export class EventComponent implements OnInit {
           alert(err);
         })
       }
-    }
+    }*/
   }
 
   async editEvent() {
@@ -127,13 +248,23 @@ export class EventComponent implements OnInit {
   }
 
   async delEvent() {
-    let item = this.event;
+    this.http.delete("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + this.eventId, this.header)
+    .subscribe(userResponse => {
+          alert("L'événement " + this.nameEvent + " a bien été supprimé.");
+          this.router.navigate(['/list-user']);
+        },
+        error => { 
+          alert("Une erreur est survenue");
+      }
+    );
+
+    /*let item = this.event;
     item.destroy().then((item) => {
       alert("L'événement " + item.get('eventName') + " a bien été supprimé.");
       this.router.navigate(['/list-user']);
     }, (error) => {
       alert(error);
-    });
+    });*/
   }
 
   isPersonIn(id) {
@@ -154,29 +285,41 @@ export class EventComponent implements OnInit {
     const pseudoInvitVal = this.pseudoInvit.value as string;
 
     if (pseudoInvitVal) {
-      const users = Parse.Object.extend('User');
-      const query = new Parse.Query(users);
-      query.equalTo('username', pseudoInvitVal);
-      var user = await query.find();
-      if (user[0]) {
-        if (!this.isPersonIn(user[0].id)) {
-          this.memberList.push(user[0].id);
-          this.event.set('usersGuest', this.memberList);
-          this.event.save()
-          .then(res => {
-            alert('Membre ajouté');
-          }, err=> {
-            alert(err);
-          })
+      this.http.get<UserResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + pseudoInvitVal, this.header)
+      .subscribe(userResponse => {
+        if (userResponse) {
+          if (!this.isPersonIn(userResponse.Id)) {
+            this.memberList.push(userResponse.Id);
+            const memberList = '{ "Guests": "' + this.memberList + '" }';
+            var jmemberList = JSON.parse(memberList);
+
+            this.http.put<EventResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + this.eventId, jmemberList, this.header)
+            .subscribe(userResponse => {
+                  alert('Membre ajouté');
+                },
+                error => { 
+                  alert("Une erreur est survenue");
+              }
+            );
+        }}
+      },
+        error => { 
+          alert("Cet utilisateur n'existe pas");
         }
-        else {
-          alert("Cet utilisateur est déjà membre ou admin de l'event");
-        }
+      );
+            /*this.event.set('usersGuest', this.memberList);
+            this.event.save()
+            .then(res => {
+              alert('Membre ajouté');
+            }, err=> {
+              alert(err);
+            })
+          }
+          else {
+            alert("Cet utilisateur est déjà membre ou admin de l'event");
+          }
+        }},*/
       }
-      else {
-        alert("Cet utilisateur n'existe pas");
-      }
-    }
   }
 
   lessMember(member, id) {
@@ -200,7 +343,33 @@ export class EventComponent implements OnInit {
 
   async upMember() {
     if (this.selectedMember) {
-      const users = Parse.Object.extend('User');
+      this.http.get<UserResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + this.selectedMember, this.header)
+      .subscribe(userResponse => {
+        if (userResponse) {
+          if (!this.isPersonIn(userResponse.Id)) {
+            this.admins.push(this.selectedMember);
+            this.adminList.push(userResponse.Id);
+            this.lessMember(this.selectedMember, userResponse.Id);
+
+            const adminList = '{ "Guests": "' + this.memberList + '", "Admins": "' + this.adminList + '" }';
+            var jadminList = JSON.parse(adminList);
+
+            this.http.put<EventResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + this.eventId, jadminList, this.header)
+            .subscribe(userResponse => {
+                  alert('Membre passé admin !');
+                },
+                error => { 
+                  alert("Une erreur est survenue");
+              }
+            );
+        }}
+      },
+        error => { 
+          alert("Cet utilisateur n'existe pas");
+        }
+      );
+
+      /*const users = Parse.Object.extend('User');
       const query = new Parse.Query(users);
       query.equalTo('username', this.selectedMember);
       var user = await query.find();
@@ -221,13 +390,37 @@ export class EventComponent implements OnInit {
         alert("Membre passé admin !");
       }, err=> {
         alert(err);
-      })
+      })*/
     }
   }
 
   async delMember() {
     if (this.selectedMember) {
-      const users = Parse.Object.extend('User');
+      this.http.get<UserResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + this.selectedMember, this.header)
+      .subscribe(userResponse => {
+        if (userResponse) {
+          if (!this.isPersonIn(userResponse.Id)) {
+            this.lessMember(this.selectedMember, userResponse.Id);
+
+            const memberList = '{ "Guests": "' + this.memberList + '" }';
+            var jmemberList = JSON.parse(memberList);
+
+            this.http.put<EventResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + this.eventId, jmemberList, this.header)
+            .subscribe(userResponse => {
+                  alert("Membre supprimé de l'event");
+                },
+                error => { 
+                  alert("Une erreur est survenue");
+              }
+            );
+        }}
+      },
+        error => { 
+          alert("Cet utilisateur n'existe pas");
+        }
+      );
+
+      /*const users = Parse.Object.extend('User');
       const query = new Parse.Query(users);
       query.equalTo('username', this.selectedMember);
       var user = await query.find();
@@ -239,7 +432,7 @@ export class EventComponent implements OnInit {
         alert("Membre supprimé de l'event");
       }, err=> {
         alert(err);
-      })
+      })*/
     }
   }
 
@@ -264,7 +457,33 @@ export class EventComponent implements OnInit {
 
   async downAdmin() {
     if (this.selectedAdmin) {
-      const users = Parse.Object.extend('User');
+      this.http.get<UserResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + this.selectedMember, this.header)
+      .subscribe(userResponse => {
+        if (userResponse) {
+          if (!this.isPersonIn(userResponse.Id)) {
+            this.membres.push(this.selectedAdmin);
+            this.memberList.push(userResponse.Id);
+            this.lessAdmin(this.selectedAdmin, userResponse.Id);
+      
+            const adminList = '{ "Guests": "' + this.memberList + '", "Admins": "' + this.adminList + '" }';
+            var jadminList = JSON.parse(adminList);
+
+            this.http.put<EventResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + this.eventId, jadminList, this.header)
+            .subscribe(userResponse => {
+                  alert("Admin rétrogradé !");
+                },
+                error => { 
+                  alert("Une erreur est survenue");
+              }
+            );
+        }}
+      },
+        error => { 
+          alert("Cet utilisateur n'existe pas");
+        }
+      );
+
+      /*const users = Parse.Object.extend('User');
       const query = new Parse.Query(users);
       query.equalTo('username', this.selectedAdmin);
       var user = await query.find();
@@ -285,13 +504,37 @@ export class EventComponent implements OnInit {
         alert("Admin rétrogradé !");
       }, err=> {
         alert(err);
-      })
+      })*/
     }
   }
 
   async delAdmin() {
     if (this.selectedAdmin) {
-      const users = Parse.Object.extend('User');
+      this.http.get<UserResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + this.selectedMember, this.header)
+      .subscribe(userResponse => {
+        if (userResponse) {
+          if (!this.isPersonIn(userResponse.Id)) {
+            this.lessAdmin(this.selectedMember, userResponse.Id);
+
+            const adminList = '{ "Admin": "' + this.adminList + '" }';
+            var jadminList = JSON.parse(adminList);
+
+            this.http.put<EventResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + this.eventId, jadminList, this.header)
+            .subscribe(userResponse => {
+                  alert("Admin supprimé de l'event");
+                },
+                error => { 
+                  alert("Une erreur est survenue");
+              }
+            );
+        }}
+      },
+        error => { 
+          alert("Cet utilisateur n'existe pas");
+        }
+      );
+
+      /*const users = Parse.Object.extend('User');
       const query = new Parse.Query(users);
       query.equalTo('username', this.selectedAdmin);
       var user = await query.find();
@@ -303,7 +546,7 @@ export class EventComponent implements OnInit {
         alert("Admin supprimé de l'event");
       }, err=> {
         alert(err);
-      })
+      })*/
     }
   }
 
@@ -313,7 +556,21 @@ export class EventComponent implements OnInit {
     const needsquantVal = parseInt(this.needsquant.value as string);
 
     if (needsnameVal != null && needspriceVal != null && needsquantVal != null) {
-      var needs = Parse.Object.extend('Needs');
+      const needs = '{ "Name": "' + needsnameVal + '", "Quantity": "' + needsquantVal + '", "Price": "' + needspriceVal + '", "About": "' + "" + '", "FromEvent": "' + this.eventId + '", "QuantityLeft": "' + needsquantVal + '" }';
+      var jneeds = JSON.parse(needs);
+
+      this.http.post<ItemResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/items", jneeds, this.header)
+      .subscribe(itemResponse => {
+            this.needsEvent.push(itemResponse.Id);
+            alert('Votre objet a été ajouté avec succès!');
+            location.reload();
+          },
+          error => { 
+            alert("Une erreur est survenue");
+        }
+      );
+
+      /*var needs = Parse.Object.extend('Needs');
       var newNeed = new needs();
 
       newNeed.set('Name', needsnameVal);
@@ -335,20 +592,31 @@ export class EventComponent implements OnInit {
         location.reload();
       }, err => {
         alert(err);
-      })
+      })*/
     }
   }
 
   async delItem(item){
     let a = 0;
     for (let i of this.needsEvent) {
-      if (i == item.id) {
+      if (i == item.Id) {
         this.needsEvent.splice(a, 1);
         break;
       }
       ++a;
     }
-    this.event.set('itemList', this.needsEvent);
+
+    this.http.delete("https://watermelon-api20200526035653.azurewebsites.net/api/items/" + item.Id, this.header)
+    .subscribe(userResponse => {
+          alert("L'item a bien été supprimé.");
+          location.reload();
+        },
+        error => { 
+          alert("Une erreur est survenue");
+      }
+    );
+
+    /*this.event.set('itemList', this.needsEvent);
     this.event.save()
     .then(res => {
       console.log('Maj item list');
@@ -361,11 +629,11 @@ export class EventComponent implements OnInit {
       location.reload();
     }, (error) => {
       alert(error);
-    });
+    });*/
   }
 
   async bringItem(item) {
-    const user = Parse.User.current();
+    //const user = Parse.User.current();
     let payTab = item.get("Pay");
     if (!payTab) {
       payTab = new Array();
@@ -378,12 +646,12 @@ export class EventComponent implements OnInit {
     if (this.payed[item.id] == true) {
       var reponse = window.confirm("Votre choix?");
       if(reponse) {
-        payTab[0] = user.id;
-        let price = item.get("Quantity") * item.get("Price")
-        alert("Paiement de " + item.get("Quantity") + " " + item.get("Name") + " d'une valeur de " + price.toString() + "€.")
+        payTab[0] = this.id;
+        let price = item.Quantity * item.Price
+        alert("Paiement de " + item.Quantity + " " + item.Name + " d'une valeur de " + price.toString() + "€.")
       }
       else {
-        this.payed[item.id] = false;
+        this.payed[item.Id] = false;
         if (payTab[0]) {
           alert("Remboursement")
         }
@@ -395,37 +663,48 @@ export class EventComponent implements OnInit {
     }
     else {
       if (payTab[0]) {
-        let price = item.get("Quantity") * item.get("Price")
-        alert("Remboursement de " + item.get("Quantity") + " " + item.get("Name") + " d'une valeur de " + price.toString() + "€.")
+        let price = item.Quantity * item.Price
+        alert("Remboursement de " + item.Quantity + " " + item.Name + " d'une valeur de " + price.toString() + "€.")
       }
     payTab[0] = "";
     }
-    if (this.gived[item.id] == true) {
-      giveTab[0] = user.id;
+    if (this.gived[item.Id] == true) {
+      giveTab[0] = this.id;
     }
     else {
       giveTab[0] = "";
     }
-    item.set("Pay", payTab);
+    const needs = '{ "QuantityLeft": "' + "0" + '" }';
+    var jneeds = JSON.parse(needs);
+
+    this.http.put<ItemResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/items", jneeds, this.header)
+    .subscribe(itemResponse => {
+          console.log('Maj item list');
+        },
+        error => { 
+          alert("Une erreur est survenue");
+      }
+    );
+
+    /*item.set("Pay", payTab);
     item.set("Give", giveTab);
     item.save()
     .then(res => {
       console.log('Maj item list');
     }, err=> {
       alert(err);
-    });
+    });*/
   }
 
   async privateBand()
   {
-    const isPriv = this.event.get('isPrivate');
     const band = document.getElementById("grayBandPrivacy");
-    if(isPriv == true)
+    if(this.isPrivate == true)
     {
       band.style.visibility="visible";
       console.log("visible");
     }
-    if(isPriv == false)
+    if(this.isPrivate == false)
     {
       band.style.visibility="hidden";
       console.log("hidden");

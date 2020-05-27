@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {FormControl, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 import * as Parse from 'parse';
 import { LoginFormComponent} from '@components/login-form/login-form.component';
@@ -19,8 +20,13 @@ export class NavComponentComponent implements OnInit {
   isLoggedIn = false;
   lieu = true;
   nom = true;
-  constructor(public dialog: MatDialog, private router: Router) {
-    if (Parse.User.current()) {
+  token:string;
+  id:string;
+
+  constructor(public dialog: MatDialog, private router: Router, private data: LoginFormComponent) {
+    this.data.currentToken.subscribe(token => this.token = token)
+    this.data.currentId.subscribe(id => this.id = id)
+    if (this.token) {
       this.isLoggedIn = true;
     }
   }
@@ -28,7 +34,7 @@ export class NavComponentComponent implements OnInit {
   search = new FormControl('', [Validators.required, Validators.requiredTrue]);
 
   signOut() {
-    Parse.User.logOut();
+    //Parse.User.logOut(); Modif token
     this.isLoggedIn = false;
   }
 
@@ -39,7 +45,7 @@ export class NavComponentComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     this.dialog.open(LoginFormComponent, dialogConfig).afterClosed().subscribe(() => {
-      if (Parse.User.current()) {
+      if (this.token) {
         this.isLoggedIn = true;
       }
     });
