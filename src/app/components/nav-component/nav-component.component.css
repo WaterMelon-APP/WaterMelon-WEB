@@ -59,12 +59,12 @@ mat-checkbox {
 
 .mat-toolbar-main {
   margin-top: 50px;
-   background-color: #47D278;
+  background-color: #47D278;
 }
 
 button {
-  padding-left: 50px;
-  padding-bottom: 10px;
+  padding-left: 30px;
+  padding-right: 20px;
   text-align: left;
   height: 100%;
   width: 100%;

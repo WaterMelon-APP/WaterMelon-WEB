@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 import * as Parse from 'parse';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-event-user-page',
@@ -11,11 +11,10 @@ import * as Parse from 'parse';
 
 export class ListEventUserPageComponent implements OnInit {
 
-  eventList;
-  inviteList;
+  constructor(private router: Router) {}
 
-  constructor(private router: Router) {
-  }
+    eventList;
+    inviteList;
 
   ngOnInit() {
     this.EvenTListByUsr();

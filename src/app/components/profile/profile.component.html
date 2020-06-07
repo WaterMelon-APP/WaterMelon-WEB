@@ -52,7 +52,7 @@
                     </li>
                     <li>
                         <label for="date">Date joined</label>
-                        <input type="text" value="{{ creation_date  | date:'medium' }}"  maxlength="100" disabled>
+                        <input type="text" value="{{ creation_date  | date:'short' }}"  maxlength="100" disabled>
                     </li>
                     <li>
                         <input type="submit" (click)="postNewProfile()" value="Save changes">

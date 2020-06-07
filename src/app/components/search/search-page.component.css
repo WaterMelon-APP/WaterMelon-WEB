@@ -6,10 +6,23 @@ body {
     background-color: #fff;
 }
 
-a {
-    outline: none;
-    text-decoration: none;
-    color: white;
+h3 {
+    color: grey;
+}
+
+.events mat-card {
+    width: 200px;
+    max-width: 250px;
+    margin-bottom: 1em;
+}
+
+.event-title {
+    background-color: #FD5757;
+}
+
+
+p {
+    color: grey;
 }
 
 .join {

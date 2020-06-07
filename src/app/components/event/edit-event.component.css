@@ -8,52 +8,70 @@ body {
 
 .container {
     height: 100%;
-    width: 100%;
+    width: auto;
     padding-right: 15px;
     padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
 }
 
-.cont2 {
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+.event-name {
+  font-size: larger;
+  padding-bottom: 2em;
+}
+#event-name .col-sm-3 {
+  width: 33%;
 }
 
-.cont3 {
-    flex: 0 0 83.33333%;
-    max-width: 83.33333%;
-    align-self: flex-end;
+#event-name #pink {
+  color: #fff;
+  width: 33%;
+  background-color: #FD5757;
+  text-align: center;
+  padding: 15px 0px;
+  border-radius: 10px;
+}
+
+::ng-deep .mat-form-field-infix {
+  padding: .10000 !important;
+}
+
+::ng-deep .mat-input-element .mat-form-field-autofill-control .cdk-text-field-autofill-monitored .ng-untouched .ng-pristine .ng-invalid {
+  /*change color of label*/
+  color: grey !important;
+ }
+
+::ng-deep .mat-input-element .mat-form-field-autofill-control .cdk-text-field-autofill-monitored .ng-untouched .ng-pristine .ng-invalid {
+  /*change color of label*/
+  color: grey !important;
+ }
+
+
+ ::ng-deep .mat-input-element .mat-form-field-autofill-control .cdk-text-field-autofill-monitored .ng-untouched .ng-pristine .ng-valid {
+  /*change color of label*/
+  color: grey !important;
+ }
+
+::ng-deep .mat-input-element .mat-form-field-autofill-control .cdk-text-field-autofill-monitored .ng-untouched .ng-pristine .ng-valid {
+  /*change color of label*/
+  color: grey !important;
+ }
+
+
+ ::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: grey !important;
+} 
+
+::ng-deep.mat-form-field-ripple {
+ /*change color of underline when focused*/
+ background-color: grey !important;;
 }
 
 .cont4 {
-    flex: 0 0 66.66667%;
-    max-width: 66.66667%;
-    align-self: baseline;
+  margin-top: 2em;
+  color: grey;
+  background-color: #fff;
 }
 
-.cont4 {
-  background-color: grey;
-}
-
-hr {
-    max-width: 98%;
-    border-width: 0.2rem;
-    border-color: #f4623a;
-    margin-bottom: 1.5rem;
-    border-color: #fff;
-    margin-top: 1.5rem;
-}
-
-mat-form-field {
-    padding-right: 3em;
-}
 /* The switch - the box around the slider */
 .switch {
   position: relative;
