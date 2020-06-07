@@ -18,8 +18,14 @@
             <div class="col-sm-6">
                 <div class="row" id="attributes">
 
+                    <div class="col-sm-6" id="grayBandPrivacy">
+                        Privé
+                    </div>
                     <div class="col-sm-6">
-                        <button *ngIf="isOwner" class="button-delete" mat-stroked-button mat-icon-button (click)="delEvent()">
+                        <button *ngIf="isOwner" class="delete" mat-stroked-button mat-icon-button (click)="delEvent()">
+
+                 
+
                             <mat-icon>delete_sweep</mat-icon>
                         </button>
                         <button *ngIf="isOwner" class="button-edit" mat-stroked-button mat-icon-button (click)="editEvent()">
