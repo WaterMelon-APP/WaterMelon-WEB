@@ -1,0 +1,64 @@
+<app-nav-component></app-nav-component>
+
+<body>
+
+  <h3>Mes événements</h3>
+  <div *ngFor="let event of eventList" class="container-all">
+    <mat-card class="events">
+      <mat-card-title>
+        <button class="event-title" mat-stroked-button (click)="goToEvent(event.id)">
+          {{event.get('eventName')}}
+        </button>
+      </mat-card-title>
+
+      <p>
+        {{event.get('dateEvent')  | date: 'short'}}
+      </p>
+      <p>
+        {{event.get('address')}}
+      </p>
+
+      <mat-card-content>
+        <button class="delete" mat-stroked-button mat-icon-button (click)="delEvent(event.id)">
+          <mat-icon>delete_sweep</mat-icon>
+        </button>
+        <button class="edit" mat-stroked-button mat-icon-button (click)="editEvent(event.id)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </mat-card-content>
+    </mat-card>
+    <br>
+  </div>
+
+  <mat-list>
+    <mat-divider></mat-divider>
+  </mat-list>
+
+  <h3>Invitations</h3>
+  <div *ngFor="let event of inviteList" class="container-all">
+    <mat-card class="events">
+      <mat-card-title>
+        <button class="event-title" mat-stroked-button (click)="goToEvent(event.id)">
+          {{event.get('eventName')}}
+        </button>
+      </mat-card-title>
+
+      <p>
+        {{event.get('dateEvent'  | date: 'short')}}
+      </p>
+      <p>
+        {{event.get('address')}}
+      </p>
+
+      <mat-card-content>
+        <button style="background-color: grey;" mat-stroked-button (click)="quitEvent(event.id)">
+          Quitter l'event
+        </button>
+      </mat-card-content>
+    </mat-card>
+    <br>
+  </div>
+
+
+
+</body>
