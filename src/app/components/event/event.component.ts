@@ -18,6 +18,8 @@ export class EventComponent implements OnInit {
   needsquant = new FormControl('', [Validators.required, Validators.requiredTrue]);
   needsname = new FormControl('', [Validators.required, Validators.requiredTrue]);
   pseudoInvit = new FormControl('', [Validators.required, Validators.requiredTrue]);
+  payeQuantity = new FormControl('', [Validators.required, Validators.requiredTrue]);
+  giveQuantity = new FormControl('', [Validators.required, Validators.requiredTrue]);
   eventId;
   itemList;
   event;
@@ -374,10 +376,29 @@ export class EventComponent implements OnInit {
     }
 
     if (this.payed[item.id] == true) {
-      payTab[0] = user.id;
+      var reponse = window.confirm("Votre choix?");
+      if(reponse) {
+        payTab[0] = user.id;
+        let price = item.get("Quantity") * item.get("Price")
+        alert("Paiement de " + item.get("Quantity") + " " + item.get("Name") + " d'une valeur de " + price.toString() + "€.")
+      }
+      else {
+        this.payed[item.id] = false;
+        if (payTab[0]) {
+          alert("Remboursement")
+        }
+        else {
+          alert("Paiement annulé");
+        }
+        payTab[0] = "";
+      }
     }
     else {
-      payTab[0] = "";
+      if (payTab[0]) {
+        let price = item.get("Quantity") * item.get("Price")
+        alert("Remboursement de " + item.get("Quantity") + " " + item.get("Name") + " d'une valeur de " + price.toString() + "€.")
+      }
+    payTab[0] = "";
     }
     if (this.gived[item.id] == true) {
       giveTab[0] = user.id;

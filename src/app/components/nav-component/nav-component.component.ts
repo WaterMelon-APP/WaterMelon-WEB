@@ -80,6 +80,9 @@ export class NavComponentComponent implements OnInit {
         research = "0".concat(research);
       }
     }
-    this.router.navigate(['/search', research]);
+    this.router.navigate(['/search', research])  
+      .then(() => {
+        window.location.reload();
+      });
   }
 }
