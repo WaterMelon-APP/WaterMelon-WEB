@@ -69,7 +69,7 @@ export class SearchComponent implements OnInit {
       if (i >= 10) {
         break;
       }
-      if (event.get("Owner") != this.user && !this.isIn(event)) {
+      if (event.get("Owner").id != this.user.id && !this.isIn(event)) {
         let eventName = event.get("eventName").toLowerCase();
         let eventPlace = event.get("address");
         if (eventPlace) {

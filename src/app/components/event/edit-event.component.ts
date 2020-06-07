@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import * as Parse from 'parse';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-event',
@@ -14,7 +15,7 @@ export class EditEventComponent implements OnInit {
   eventaddress = new FormControl('', [Validators.required, Validators.requiredTrue]);
   eventname = new FormControl('', [Validators.required, Validators.requiredTrue]);
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private _httpClient: HttpClient) { }
   dateEvent;
   addressEvent;
   nameEvent;
