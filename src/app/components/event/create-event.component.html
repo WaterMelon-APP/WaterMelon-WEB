@@ -1,6 +1,6 @@
 <div class="newEvent-container">
   <mat-form-field style="padding-right: 3em;">
-      <input style matInput placeholder="Nommez votre événement" [formControl]="eventname" required>
+      <input style matInput placeholder="Nom de votre événement" [formControl]="eventname" required>
   </mat-form-field>
   <mat-form-field style="padding-right: 3em;">
       <input matInput [(ngModel)]="dateEvent" [matDatepicker]="picker" required>
@@ -8,12 +8,13 @@
       <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
   <div>
-    L'évenement est t'il privé ?
+    L'événement est-il privé ?
     <!-- Rounded switch -->
     <label class="switch">
       <input type="checkbox" id= "privCreate" checked="true">
       <span class="slider round"></span>
     </label>
   </div>
-  <button mat-button color="primary"(click)="createEvent()">Créez votre événement</button>
+  <br>
+  <button mat-button class="create" (click)="createEvent()">Créez votre événement</button>
 </div>
