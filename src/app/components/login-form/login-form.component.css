@@ -1,6 +1,13 @@
+h3 {
+  text-align: center;
+  color: #fff;
+}
+
 .example-container {
   display: flex;
   flex-direction: column;
+  padding: 65px 40px;
+  padding-bottom: 30px;
 }
 
 .example-container > * {
@@ -14,15 +21,44 @@
 input.example-right-align::-webkit-outer-spin-button,
 input.example-right-align::-webkit-inner-spin-button {
   display: none;
+  color: grey;
 }
 
 input.example-right-align {
   -moz-appearance: textfield;
+  color: grey;
 }
 
+input.mat-input-element {
+  color: #fff;
+}
+
+.mat-form-field-infix {
+  color: #FD5757 !important;
+}
+
+button {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  color: #FD5757;
+  background-color: #fff;
+}
+
+button:hover {
+  background-color: #fbc8c8 !important;
+}
+
+
 a {
+  color: #fff;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 3px;
   outline: none;
-  text-decoration: none;
-  color: gray;
+  font-size: 12px;
   text-align: center;
 } 
+
+a.first {
+  margin-top: 15px;
+}

@@ -1,6 +1,13 @@
 .register-container {
     display: flex;
     flex-direction: column;
+    padding: 65px 40px;
+    padding-bottom: 30px;
+}
+
+  h3 {
+    text-align: center;
+    color: #fff;
   }
 
   .example-container > * {
@@ -23,4 +30,15 @@
   .google {
     width: 50%;
     margin: 0 auto;
+  }
+
+  .register {
+      margin-top: 30px;
+      margin-bottom: 20px;
+      color: #FD5757;
+      background-color: #fff;
+    }
+    
+  .register:hover {
+      background-color: #fbc8c8 !important;
   }

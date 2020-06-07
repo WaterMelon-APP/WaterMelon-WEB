@@ -54,9 +54,10 @@
 
 </script>
 
+<h3>Register</h3>
 <div class="register-container">
     <mat-form-field>
-        <input matInput placeholder="Enter your username" [formControl]="username" required>
+        <input matInput placeholder="Choose a username" [formControl]="username" required>
         <mat-error *ngIf="username.invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
     <mat-form-field>
@@ -64,14 +65,14 @@
         <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input  matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'" [formControl]="firstPasswd" required>
+      <input  matInput placeholder="Choose a password" [type]="hide ? 'password' : 'text'" [formControl]="firstPasswd" required>
       <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
     </mat-form-field>
     <mat-form-field>
-        <input  matInput placeholder="Verify your password" [type]="hide ? 'password' : 'text'" [formControl]="verifPasswd" required>
+        <input  matInput placeholder="Confirm password" [type]="hide ? 'password' : 'text'" [formControl]="verifPasswd" required>
         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
       </mat-form-field>
-    <button mat-button color="primary"(click)="register(user)">Sign Up</button>
+    <button class="register" mat-button (click)="register(user)">Sign Up</button>
 
 
     <!--<google-signin class="google"

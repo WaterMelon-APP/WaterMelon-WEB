@@ -2,3 +2,7 @@
     color: #fff;
     border: solid 1px #fff;
 }
+
+.switch input:checked {
+    color: #47D278;
+}
