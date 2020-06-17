@@ -7,6 +7,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { AuthService } from '@services/auth.service.ts'
 
 import { User } from '@models/user';
 
@@ -32,10 +33,10 @@ export interface LogResponse {
 })
 
 export class LoginFormComponent implements OnInit {
-  private tokenSource = new BehaviorSubject<string>("");
+/*  private tokenSource = new BehaviorSubject<string>("");
   private idSource = new BehaviorSubject<string>("");
   currentToken = this.tokenSource.asObservable();
-  currentId = this.idSource.asObservable();
+  currentId = this.idSource.asObservable();*/
 
 
   hide = true;
@@ -44,7 +45,7 @@ export class LoginFormComponent implements OnInit {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required, Validators.requiredTrue]);
 
-  constructor(private dialogRef: MatDialogRef<LoginFormComponent>, private http: HttpClient) { }
+  constructor(private dialogRef: MatDialogRef<LoginFormComponent>, private http: HttpClient, private auth: AuthService) { }
 
   getErrorMessage() {
 
@@ -69,8 +70,10 @@ export class LoginFormComponent implements OnInit {
       console.log('juser :>> ', juser);
       this.http.post<LogResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/users/login", juser, header)
       .subscribe(logResponse => {
-          this.tokenSource.next(logResponse.Token);
-          this.idSource.next(logResponse.Id);
+          //this.tokenSource.next(logResponse.Token);
+          //this.idSource.next(logResponse.Id);
+          this.auth.logIn(logResponse.Id, logResponse.Token);
+          this.dialogRef.close();
         },
         error => { 
             alert("Une erreur est survenue");

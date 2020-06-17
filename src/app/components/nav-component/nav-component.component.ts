@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {FormControl, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 import * as Parse from 'parse';
-import { LoginFormComponent} from '@components/login-form/login-form.component';
+import { LoginFormComponent} from '../login-form/login-form.component';
 import { RegisterFormComponent } from '@components/register/register-form.component';
 import { CreateEventComponent} from '@components/event/create-event.component';
+import { AuthService } from '@services/auth.service.ts'
+
 
 @Component({
   selector: 'app-nav-component',
@@ -19,28 +22,38 @@ export class NavComponentComponent implements OnInit {
   isLoggedIn = false;
   lieu = true;
   nom = true;
-  constructor(public dialog: MatDialog, private router: Router) {
-    if (Parse.User.current()) {
+  token: string;
+  id: string;
+
+  constructor(public dialog: MatDialog, private router: Router, private auth: AuthService/*, private data: LoginFormComponent*/) {
+    //this.data.currentToken.subscribe(token => this.token = token)
+    //this.data.currentId.subscribe(id => this.id = id)
+    this.token = this.auth.getToken();
+    console.log('this.token :>> ', this.token);
+    if (this.token) {
       this.isLoggedIn = true;
     }
+  }
+
+  ngOnInit() {
   }
 
   search = new FormControl('', [Validators.required, Validators.requiredTrue]);
 
   signOut() {
-    Parse.User.logOut();
+    //Parse.User.logOut(); Modif token
+    this.auth.logOut();
     this.isLoggedIn = false;
-  }
-
-  ngOnInit() {
   }
 
   Login() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     this.dialog.open(LoginFormComponent, dialogConfig).afterClosed().subscribe(() => {
-      if (Parse.User.current()) {
+      if (this.auth.getToken()) {
         this.isLoggedIn = true;
+        this.token = this.auth.getToken();
+        console.log('this.token :>> ', this.token);
       }
     });
   }
