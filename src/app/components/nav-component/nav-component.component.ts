@@ -6,9 +6,9 @@ import { BehaviorSubject } from 'rxjs';
 
 import * as Parse from 'parse';
 import { LoginFormComponent} from '../login-form/login-form.component';
-import { RegisterFormComponent } from '@components/register/register-form.component';
-import { CreateEventComponent} from '@components/event/create-event.component';
-import { AuthService } from '@services/auth.service.ts'
+import { RegisterFormComponent } from '../register/register-form.component';
+import { CreateEventComponent} from '../event/create-event.component';
+import { AuthService } from '../../services/auth.service'
 
 
 @Component({
@@ -23,11 +23,8 @@ export class NavComponentComponent implements OnInit {
   lieu = true;
   nom = true;
   token: string;
-  id: string;
 
-  constructor(public dialog: MatDialog, private router: Router, private auth: AuthService/*, private data: LoginFormComponent*/) {
-    //this.data.currentToken.subscribe(token => this.token = token)
-    //this.data.currentId.subscribe(id => this.id = id)
+  constructor(public dialog: MatDialog, private router: Router, private auth: AuthService) {
     this.token = this.auth.getToken();
     console.log('this.token :>> ', this.token);
     if (this.token) {

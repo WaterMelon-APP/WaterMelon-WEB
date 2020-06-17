@@ -7,9 +7,9 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { AuthService } from '@services/auth.service.ts'
+import { AuthService } from '../../services/auth.service'
 
-import { User } from '@models/user';
+import { User } from '../../models/user';
 
 export interface LogResponse {
   Id: string;
@@ -70,8 +70,6 @@ export class LoginFormComponent implements OnInit {
       console.log('juser :>> ', juser);
       this.http.post<LogResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/users/login", juser, header)
       .subscribe(logResponse => {
-          //this.tokenSource.next(logResponse.Token);
-          //this.idSource.next(logResponse.Id);
           this.auth.logIn(logResponse.Id, logResponse.Token);
           this.dialogRef.close();
         },

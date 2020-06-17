@@ -2,10 +2,29 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import * as Parse from 'parse';
 import {MatDialogRef} from '@angular/material';
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
+import { HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
-import { User } from '@models/user';
+import { User } from '../../models/user';
+import { AuthService } from '../../services/auth.service'
 
-//import {GoogleSignInSuccess} from 'angular-google-signin';
+export interface RegResponse {
+    Id: string;
+    Name: string;
+    Username: string;
+    Password: string;
+    Email: string;
+    Token: string;
+    FirstName: string;
+    LastName: string;
+    Phone: string;
+    Birthdate: Date;
+    ProfilePicture: string;
+    Events: Array<string>;
+}
 
 @Component ({
     selector: 'app-register-form',
@@ -22,50 +41,12 @@ export class RegisterFormComponent implements OnInit {
     firstPasswd = new FormControl('', [Validators.required, Validators.requiredTrue]);
     verifPasswd = new FormControl('', [Validators.required, Validators.requiredTrue]);
 
-    constructor(private dialogRef: MatDialogRef<RegisterFormComponent>) { }
-
-    /*// Auth with Google
-    private myClientId: string = '975933495379-5b34kdfvm2hieivc1iol4ndj76biq7d9.apps.googleusercontent.com';
-
-    onGoogleSignInSuccess(event: GoogleSignInSuccess) {
-      const user = new Parse.User();
-
-      let googleUser: gapi.auth2.GoogleUser = event.googleUser;
-      let id: string = googleUser.getId();
-      let profile: gapi.auth2.BasicProfile = googleUser.getBasicProfile();
-
-      // Print user with info to console
-      const usernameVal = profile.getName();
-      console.log(usernameVal);
-      const emailVal = profile.getEmail();
-      console.log(emailVal);
-      user.set("email", emailVal);
-
-      // Generate login session token
-      const token_id = googleUser.getAuthResponse().id_token;
-      console.log(token_id);
-      Parse.User.signUp(usernameVal, "", null); // comment passer token_id en session ?
-
-      // Enter data into database
-      var userClass = Parse.Object.extend('User');
-      var newUser = new userClass();
-      newUser.set('username', usernameVal);
-      newUser.set('email', emailVal);
-      newUser.set('keyGoogle', token_id);
-      newUser.set('password', 'google');
-
-      newUser.save();
-    }*/
-
-    // Auth with Facebook
-
-    // Local registration
+    constructor(private dialogRef: MatDialogRef<RegisterFormComponent>, private http: HttpClient, private auth: AuthService) { }
 
     ngOnInit() {
     }
 
     getErrorMessage() {
-
     }
 
     async register(user: User) {
@@ -75,8 +56,28 @@ export class RegisterFormComponent implements OnInit {
         const verifPasswdVal = this.verifPasswd.value as string;
         if (usernameVal != null || emailVal != null || firstPasswdVal != null || verifPasswdVal != null) {
             if (firstPasswdVal.localeCompare(verifPasswdVal)) {
-                alert("Passwords don't match");
+                alert("Les mots de passe ne sont pas identiques.");
             } else {
+                const header: Object = {
+                    headers: new HttpHeaders({
+                        Accept: 'application/json',
+                        'Content-Type':  'application/json'
+                    })
+                };
+                const user = '{ "Name": "' + emailVal + '", "Username": "' + usernameVal + '", "Password": "' + firstPasswdVal + '" }';
+                var juser = JSON.parse(user);
+                console.log('juser :>> ', juser);
+                this.http.post<RegResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/users/create", juser, header)
+                    .subscribe(regResponse => {
+                        this.auth.logIn(regResponse.Id, regResponse.Token);
+                        this.dialogRef.close();
+                    },
+                    error => { 
+                        alert("Une erreur est survenue");
+                    }
+                );
+
+                /*                
                 Parse.User.signUp(usernameVal, firstPasswdVal, null)
                 .then(res => {
                     this.dialogRef.close()
@@ -103,6 +104,7 @@ export class RegisterFormComponent implements OnInit {
                     }
                     alert(msg);
                 });
+                */
             }
         }
     }
