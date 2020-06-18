@@ -14,7 +14,7 @@ export interface EventResponse {
   Name: string;
   Owner: string;
   Date: Date;
-  Adress: string;
+  Address: string;
   Guests: Array<string>;
   Public: boolean;
   ItemList: Array<string>;
@@ -50,18 +50,24 @@ export class ListEventUserPageComponent implements OnInit {
     this.createInviteList();
   }
 
-  /*-----------
-  A modifier invitations
-  -----------*/
   async createInviteList() {
-    this.http.get<EventResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/events/searchfromuser/" + this.id, this.header)
+    let invites: Array<EventResponse>;
+    invites = [];
+    this.inviteList = [];
+
+    this.http.get<Array<EventResponse>>("https://watermelon-api20200526035653.azurewebsites.net/api/events/searchfromuser/" + this.id, this.header)
     .subscribe(eventResponse => {
-        this.inviteList = eventResponse;
+        invites = eventResponse;
       },
       error => { 
           alert("Une erreur est survenue");
       }
     );
+    for (let invite of invites) {
+      if (invite.Owner != this.id) {
+        this.inviteList.push(invite);
+      }
+    }
 
     /*const user = Parse.User.current();
     const eventList = Parse.Object.extend('Event');
@@ -77,14 +83,24 @@ export class ListEventUserPageComponent implements OnInit {
   }
 
   async EvenTListByUsr() {
-    this.http.get<EventResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/events/searchfromuser/" + this.id, this.header)
+    let events: Array<EventResponse>;
+    events = [];
+    this.eventList = [];
+
+    this.http.get<Array<EventResponse>>("https://watermelon-api20200526035653.azurewebsites.net/api/events/searchfromuser/" + this.id, this.header)
     .subscribe(eventResponse => {
-        this.inviteList = eventResponse;
+        this.eventList = eventResponse;
       },
       error => { 
           alert("Une erreur est survenue");
       }
     );
+    for (let event of events) {
+      if (event.Owner == this.id) {
+        this.eventList.push(event);
+      }
+    }
+
 
     /*const user = Parse.User.current();
     const eventList = Parse.Object.extend('Event');
@@ -117,6 +133,22 @@ export class ListEventUserPageComponent implements OnInit {
     });*/
   }
 
+  clearGuests(guests) {
+    let guestsList: string = '[';
+    let a = 0;
+    if (guests) {
+      for (let guest of guests) {
+        if (a) {
+          guestsList = guestsList + ", ";
+        }
+        guestsList = guestsList + '"' + guest + '"';
+        a = 1;
+      }
+    }
+    guestsList = guestsList + "]";
+    return (guestsList);
+  }
+
   /*-----------
   A modifier admin
   -----------*/
@@ -147,7 +179,7 @@ export class ListEventUserPageComponent implements OnInit {
       ++a;
     }*/
 
-    const guest = '{ "Guests": "' + memberList + /*'", "Admins": "' + adminList +*/ '" }';
+    const guest = '{ "Guests": "' + this.clearGuests(memberList) + /*'", "Admins": "' + adminList +*/ '" }';
     var jguest = JSON.parse(guest);
     this.http.put<EventResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + event.Id, jguest, this.header)
     .subscribe(eventResponse => {

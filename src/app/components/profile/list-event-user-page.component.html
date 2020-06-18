@@ -6,23 +6,23 @@
   <div *ngFor="let event of eventList" class="container-all">
     <mat-card class="events">
       <mat-card-title>
-        <button class="event-title" mat-stroked-button (click)="goToEvent(event.id)">
-          {{event.get('eventName')}}
+        <button class="event-title" mat-stroked-button (click)="goToEvent(event.Id)">
+          {{event.Name}}
         </button>
       </mat-card-title>
 
       <p>
-        {{event.get('dateEvent')  | date: 'short'}}
+        {{event.Date | date: 'short'}}
       </p>
       <p>
-        {{event.get('address')}}
+        {{event.Address}}
       </p>
 
       <mat-card-content>
-        <button class="delete" mat-stroked-button mat-icon-button (click)="delEvent(event.id)">
+        <button class="delete" mat-stroked-button mat-icon-button (click)="delEvent(event.Id)">
           <mat-icon>delete_sweep</mat-icon>
         </button>
-        <button class="edit" mat-stroked-button mat-icon-button (click)="editEvent(event.id)">
+        <button class="edit" mat-stroked-button mat-icon-button (click)="editEvent(event.Id)">
           <mat-icon>edit</mat-icon>
         </button>
       </mat-card-content>
@@ -38,16 +38,16 @@
   <div *ngFor="let event of inviteList" class="container-all">
     <mat-card class="events">
       <mat-card-title>
-        <button class="event-title" mat-stroked-button (click)="goToEvent(event.id)">
-          {{event.get('eventName')}}
+        <button class="event-title" mat-stroked-button (click)="goToEvent(event.Id)">
+          {{event.Name}}
         </button>
       </mat-card-title>
 
       <p>
-        {{event.get('dateEvent'  | date: 'short')}}
+        {{event.DateEvent | date: 'short'}}
       </p>
       <p>
-        {{event.get('address')}}
+        {{event.Address}}
       </p>
 
       <mat-card-content>

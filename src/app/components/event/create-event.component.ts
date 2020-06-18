@@ -9,13 +9,14 @@ import { HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service'
+import { getServers } from 'dns';
 
 export interface EventResponse {
   Id: string;
   Name: string;
   Owner: string;
   Date: Date;
-  Adress: string;
+  Address: string;
   Guests: Array<string>;
   Public: boolean;
   ItemList: Array<string>;
@@ -53,10 +54,12 @@ export class CreateEventComponent implements OnInit {
     const eventnameVal = this.eventname.value as string;
     const eventdateVal = this.dateEvent;
     const checkbox = document.getElementById('privCreate') as HTMLInputElement;
+    let guests = [];
+    guests.push(this.id);
 
 
     if (eventnameVal != null ||  eventdateVal != null) {
-      const event = '{ "Name": "' + eventnameVal + '", "Owner": "' + this.id + '", "Date": "' + eventdateVal.toISOString() + '", "Adress": "' + "" + '", "Public": "' + !checkbox.checked + '" }';
+      const event = '{ "Name": "' + eventnameVal + '", "Owner": "' + this.id + '", "Date": "' + eventdateVal.toISOString() + '", "Adress": "' + "" + '", "Guests": ["' + guests + '"], "Public": "' + !checkbox.checked + '", "ItemList": ' + "[]" +  ' }';
       var jevent = JSON.parse(event);
       console.log('jevent :>> ', jevent);
 

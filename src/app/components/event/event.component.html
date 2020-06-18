@@ -7,7 +7,7 @@
             <div class="col-sm-6" id="pink">
                 <mat-icon>event</mat-icon>
                 <p style="font-size: large;">{{nameEvent}}</p>
-                <p>{{event.get('dateEvent')  | date: 'short'}}</p>
+                <p>{{event.Date  | date: 'short'}}</p>
                 <br>
                 <mat-icon>lock</mat-icon>
             </div>
@@ -24,7 +24,6 @@
                     <div class="col-sm-6">
                         <button *ngIf="isOwner" class="delete" mat-stroked-button mat-icon-button (click)="delEvent()">
 
-                 
 
                             <mat-icon>delete_sweep</mat-icon>
                         </button>
@@ -98,9 +97,9 @@
                     <th>Quantité</th>
                 </tr>
                 <tr class="item-list-strike" *ngFor="let item of itemList">
-                    <td class="linetrought"> {{item.get('Name')}} </td>
-                    <td class="linetrought"> {{item.get('Price')}} </td>
-                    <td class="linetrought"> {{item.get('Quantity')}} </td>
+                    <td class="linetrought"> {{item.Name}} </td>
+                    <td class="linetrought"> {{item.Price}} </td>
+                    <td class="linetrought"> {{item.Quantity}} </td>
                     <mat-checkbox class="selected-pay" [(ngModel)]="payed[item.id]"> Paye </mat-checkbox>
                     <mat-checkbox class="selected-bring" [(ngModel)]="gived[item.id]"> Apporte </mat-checkbox>
                     <button mat-button mat-stroked-button color="primary" (click)="bringItem(item)"> Confirmer</button>
