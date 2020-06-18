@@ -137,6 +137,11 @@ export class EventComponent implements OnInit {
           this.adminList = [];
         }*/
 
+        if (this.id == this.event.Owner) {
+          this.isOwner = true;
+          this.isAdmin = true;
+        }  
+
         this.membres = [];
         //this.admins = [];
         for (let me of this.memberList) {
