@@ -1,24 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
-import { HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
-
-import { AuthService } from '../../services/auth.service'
-import * as Parse from 'parse';
 import { Router } from '@angular/router';
 
-export interface EventResponse {
-  Id: string;
-  Name: string;
-  Owner: string;
-  Date: Date;
-  Address: string;
-  Guests: Array<string>;
-  Public: boolean;
-  ItemList: Array<string>;
-}
+import { AuthService } from '../../services/auth.service'
+import { Event } from '../../models/event.model'
 
 @Component({
   selector: 'app-list-event-user-page',
@@ -28,34 +13,26 @@ export interface EventResponse {
 
 export class ListEventUserPageComponent implements OnInit {
 
-  constructor(private router: Router, private http: HttpClient, private auth: AuthService) {}
-
   eventList;
   inviteList;
   header: Object;
-  token: string;
   id: string;
 
+  constructor(private router: Router, private http: HttpClient, private auth: AuthService) {}
+
   ngOnInit() {
-    this.token = this.auth.getToken();
     this.id = this.auth.getId();
-    this.header = {
-      headers: new HttpHeaders({
-          Accept: 'application/json',
-          'Content-Type':  'application/json',
-          'Authorization': 'Bearer ' + this.token,
-      })
-    };
+    this.header = this.auth.getSecureHeader();
     this.EvenTListByUsr();
     this.createInviteList();
   }
 
   async createInviteList() {
-    let invites: Array<EventResponse>;
+    let invites: Array<Event>;
     invites = [];
     this.inviteList = [];
 
-    this.http.get<Array<EventResponse>>("https://watermelon-api20200526035653.azurewebsites.net/api/events/searchfromuser/" + this.id, this.header)
+    this.http.get<Array<Event>>("https://watermelon-api20200526035653.azurewebsites.net/api/events/searchfromuser/" + this.id, this.header)
     .subscribe(eventResponse => {
         invites = eventResponse;
       },
@@ -68,26 +45,14 @@ export class ListEventUserPageComponent implements OnInit {
         this.inviteList.push(invite);
       }
     }
-
-    /*const user = Parse.User.current();
-    const eventList = Parse.Object.extend('Event');
-    const query = new Parse.Query(eventList);
-    this.inviteList = [];
-    var allEvent = await query.find();
-    for (let event of allEvent) {
-      if ((event.get("usersAdmin") && event.get("usersAdmin").includes(user.id))
-      || (event.get("usersGuest") && event.get("usersGuest").includes(user.id))) {
-        this.inviteList.push(event);
-      }
-    }*/
   }
 
   async EvenTListByUsr() {
-    let events: Array<EventResponse>;
+    let events: Array<Event>;
     events = [];
     this.eventList = [];
 
-    this.http.get<Array<EventResponse>>("https://watermelon-api20200526035653.azurewebsites.net/api/events/searchfromuser/" + this.id, this.header)
+    this.http.get<Array<Event>>("https://watermelon-api20200526035653.azurewebsites.net/api/events/searchfromuser/" + this.id, this.header)
     .subscribe(eventResponse => {
         this.eventList = eventResponse;
       },
@@ -100,13 +65,6 @@ export class ListEventUserPageComponent implements OnInit {
         this.eventList.push(event);
       }
     }
-
-
-    /*const user = Parse.User.current();
-    const eventList = Parse.Object.extend('Event');
-    const query = new Parse.Query(eventList);
-    query.equalTo('Owner', user);
-    this.eventList = await query.find();*/
   }
 
   async delEvent(id) {
@@ -119,18 +77,6 @@ export class ListEventUserPageComponent implements OnInit {
           alert("Une erreur est survenue");
       }
     );
-
-    /*const eventList = Parse.Object.extend('Event');
-    const query = new Parse.Query(eventList);
-    query.equalTo('objectId', id);
-    let item = await query.find();
-
-    item[0].destroy().then((item) => {
-      alert("L'événement " + item.get('eventName') + " a bien été supprimé.");
-      location.reload();
-    }, (error) => {
-      alert(error);
-    });*/
   }
 
   clearGuests(guests) {
@@ -181,7 +127,7 @@ export class ListEventUserPageComponent implements OnInit {
 
     const guest = '{ "Guests": "' + this.clearGuests(memberList) + /*'", "Admins": "' + adminList +*/ '" }';
     var jguest = JSON.parse(guest);
-    this.http.put<EventResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + event.Id, jguest, this.header)
+    this.http.put<Event>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + event.Id, jguest, this.header)
     .subscribe(eventResponse => {
         alert("Vous avez quitté l'event");
         location.reload();
@@ -190,30 +136,6 @@ export class ListEventUserPageComponent implements OnInit {
         alert("Une erreur est survenue");
       }
     );
-
-    /*const user = Parse.User.current();
-    const eventList = Parse.Object.extend('Event');
-    const query = new Parse.Query(eventList);
-    query.equalTo('objectId', id);
-    let event = await query.find();
-
-
-    event[0].set('usersGuest', memberList);
-    event[0].save()
-    .then(res => {
-      console.log("Membre supprimé de l'event");
-    }, err=> {
-      alert(err);
-    })
-    event[0].set('usersAdmin', adminList);
-    event[0].save()
-    .then(res => {
-      console.log("Admin supprimé de l'event");
-      alert("Vous avez quitté l'event");
-      location.reload();
-    }, err=> {
-      alert(err);
-    })*/
   }
 
   async editEvent(id) {

@@ -1,25 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
-import { HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service'
-import * as Parse from 'parse';
-import { isIdentifier } from '@angular/compiler';
-
-export interface EventResponse {
-  Id: string;
-  Name: string;
-  Owner: string;
-  Date: Date;
-  Address: string;
-  Guests: Array<string>;
-  Public: boolean;
-  ItemList: Array<string>;
-}
+import { Event } from '../../models/event.model'
 
 @Component({
   selector: 'search-page',
@@ -31,25 +15,16 @@ export class SearchComponent implements OnInit {
 
   eventList;
   research;
-  user;
-  eventL: Array<EventResponse>;
+  eventL: Array<Event>;
   header: Object;
-  token: string;
   id: string;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private auth: AuthService) {
   }
 
   ngOnInit() {
-    this.token = this.auth.getToken();
     this.id = this.auth.getId();
-    this.header = {
-      headers: new HttpHeaders({
-          Accept: 'application/json',
-          'Content-Type':  'application/json',
-          'Authorization': 'Bearer ' + this.token,
-      })
-    };
+    this.header = this.auth.getSecureHeader();
     let search = this.route.snapshot.paramMap.get('id');
     const reg = /[_]+/m;
     search = search.replace(reg, " ");
@@ -89,7 +64,7 @@ export class SearchComponent implements OnInit {
     }
 
 
-    this.http.get<Array<EventResponse>>("https://watermelon-api20200526035653.azurewebsites.net/api/events/search/", this.header)
+    this.http.get<Array<Event>>("https://watermelon-api20200526035653.azurewebsites.net/api/events/search/", this.header)
     .subscribe(eventResponse => {
         this.eventL = eventResponse;
       },
@@ -118,31 +93,6 @@ export class SearchComponent implements OnInit {
           this.eventList.push(event);
           ++i;
         }
-    /*const eventList = Parse.Object.extend('Event');
-    const query = new Parse.Query(eventList);
-    query.equalTo('isPrivate', false);
-    let eventL = await query.find();
-    this.eventList = [];
-    let i = 0;
-    for (let event of eventL) {
-      if (i >= 10) {
-        break;
-      }
-      if (event.get("Owner").id != this.id && !this.isIn(event)) {
-        let eventName = event.get("eventName").toLowerCase();
-        let eventPlace = event.get("address");
-        if (eventPlace) {
-          eventPlace = eventPlace.toLowerCase();
-        }
-        if (nom && eventName.includes(this.research)) {
-          this.eventList.push(event);
-          ++i;
-        }
-        else if (lieu && eventPlace && eventPlace.includes(this.research)) {
-          this.eventList.push(event);
-          ++i;
-        }*/
-
       }
     }
   }
@@ -173,7 +123,7 @@ export class SearchComponent implements OnInit {
     const memberList = '{ "Guests": "' + memberL + '" }';
     var jmemberList = JSON.parse(memberList);
 
-    this.http.put<EventResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + event.Id, jmemberList, this.header)
+    this.http.put<Event>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + event.Id, jmemberList, this.header)
     .subscribe(userResponse => {
           alert("Vous avez rejoint l'event");
         },
@@ -181,26 +131,6 @@ export class SearchComponent implements OnInit {
           alert("Une erreur est survenue");
       }
     );
-
-    /*const eventList = Parse.Object.extend('Event');
-    const query = new Parse.Query(eventList);
-    query.equalTo('objectId', id);
-    let event = await query.find();
-
-    let memberList = event[0].get('usersGuest');
-    if (!memberList) {
-      memberList = [];
-    }
-    memberList.push(this.id);
-
-    event[0].set('usersGuest', memberList);
-    event[0].save()
-    .then(res => {
-      console.log("Membre ajouté à l'event");
-      alert("Vous avez rejoint l'event");
-    }, err=> {
-      alert(err);
-    })*/
   }
 
   async goToEvent(id) {

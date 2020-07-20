@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {FormControl, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 
-import * as Parse from 'parse';
 import { LoginFormComponent} from '../login-form/login-form.component';
 import { RegisterFormComponent } from '../register/register-form.component';
 import { CreateEventComponent} from '../event/create-event.component';
@@ -38,7 +36,6 @@ export class NavComponentComponent implements OnInit {
   search = new FormControl('', [Validators.required, Validators.requiredTrue]);
 
   signOut() {
-    //Parse.User.logOut(); Modif token
     this.auth.logOut();
     this.isLoggedIn = false;
   }

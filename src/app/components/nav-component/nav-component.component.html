@@ -69,19 +69,6 @@
         </div>
       </mat-toolbar-row>
 
-      <!--
-        <mat-toolbar-row style="height: 2em">
-          <div *ngIf="isLoggedIn">
-            <a routerLink="/email">
-              <button mat-menu-item>
-                <mat-icon>alternate_email</mat-icon>
-                    Invitations
-              </button>
-            </a>
-          </div>
-        </mat-toolbar-row>
-        -->
-
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="!isLoggedIn">
           <button mat-menu-item (click)="Login()">

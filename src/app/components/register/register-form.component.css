@@ -1,44 +1,44 @@
 .register-container {
-    display: flex;
-    flex-direction: column;
-    padding: 65px 40px;
-    padding-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  padding: 65px 40px;
+  padding-bottom: 30px;
 }
 
-  h3 {
-    text-align: center;
-    color: #fff;
-  }
+h3 {
+  text-align: center;
+  color: #fff;
+}
 
-  .example-container > * {
-    width: 100%;
-  }
+.example-container > * {
+  width: 100%;
+}
 
-  .example-right-align {
-    text-align: right;
-  }
+.example-right-align {
+  text-align: right;
+}
 
-  input.example-right-align::-webkit-outer-spin-button,
-  input.example-right-align::-webkit-inner-spin-button {
-    display: none;
-  }
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none;
+}
 
-  input.example-right-align {
-    -moz-appearance: textfield;
-  }
+input.example-right-align {
+  -moz-appearance: textfield;
+}
 
-  .google {
-    width: 50%;
-    margin: 0 auto;
-  }
+.google {
+  width: 50%;
+  margin: 0 auto;
+}
 
-  .register {
-      margin-top: 30px;
-      margin-bottom: 20px;
-      color: #FD5757;
-      background-color: #fff;
-    }
-    
-  .register:hover {
-      background-color: #fbc8c8 !important;
-  }
+.register {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  color: #FD5757;
+  background-color: #fff;
+}
+
+.register:hover {
+    background-color: #fbc8c8 !important;
+}

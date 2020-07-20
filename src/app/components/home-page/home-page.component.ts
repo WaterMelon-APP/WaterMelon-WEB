@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import * as Parse from 'parse';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service'
 import { RegisterFormComponent } from './../register/register-form.component';

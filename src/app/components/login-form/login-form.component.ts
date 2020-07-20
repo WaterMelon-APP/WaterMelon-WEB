@@ -1,30 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
-import * as Parse from 'parse';
 import {MatDialogRef} from '@angular/material';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
-import { HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../../services/auth.service'
 
-import { User } from '../../models/user';
-
-export interface LogResponse {
-  Id: string;
-  Name: string;
-  Username: string;
-  Password: string;
-  Email: string;
-  Token: string;
-  FirstName: string;
-  LastName: string;
-  Phone: string;
-  Birthdate: Date;
-  ProfilePicture: string;
-  Events: Array<string>;
-}
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-login-form',
@@ -33,11 +13,6 @@ export interface LogResponse {
 })
 
 export class LoginFormComponent implements OnInit {
-/*  private tokenSource = new BehaviorSubject<string>("");
-  private idSource = new BehaviorSubject<string>("");
-  currentToken = this.tokenSource.asObservable();
-  currentId = this.idSource.asObservable();*/
-
 
   hide = true;
 
@@ -47,28 +22,20 @@ export class LoginFormComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<LoginFormComponent>, private http: HttpClient, private auth: AuthService) { }
 
-  getErrorMessage() {
+  getErrorMessage() { }
 
-  }
-
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   async login(user: User) {
     const emailVal = this.email.value as string;
     const passwordVal = this.password.value as string;
     if (emailVal != null || passwordVal != null) {
       
-      const header: Object = {
-        headers: new HttpHeaders({
-            Accept: 'application/json',
-            'Content-Type':  'application/json'
-        })
-      };
+      const header: Object = this.auth.getHeader();
       const user = '{ "Username": "' + emailVal + '", "Password": "' + passwordVal + '" }';
       var juser = JSON.parse(user);
       console.log('juser :>> ', juser);
-      this.http.post<LogResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/users/login", juser, header)
+      this.http.post<User>("https://watermelon-api20200526035653.azurewebsites.net/api/users/login", juser, header)
       .subscribe(logResponse => {
           this.auth.logIn(logResponse.Id, logResponse.Token);
           this.dialogRef.close();
@@ -77,31 +44,6 @@ export class LoginFormComponent implements OnInit {
             alert("Une erreur est survenue");
         }
       );
-      /*Parse.User.logIn(emailVal, passwordVal)
-        .then(res => {
-          this.dialogRef.close();
-
-        }, err => {
-          console.log(err);
-          console.log(err.code);
-          let msg;
-          switch (err.code) {
-            case 101:
-              msg = 'Email or Password is wrong.';
-              break;
-
-            case 200:
-              msg = 'Username/email is required.';
-              break;
-
-            default:
-              msg = 'Something goes wrong';
-              break;
-
-          }
-          alert(msg);
-        });*/
-
     }
   }
 }
