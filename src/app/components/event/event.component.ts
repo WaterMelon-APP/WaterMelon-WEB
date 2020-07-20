@@ -140,7 +140,7 @@ export class EventComponent implements OnInit {
         if (this.id == this.event.Owner) {
           this.isOwner = true;
           this.isAdmin = true;
-        }  
+        }
 
         this.membres = [];
         //this.admins = [];
@@ -149,7 +149,7 @@ export class EventComponent implements OnInit {
           .subscribe(userResponse => {
                 this.membres.push(userResponse.Name);
               },
-              error => { 
+              error => {
                 alert("Une erreur est survenue");
             }
           );
@@ -159,7 +159,7 @@ export class EventComponent implements OnInit {
           .subscribe(userResponse => {
                 this.admins.push(userResponse.Name);
               },
-              error => { 
+              error => {
                 alert("Une erreur est survenue");
             }
           );
@@ -178,15 +178,15 @@ export class EventComponent implements OnInit {
               if (userResponse.get("Give") != null && userResponse.get("Give")[0] != "") {
                 this.gived[userResponse.Id] = true;
               }*/
-  
+
             },
-              error => { 
+              error => {
                 alert("Une erreur est survenue");
             }
           );
         }
       },
-      error => { 
+      error => {
           alert("Une erreur est survenue");
       }
     );
@@ -265,7 +265,7 @@ export class EventComponent implements OnInit {
           alert("L'événement " + this.nameEvent + " a bien été supprimé.");
           this.router.navigate(['/list-user']);
         },
-        error => { 
+        error => {
           alert("Une erreur est survenue");
       }
     );
@@ -309,13 +309,13 @@ export class EventComponent implements OnInit {
             .subscribe(userResponse => {
                   alert('Membre ajouté');
                 },
-                error => { 
+                error => {
                   alert("Une erreur est survenue");
               }
             );
         }}
       },
-        error => { 
+        error => {
           alert("Cet utilisateur n'existe pas");
         }
       );
@@ -370,13 +370,13 @@ export class EventComponent implements OnInit {
             .subscribe(userResponse => {
                   alert('Membre passé admin !');
                 },
-                error => { 
+                error => {
                   alert("Une erreur est survenue");
               }
             );
         }}
       },
-        error => { 
+        error => {
           alert("Cet utilisateur n'existe pas");
         }
       );
@@ -421,13 +421,13 @@ export class EventComponent implements OnInit {
             .subscribe(userResponse => {
                   alert("Membre supprimé de l'event");
                 },
-                error => { 
+                error => {
                   alert("Une erreur est survenue");
               }
             );
         }}
       },
-        error => { 
+        error => {
           alert("Cet utilisateur n'existe pas");
         }
       );
@@ -476,7 +476,7 @@ export class EventComponent implements OnInit {
             this.membres.push(this.selectedAdmin);
             this.memberList.push(userResponse.Id);
             this.lessAdmin(this.selectedAdmin, userResponse.Id);
-      
+
             const adminList = '{ "Guests": "' + this.memberList + '", "Admins": "' + this.adminList + '" }';
             var jadminList = JSON.parse(adminList);
 
@@ -484,13 +484,13 @@ export class EventComponent implements OnInit {
             .subscribe(userResponse => {
                   alert("Admin rétrogradé !");
                 },
-                error => { 
+                error => {
                   alert("Une erreur est survenue");
               }
             );
         }}
       },
-        error => { 
+        error => {
           alert("Cet utilisateur n'existe pas");
         }
       );
@@ -535,13 +535,13 @@ export class EventComponent implements OnInit {
             .subscribe(userResponse => {
                   alert("Admin supprimé de l'event");
                 },
-                error => { 
+                error => {
                   alert("Une erreur est survenue");
               }
             );
         }}
       },
-        error => { 
+        error => {
           alert("Cet utilisateur n'existe pas");
         }
       );
@@ -577,7 +577,7 @@ export class EventComponent implements OnInit {
             alert('Votre objet a été ajouté avec succès!');
             location.reload();
           },
-          error => { 
+          error => {
             alert("Une erreur est survenue");
         }
       );
@@ -623,7 +623,7 @@ export class EventComponent implements OnInit {
           alert("L'item a bien été supprimé.");
           location.reload();
         },
-        error => { 
+        error => {
           alert("Une erreur est survenue");
       }
     );
@@ -693,7 +693,7 @@ export class EventComponent implements OnInit {
     .subscribe(itemResponse => {
           console.log('Maj item list');
         },
-        error => { 
+        error => {
           alert("Une erreur est survenue");
       }
     );
@@ -738,4 +738,11 @@ export class EventComponent implements OnInit {
     }
   }
 
+  async sendTweet()
+  {
+    const link = "https://watermelonapp.azurewebsites.net/"; //+ //go look on local
+    var text = "Hey%2C%20je%20viens%20de%20cr%C3%A9er%20mon%20%C3%A9v%C3%A9nement%20" + this.nameEvent + "rejoint%20moi%20!" + link;
+    const tweet_url = "http://twitter.com/intent/tweet?text=" + text;
+    window.open(tweet_url, "_blank");
+  }
 }

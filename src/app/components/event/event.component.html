@@ -1,6 +1,6 @@
 <app-nav-component></app-nav-component>
 <body>
-    
+
     <div class="container" align="center">
         <div class="row" id="title">
             <div class="col-sm-3"></div>
@@ -33,13 +33,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3"></div>           
-        </div>        
+            <div class="col-sm-3"></div>
+        </div>
     </div>
-    
+
     <br><br>
 
     <section class="masthead">
+            <button (click)="sendTweet()"></button>
             <div class="cont4" *ngIf="isAdmin">
                 <b>Ajouter un participant</b><br>
                 <mat-form-field>
@@ -61,7 +62,7 @@
                 <button mat-button mat-stroked-button id="square-pink" (click)="delAdmin()">Retirer de l'event</button>
             </div>
             <div class="cont4" *ngIf="isAdmin">
-                <b>Participants</b><br> 
+                <b>Participants</b><br>
                 <mat-form-field>
                     <mat-label>Membre</mat-label>
                     <mat-select [(value)]="selectedMember">
