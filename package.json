@@ -29,7 +29,6 @@
     "google-auth-library": "^5.10.1",
     "hammerjs": "^2.0.8",
     "nyc": "^14.1.1",
-    "parse": "^2.12.0",
     "rxjs": "^6.5.5",
     "tslib": "^1.11.1",
     "zone.js": "^0.10.3"

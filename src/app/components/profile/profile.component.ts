@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit {
   fEmail = new FormControl('', [Validators.required, Validators.requiredTrue]);
   fBirthdate = new FormControl('', [Validators.required, Validators.requiredTrue]);
   fPhone = new FormControl('', [Validators.required, Validators.requiredTrue]);
-  fLocal = new FormControl('', [Validators.required, Validators.requiredTrue]);
+  //fLocal = new FormControl('', [Validators.required, Validators.requiredTrue]);
   fBio = new FormControl('', [Validators.required, Validators.requiredTrue]);
   fDate = new FormControl('', [Validators.required, Validators.requiredTrue]);
   username;
@@ -85,7 +85,7 @@ export class ProfileComponent implements OnInit {
     if (fBioVal == null || fBioVal == "") {
       fBioVal = this.bio;
     }
-    let fLocalVal = this.fLocal.value as string;
+    //let fLocalVal = this.fLocal.value as string;
 
     console.log('fBioVal :', fBioVal);
     console.log('fSurnameVal :', fSurnameVal);

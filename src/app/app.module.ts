@@ -19,8 +19,6 @@ import { CreateEventComponent } from './components/event/create-event.component'
 import { EditEventComponent } from './components/event/edit-event.component';
 import { SearchComponent } from './components/search/search-page.component';
 
-const parse = require('parse');
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +58,5 @@ const parse = require('parse');
 export class AppModule {
 
   constructor() {
-    parse.initialize("OwSChGtDD8UV6I0F1MApF8V40KZfl9ex26rLyctc", "4RETRc4i3ILpP2X8dPjXbHJpAZw4rMGNI4BD24e2");
-    parse.serverURL = 'http://watermelonserver.herokuapp.com/parse';
   }
 }
