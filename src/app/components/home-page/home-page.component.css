@@ -17,9 +17,10 @@ body {
 }
 
 #event-name #pink {
-    color: #fff;
+    color: #FD5757;
     width: 33%;
-    background-color: #FD5757;
+    background-color: #fff;
+    border: solid 5px #FD5757;
     text-align: center;
     padding: 15px 0px;
     border-radius: 10px;
