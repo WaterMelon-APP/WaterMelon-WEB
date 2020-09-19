@@ -32,7 +32,7 @@ export class ListEventUserPageComponent implements OnInit {
     invites = [];
     this.inviteList = [];
 
-    this.http.get<Array<Event>>("https://watermelon-api20200526035653.azurewebsites.net/api/events/searchfromuser/" + this.id, this.header)
+    this.http.get<Array<Event>>(this.auth.callEventsSearchfromuser(this.id), this.header)
     .subscribe(eventResponse => {
         invites = eventResponse;
       },
@@ -52,7 +52,7 @@ export class ListEventUserPageComponent implements OnInit {
     events = [];
     this.eventList = [];
 
-    this.http.get<Array<Event>>("https://watermelon-api20200526035653.azurewebsites.net/api/events/searchfromuser/" + this.id, this.header)
+    this.http.get<Array<Event>>(this.auth.callEventsSearchfromuser(this.id), this.header)
     .subscribe(eventResponse => {
         this.eventList = eventResponse;
       },
@@ -68,7 +68,7 @@ export class ListEventUserPageComponent implements OnInit {
   }
 
   async delEvent(id) {
-    this.http.delete("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + id, this.header)
+    this.http.delete(this.auth.callEvents(id), this.header)
     .subscribe(userResponse => {
           alert("L'événement a bien été supprimé.");
           location.reload();
@@ -127,7 +127,7 @@ export class ListEventUserPageComponent implements OnInit {
 
     const guest = '{ "Guests": "' + this.clearGuests(memberList) + /*'", "Admins": "' + adminList +*/ '" }';
     var jguest = JSON.parse(guest);
-    this.http.put<Event>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + event.Id, jguest, this.header)
+    this.http.put<Event>(this.auth.callEvents(event.Id), jguest, this.header)
     .subscribe(eventResponse => {
         alert("Vous avez quitté l'event");
         location.reload();

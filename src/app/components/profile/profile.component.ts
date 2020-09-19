@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit {
   }
 
   async profileInit() {
-    this.http.get<User>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + this.id, this.header)
+    this.http.get<User>(this.auth.callUsers(this.id), this.header)
     .subscribe(userResponse => {
       this.username = userResponse.Username;
       this.name = userResponse.Name;
@@ -94,7 +94,7 @@ export class ProfileComponent implements OnInit {
     console.log('user :>> ', user);
     var juser = JSON.parse(user);
 
-    this.http.put<User>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + this.id, juser, this.header)
+    this.http.put<User>(this.auth.callUsers(this.id), juser, this.header)
     .subscribe(userResponse => {
           alert('Les changements ont bien été enregistré !');
           location.reload();

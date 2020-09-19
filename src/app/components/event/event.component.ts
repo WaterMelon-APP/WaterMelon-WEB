@@ -59,7 +59,7 @@ export class EventComponent implements OnInit {
   }
 
   async findEvent() {
-    this.http.get<Event>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + this.eventId, this.header)
+    this.http.get<Event>(this.auth.callEvents(this.eventId), this.header)
     .subscribe(eventResponse => {
         this.event = eventResponse;
         this.needsEvent = eventResponse.ItemList;
@@ -85,7 +85,7 @@ export class EventComponent implements OnInit {
         this.membres = [];
         //this.admins = [];
         for (let me of this.memberList) {
-          this.http.get<User>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + me, this.header)
+          this.http.get<User>(this.auth.callUsers(me), this.header)
           .subscribe(userResponse => {
                 this.membres.push(userResponse.Name);
               },
@@ -106,7 +106,7 @@ export class EventComponent implements OnInit {
         }*/
 
         for (let item of this.needsEvent) {
-          this.http.get<Item>("https://watermelon-api20200526035653.azurewebsites.net/api/items/" + item, this.header)
+          this.http.get<Item>(this.auth.callItems(item), this.header)
           .subscribe(userResponse => {
               this.itemList.push(userResponse);
               this.payed[userResponse.Id] = userResponse.Paye;
@@ -137,7 +137,7 @@ export class EventComponent implements OnInit {
   }
 
   async delEvent() {
-    this.http.delete("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + this.eventId, this.header)
+    this.http.delete(this.auth.callEvents(this.eventId), this.header)
     .subscribe(userResponse => {
           alert("L'événement " + this.nameEvent + " a bien été supprimé.");
           this.router.navigate(['/list-user']);
@@ -166,7 +166,7 @@ export class EventComponent implements OnInit {
     const pseudoInvitVal = this.pseudoInvit.value as string;
 
     if (pseudoInvitVal) {
-      this.http.get<User>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + pseudoInvitVal, this.header)
+      this.http.get<User>(this.auth.callUsers(pseudoInvitVal), this.header)
       .subscribe(userResponse => {
         if (userResponse) {
           if (!this.isPersonIn(userResponse.Id)) {
@@ -174,7 +174,7 @@ export class EventComponent implements OnInit {
             const memberList = '{ "Guests": "' + this.memberList + '" }';
             var jmemberList = JSON.parse(memberList);
 
-            this.http.put<Event>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + this.eventId, jmemberList, this.header)
+            this.http.put<Event>(this.auth.callEvents(this.eventId), jmemberList, this.header)
             .subscribe(userResponse => {
                   alert('Membre ajouté');
                 },
@@ -212,7 +212,7 @@ export class EventComponent implements OnInit {
 
   async upMember() {
     if (this.selectedMember) {
-      this.http.get<User>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + this.selectedMember, this.header)
+      this.http.get<User>(this.auth.callUsers(this.selectedMember), this.header)
       .subscribe(userResponse => {
         if (userResponse) {
           if (!this.isPersonIn(userResponse.Id)) {
@@ -223,7 +223,7 @@ export class EventComponent implements OnInit {
             const adminList = '{ "Guests": "' + this.memberList + '", "Admins": "' + this.adminList + '" }';
             var jadminList = JSON.parse(adminList);
 
-            this.http.put<Event>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + this.eventId, jadminList, this.header)
+            this.http.put<Event>(this.auth.callEvents(this.eventId), jadminList, this.header)
             .subscribe(userResponse => {
                   alert('Membre passé admin !');
                 },
@@ -242,7 +242,7 @@ export class EventComponent implements OnInit {
 
   async delMember() {
     if (this.selectedMember) {
-      this.http.get<User>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + this.selectedMember, this.header)
+      this.http.get<User>(this.auth.callUsers(this.selectedMember), this.header)
       .subscribe(userResponse => {
         if (userResponse) {
           if (!this.isPersonIn(userResponse.Id)) {
@@ -251,7 +251,7 @@ export class EventComponent implements OnInit {
             const memberList = '{ "Guests": "' + this.memberList + '" }';
             var jmemberList = JSON.parse(memberList);
 
-            this.http.put<Event>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + this.eventId, jmemberList, this.header)
+            this.http.put<Event>(this.auth.callEvents(this.eventId), jmemberList, this.header)
             .subscribe(userResponse => {
                   alert("Membre supprimé de l'event");
                 },
@@ -289,7 +289,7 @@ export class EventComponent implements OnInit {
 
   async downAdmin() {
     if (this.selectedAdmin) {
-      this.http.get<User>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + this.selectedMember, this.header)
+      this.http.get<User>(this.auth.callUsers(this.selectedMember), this.header)
       .subscribe(userResponse => {
         if (userResponse) {
           if (!this.isPersonIn(userResponse.Id)) {
@@ -300,7 +300,7 @@ export class EventComponent implements OnInit {
             const adminList = '{ "Guests": "' + this.memberList + '", "Admins": "' + this.adminList + '" }';
             var jadminList = JSON.parse(adminList);
 
-            this.http.put<Event>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + this.eventId, jadminList, this.header)
+            this.http.put<Event>(this.auth.callEvents(this.eventId), jadminList, this.header)
             .subscribe(userResponse => {
                   alert("Admin rétrogradé !");
                 },
@@ -319,7 +319,7 @@ export class EventComponent implements OnInit {
 
   async delAdmin() {
     if (this.selectedAdmin) {
-      this.http.get<User>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + this.selectedMember, this.header)
+      this.http.get<User>(this.auth.callUsers(this.selectedMember), this.header)
       .subscribe(userResponse => {
         if (userResponse) {
           if (!this.isPersonIn(userResponse.Id)) {
@@ -328,7 +328,7 @@ export class EventComponent implements OnInit {
             const adminList = '{ "Admin": "' + this.adminList + '" }';
             var jadminList = JSON.parse(adminList);
 
-            this.http.put<Event>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + this.eventId, jadminList, this.header)
+            this.http.put<Event>(this.auth.callEvents(this.eventId), jadminList, this.header)
             .subscribe(userResponse => {
                   alert("Admin supprimé de l'event");
                 },
@@ -354,7 +354,7 @@ export class EventComponent implements OnInit {
       const needs = '{ "Name": "' + needsnameVal + '", "Quantity": ' + needsquantVal + ', "Price": ' + needspriceVal + ', "About": "' + "" + '", "FromEvent": "' + this.eventId + '", "QuantityLeft": ' + needsquantVal + ' }';
       var jneeds = JSON.parse(needs);
 
-      this.http.post<Item>("https://watermelon-api20200526035653.azurewebsites.net/api/items", jneeds, this.header)
+      this.http.post<Item>(this.auth.callItems(""), jneeds, this.header)
       .subscribe(itemResponse => {
             this.needsEvent.push(itemResponse.Id);
             alert('Votre objet a été ajouté avec succès!');
@@ -377,7 +377,7 @@ export class EventComponent implements OnInit {
       ++a;
     }
 
-    this.http.delete("https://watermelon-api20200526035653.azurewebsites.net/api/items/" + item.Id, this.header)
+    this.http.delete(this.auth.callItems(item.Id), this.header)
     .subscribe(userResponse => {
           alert("L'item a bien été supprimé.");
           location.reload();
@@ -432,7 +432,7 @@ export class EventComponent implements OnInit {
     const needs = '{ "Id": "' + item.Id + '", "Name": "' + item.Name + '", "Quantity": ' + item.Quantity + ', "Price": ' + item.Price + ', "About": "' + item.About + '", "Bring": ' + this.dispBrings(this.gived[item.Id]) + ', "Paye": ' + this.dispBrings(this.payed[item.Id]) + ', "FromEvent": ' + this.eventId + '", "QuantityLeft": ' + 0 + ' }';
     var jneeds = JSON.parse(needs);
 
-    this.http.put<Item>("https://watermelon-api20200526035653.azurewebsites.net/api/items", jneeds, this.header)
+    this.http.put<Item>(this.auth.callItems(""), jneeds, this.header)
     .subscribe(itemResponse => {
           console.log('Maj item list');
         },

@@ -42,7 +42,7 @@ export class RegisterFormComponent implements OnInit {
                 const user = '{ "Name": "' + emailVal + '", "Username": "' + usernameVal + '", "Password": "' + firstPasswdVal + '" }';
                 var juser = JSON.parse(user);
                 console.log('juser :>> ', juser);
-                this.http.post<User>("https://watermelon-api20200526035653.azurewebsites.net/api/users/create", juser, header)
+                this.http.post<User>(this.auth.callUsersCreate(), juser, header)
                     .subscribe(regResponse => {
                         this.auth.logIn(regResponse.Id, regResponse.Token);
                         this.dialogRef.close();

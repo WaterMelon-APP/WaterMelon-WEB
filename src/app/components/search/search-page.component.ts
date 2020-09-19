@@ -64,7 +64,7 @@ export class SearchComponent implements OnInit {
     }
 
 
-    this.http.get<Array<Event>>("https://watermelon-api20200526035653.azurewebsites.net/api/events/search/", this.header)
+    this.http.get<Array<Event>>(this.auth.callEventsSearch(), this.header)
     .subscribe(eventResponse => {
         this.eventL = eventResponse;
       },
@@ -123,7 +123,7 @@ export class SearchComponent implements OnInit {
     const memberList = '{ "Guests": "' + memberL + '" }';
     var jmemberList = JSON.parse(memberList);
 
-    this.http.put<Event>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + event.Id, jmemberList, this.header)
+    this.http.put<Event>(this.auth.callEvents(event.Id), jmemberList, this.header)
     .subscribe(userResponse => {
           alert("Vous avez rejoint l'event");
         },

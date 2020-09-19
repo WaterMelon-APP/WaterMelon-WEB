@@ -35,7 +35,7 @@ export class LoginFormComponent implements OnInit {
       const user = '{ "Username": "' + emailVal + '", "Password": "' + passwordVal + '" }';
       var juser = JSON.parse(user);
       console.log('juser :>> ', juser);
-      this.http.post<User>("https://watermelon-api20200526035653.azurewebsites.net/api/users/login", juser, header)
+      this.http.post<User>(this.auth.callUsersLogin(), juser, header)
       .subscribe(logResponse => {
           this.auth.logIn(logResponse.Id, logResponse.Token);
           this.dialogRef.close();

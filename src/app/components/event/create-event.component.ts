@@ -39,7 +39,7 @@ export class CreateEventComponent implements OnInit {
       var jevent = JSON.parse(event);
       console.log('jevent :>> ', jevent);
 
-      this.http.post<Event>("https://watermelon-api20200526035653.azurewebsites.net/api/events", jevent, this.header)
+      this.http.post<Event>(this.auth.callEvents(""), jevent, this.header)
       .subscribe(itemResponse => {
         alert('Votre événement a été créé avec succès!');
           console.log('itemResponse :>> ', itemResponse);

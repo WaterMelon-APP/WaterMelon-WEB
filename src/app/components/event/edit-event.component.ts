@@ -39,7 +39,7 @@ export class EditEventComponent implements OnInit {
   }
 
   async findEvent() {
-    this.http.get<Event>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + this.eventId, this.header)
+    this.http.get<Event>(this.auth.callEvents(this.eventId), this.header)
     .subscribe(eventResponse => {
         this.dateEvent = new Date(eventResponse.Date);
         this.nameEvent = eventResponse.Name;
@@ -63,7 +63,7 @@ export class EditEventComponent implements OnInit {
     if (eventnameVal != null) {
       const name = '{ "Id": "' + this.eventId + '", "Name": "' + eventnameVal + '", "Owner": "' + this.id + '", "Date": "' + this.dateEvent.toISOString() + '", "Adress": "' + this.addressEvent + '", "Guests": ' + this.clearGuests(this.guestsEvent) + ', "Public": ' + this.isPublic + ', "ItemList": ' + this.clearGuests(this.itemEvent) + ' }';
       var jname = JSON.parse(name);
-      this.http.put<Event>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + this.eventId, jname, this.header)
+      this.http.put<Event>(this.auth.callEvents(this.eventId), jname, this.header)
       .subscribe(eventResponse => {
           alert("Le nom a bien été changé à " + eventnameVal + " !");
           location.reload();
@@ -81,7 +81,7 @@ export class EditEventComponent implements OnInit {
     if (eventdateVal != null) {
       const date = '{ "Id": "' + this.eventId + '", "Name": "' + this.nameEvent + '", "Owner": "' + this.id + '", "Date": "' + eventdateVal.toISOString() + '", "Address": "' + this.addressEvent + '", "Guests": ' + this.clearGuests(this.guestsEvent) + ', "Public": ' + this.isPublic + ', "ItemList": ' + this.clearGuests(this.itemEvent) + ' }';
       var jdate = JSON.parse(date);
-      this.http.put<Event>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + this.eventId, jdate, this.header)
+      this.http.put<Event>(this.auth.callEvents(this.eventId), jdate, this.header)
       .subscribe(eventResponse => {
           alert("La date a bien été changé !");
           location.reload();
@@ -99,7 +99,7 @@ export class EditEventComponent implements OnInit {
     if (eventaddressVal != null) {
       const address = '{ "Id": "' + this.eventId + '", "Name": "' + this.nameEvent + '", "Owner": "' + this.id + '", "Date": "' + this.dateEvent.toISOString() + '", "Address": "' + eventaddressVal + '", "Guests": ' + this.clearGuests(this.guestsEvent) + ', "Public": ' + this.isPublic + ', "ItemList": ' + this.clearGuests(this.itemEvent) + ' }';
       var jaddress = JSON.parse(address);
-      this.http.put<Event>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + this.eventId, jaddress, this.header)
+      this.http.put<Event>(this.auth.callEvents(this.eventId), jaddress, this.header)
       .subscribe(eventResponse => {
           alert("L'adresse a bien été changé à " + eventaddressVal + " !");
           location.reload();
@@ -142,7 +142,7 @@ export class EditEventComponent implements OnInit {
     console.log('ispublic :>> ', ispublic);
     var jpublic = JSON.parse(ispublic);
     console.log('jpublic :>> ', jpublic);
-    this.http.put<Event>("https://watermelon-api20200526035653.azurewebsites.net/api/events/" + this.eventId, jpublic, this.header)
+    this.http.put<Event>(this.auth.callEvents(this.eventId), jpublic, this.header)
     .subscribe(eventResponse => {
       console.log('eventResponse :>> ', eventResponse);
         alert("L'événement a bien été modifié");
