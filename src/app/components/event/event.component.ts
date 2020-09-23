@@ -80,16 +80,16 @@ export class EventComponent implements OnInit {
         if (this.id == this.event.Owner) {
           this.isOwner = true;
           this.isAdmin = true;
-        }  
+        }
 
         this.membres = [];
         //this.admins = [];
         for (let me of this.memberList) {
           this.http.get<User>(this.auth.callUsers(me), this.header)
           .subscribe(userResponse => {
-                this.membres.push(userResponse.Name);
+                this.membres.push(userResponse.Username);
               },
-              error => { 
+              error => {
                 alert("Une erreur est survenue");
             }
           );
@@ -99,7 +99,7 @@ export class EventComponent implements OnInit {
           .subscribe(userResponse => {
                 this.admins.push(userResponse.Name);
               },
-              error => { 
+              error => {
                 alert("Une erreur est survenue");
             }
           );
@@ -118,15 +118,15 @@ export class EventComponent implements OnInit {
               if (userResponse.get("Give") != null && userResponse.get("Give")[0] != "") {
                 this.gived[userResponse.Id] = true;
               }*/
-  
+
             },
-              error => { 
+              error => {
                 alert("Une erreur est survenue");
             }
           );
         }
       },
-      error => { 
+      error => {
           alert("Une erreur est survenue");
       }
     );
@@ -142,7 +142,7 @@ export class EventComponent implements OnInit {
           alert("L'événement " + this.nameEvent + " a bien été supprimé.");
           this.router.navigate(['/list-user']);
         },
-        error => { 
+        error => {
           alert("Une erreur est survenue");
       }
     );
@@ -166,7 +166,7 @@ export class EventComponent implements OnInit {
     const pseudoInvitVal = this.pseudoInvit.value as string;
 
     if (pseudoInvitVal) {
-      this.http.get<User>(this.auth.callUsers(pseudoInvitVal), this.header)
+      this.http.get<User>(this.auth.callUsersByName(pseudoInvitVal), this.header)
       .subscribe(userResponse => {
         if (userResponse) {
           if (!this.isPersonIn(userResponse.Id)) {
@@ -178,13 +178,13 @@ export class EventComponent implements OnInit {
             .subscribe(userResponse => {
                   alert('Membre ajouté');
                 },
-                error => { 
+                error => {
                   alert("Une erreur est survenue");
               }
             );
         }}
       },
-        error => { 
+        error => {
           alert("Cet utilisateur n'existe pas");
         }
       );
@@ -212,7 +212,7 @@ export class EventComponent implements OnInit {
 
   async upMember() {
     if (this.selectedMember) {
-      this.http.get<User>(this.auth.callUsers(this.selectedMember), this.header)
+      this.http.get<User>(this.auth.callUsersByName(this.selectedMember), this.header)
       .subscribe(userResponse => {
         if (userResponse) {
           if (!this.isPersonIn(userResponse.Id)) {
@@ -227,13 +227,13 @@ export class EventComponent implements OnInit {
             .subscribe(userResponse => {
                   alert('Membre passé admin !');
                 },
-                error => { 
+                error => {
                   alert("Une erreur est survenue");
               }
             );
         }}
       },
-        error => { 
+        error => {
           alert("Cet utilisateur n'existe pas");
         }
       );
@@ -242,7 +242,7 @@ export class EventComponent implements OnInit {
 
   async delMember() {
     if (this.selectedMember) {
-      this.http.get<User>(this.auth.callUsers(this.selectedMember), this.header)
+      this.http.get<User>(this.auth.callUsersByName(this.selectedMember), this.header)
       .subscribe(userResponse => {
         if (userResponse) {
           if (!this.isPersonIn(userResponse.Id)) {
@@ -255,13 +255,13 @@ export class EventComponent implements OnInit {
             .subscribe(userResponse => {
                   alert("Membre supprimé de l'event");
                 },
-                error => { 
+                error => {
                   alert("Une erreur est survenue");
               }
             );
         }}
       },
-        error => { 
+        error => {
           alert("Cet utilisateur n'existe pas");
         }
       );
@@ -289,14 +289,14 @@ export class EventComponent implements OnInit {
 
   async downAdmin() {
     if (this.selectedAdmin) {
-      this.http.get<User>(this.auth.callUsers(this.selectedMember), this.header)
+      this.http.get<User>(this.auth.callUsersByName(this.selectedMember), this.header)
       .subscribe(userResponse => {
         if (userResponse) {
           if (!this.isPersonIn(userResponse.Id)) {
             this.membres.push(this.selectedAdmin);
             this.memberList.push(userResponse.Id);
             this.lessAdmin(this.selectedAdmin, userResponse.Id);
-      
+
             const adminList = '{ "Guests": "' + this.memberList + '", "Admins": "' + this.adminList + '" }';
             var jadminList = JSON.parse(adminList);
 
@@ -304,13 +304,13 @@ export class EventComponent implements OnInit {
             .subscribe(userResponse => {
                   alert("Admin rétrogradé !");
                 },
-                error => { 
+                error => {
                   alert("Une erreur est survenue");
               }
             );
         }}
       },
-        error => { 
+        error => {
           alert("Cet utilisateur n'existe pas");
         }
       );
@@ -319,7 +319,7 @@ export class EventComponent implements OnInit {
 
   async delAdmin() {
     if (this.selectedAdmin) {
-      this.http.get<User>(this.auth.callUsers(this.selectedMember), this.header)
+      this.http.get<User>(this.auth.callUsersByName(this.selectedMember), this.header)
       .subscribe(userResponse => {
         if (userResponse) {
           if (!this.isPersonIn(userResponse.Id)) {
@@ -332,13 +332,13 @@ export class EventComponent implements OnInit {
             .subscribe(userResponse => {
                   alert("Admin supprimé de l'event");
                 },
-                error => { 
+                error => {
                   alert("Une erreur est survenue");
               }
             );
         }}
       },
-        error => { 
+        error => {
           alert("Cet utilisateur n'existe pas");
         }
       );
@@ -360,7 +360,7 @@ export class EventComponent implements OnInit {
             alert('Votre objet a été ajouté avec succès!');
             location.reload();
           },
-          error => { 
+          error => {
             alert("Une erreur est survenue");
         }
       );
@@ -382,7 +382,7 @@ export class EventComponent implements OnInit {
           alert("L'item a bien été supprimé.");
           location.reload();
         },
-        error => { 
+        error => {
           alert("Une erreur est survenue");
       }
     );
@@ -436,7 +436,7 @@ export class EventComponent implements OnInit {
     .subscribe(itemResponse => {
           console.log('Maj item list');
         },
-        error => { 
+        error => {
           alert("Une erreur est survenue");
       }
     );
@@ -457,8 +457,7 @@ export class EventComponent implements OnInit {
     ret = ret + "}";
   }
 
-  async privateBand()
-  {
+  async privateBand(){
     const band = document.getElementById("grayBandPrivacy");
     if(this.isPrivate == true)
     {
