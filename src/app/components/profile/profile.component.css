@@ -6,17 +6,17 @@
 }
 
 .profile-card {
-  max-width: 400px;
+    max-width: 400px;
 }
 
 /*-- Profile picture centered --*/
 .profile-picture {
-  height: 125px; 
-  width: 125px; 
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  border-radius: 100%;
+    height: 125px; 
+    width: 125px; 
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border-radius: 100%;
 }
 
 /*--Form style--*/
@@ -34,6 +34,7 @@ input {
 	padding:20px;
 	font-family:  Arial, Helvetica, sans-serif;
 }
+
 .form-style-7 h1{
 	display: block;
 	text-align: center;
@@ -42,11 +43,13 @@ input {
 	color: #5C5C5C;
 	font-size:x-large;
 }
+
 .form-style-7 ul{
 	list-style:none;
 	padding:0;
 	margin:0;	
 }
+
 .form-style-7 li{
 	display: block;
 	padding: 9px;
@@ -54,11 +57,13 @@ input {
 	margin-bottom: 30px;
 	border-radius: 3px;
 }
+
 .form-style-7 li:last-child{
 	border:none;
 	margin-bottom: 0px;
 	text-align: center;
 }
+
 .form-style-7 li > label{
 	display: block;
 	float: left;
@@ -71,6 +76,7 @@ input {
 	overflow: hidden;
 	font-family: Arial, Helvetica, sans-serif;
 }
+
 .form-style-7 input[type="text"],
 .form-style-7 input[type="date"],
 .form-style-7 input[type="datetime"],
@@ -96,19 +102,7 @@ input {
 	padding: 0;
 	font-family: Arial, Helvetica, sans-serif;;
 }
-.form-style-7 input[type="text"]:focus,
-.form-style-7 input[type="date"]:focus,
-.form-style-7 input[type="datetime"]:focus,
-.form-style-7 input[type="email"]:focus,
-.form-style-7 input[type="number"]:focus,
-.form-style-7 input[type="facebook"]:focus,
-.form-style-7 input[type="time"]:focus,
-.form-style-7 input[type="phone"]:focus,
-.form-style-7 input[type="password"]:focus,
-.form-style-7 textarea:focus,
-.form-style-7 select:focus 
-{
-}
+
 .form-style-7 li > span{
 	background: #FF7676;
 	display: block;
@@ -121,9 +115,11 @@ input {
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
 }
+
 .form-style-7 textarea{
 	resize:none;
 }
+
 .form-style-7 input[type="submit"],
 .form-style-7 input[type="button"]{
 	background: #FD5757;
@@ -132,16 +128,18 @@ input {
 	border-radius: 3px;
 	color: #fff;
 }
+
 .form-style-7 input[type="submit"]:hover,
 .form-style-7 input[type="button"]:hover{
 	background: #FF7676;
 	color:#fff;
 }
+
 .form-style-7 input:focus,
 .form-style-7 input:focus
 {
-  border: none;
-  border-bottom: 3px solid #FD5757;
+    border: none;
+    border-bottom: 3px solid #FD5757;
 	border-radius: 3px;
 	box-shadow: 0 0 5px #FD5757;
 	border: 1px solid #FD5757;

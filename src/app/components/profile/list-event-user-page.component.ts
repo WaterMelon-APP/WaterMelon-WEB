@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
-import * as Parse from 'parse';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+
+import { AuthService } from '../../services/auth.service'
+import { Event } from '../../models/event.model'
 
 @Component({
   selector: 'app-list-event-user-page',
@@ -11,101 +13,129 @@ import { Router } from '@angular/router';
 
 export class ListEventUserPageComponent implements OnInit {
 
-  constructor(private router: Router) {}
+  eventList;
+  inviteList;
+  header: Object;
+  id: string;
 
-    eventList;
-    inviteList;
+  constructor(private router: Router, private http: HttpClient, private auth: AuthService) {}
 
   ngOnInit() {
+    this.id = this.auth.getId();
+    this.header = this.auth.getSecureHeader();
     this.EvenTListByUsr();
     this.createInviteList();
   }
 
   async createInviteList() {
-    const user = Parse.User.current();
-    const eventList = Parse.Object.extend('Event');
-    const query = new Parse.Query(eventList);
+    let invites: Array<Event>;
+    invites = [];
     this.inviteList = [];
-    var allEvent = await query.find();
-    for (let event of allEvent) {
-      if ((event.get("usersAdmin") && event.get("usersAdmin").includes(user.id))
-      || (event.get("usersGuest") && event.get("usersGuest").includes(user.id))) {
-        this.inviteList.push(event);
+
+    this.http.get<Array<Event>>(this.auth.callEventsSearchfromuser(this.id), this.header)
+    .subscribe(eventResponse => {
+        invites = eventResponse;
+      },
+      error => { 
+          alert("Une erreur est survenue");
+      }
+    );
+    for (let invite of invites) {
+      if (invite.Owner != this.id) {
+        this.inviteList.push(invite);
       }
     }
   }
 
   async EvenTListByUsr() {
-    const user = Parse.User.current();
-    const eventList = Parse.Object.extend('Event');
-    const query = new Parse.Query(eventList);
-    query.equalTo('Owner', user);
-    this.eventList = await query.find();
+    let events: Array<Event>;
+    events = [];
+    this.eventList = [];
+
+    this.http.get<Array<Event>>(this.auth.callEventsSearchfromuser(this.id), this.header)
+    .subscribe(eventResponse => {
+        this.eventList = eventResponse;
+      },
+      error => { 
+          alert("Une erreur est survenue");
+      }
+    );
+    for (let event of events) {
+      if (event.Owner == this.id) {
+        this.eventList.push(event);
+      }
+    }
   }
 
   async delEvent(id) {
-    const eventList = Parse.Object.extend('Event');
-    const query = new Parse.Query(eventList);
-    query.equalTo('objectId', id);
-    let item = await query.find();
-
-    item[0].destroy().then((item) => {
-      alert("L'événement " + item.get('eventName') + " a bien été supprimé.");
-      location.reload();
-    }, (error) => {
-      alert(error);
-    });
+    this.http.delete(this.auth.callEvents(id), this.header)
+    .subscribe(userResponse => {
+          alert("L'événement a bien été supprimé.");
+          location.reload();
+        },
+        error => { 
+          alert("Une erreur est survenue");
+      }
+    );
   }
 
-  async quitEvent(id) {
-    const user = Parse.User.current();
-    const eventList = Parse.Object.extend('Event');
-    const query = new Parse.Query(eventList);
-    query.equalTo('objectId', id);
-    let event = await query.find();
+  clearGuests(guests) {
+    let guestsList: string = '[';
+    let a = 0;
+    if (guests) {
+      for (let guest of guests) {
+        if (a) {
+          guestsList = guestsList + ", ";
+        }
+        guestsList = guestsList + '"' + guest + '"';
+        a = 1;
+      }
+    }
+    guestsList = guestsList + "]";
+    return (guestsList);
+  }
 
-    let memberList = event[0].get('usersGuest');
-    let adminList = event[0].get('usersAdmin');
+  /*-----------
+  A modifier admin
+  -----------*/
+  async quitEvent(event) {
+    let memberList = event.Guests;
+    //let adminList = event.Admins;
     if (!memberList) {
       memberList = [];
     }
-    if (!adminList) {
+    /*if (!adminList) {
       adminList = [];
-    }
+    }*/
 
     let a = 0;
     for (let i of memberList) {
-      if (i == user.id) {
+      if (i == this.id) {
         memberList.splice(a, 1);
         break;
       }
       ++a;
     }
-    a = 0;
+    /*a = 0;
     for (let i of adminList) {
-      if (i == user.id) {
+      if (i == this.id) {
         adminList.splice(a, 1);
         break;
       }
       ++a;
-    }
+    }*/
 
-    event[0].set('usersGuest', memberList);
-    event[0].save()
-    .then(res => {
-      console.log("Membre supprimé de l'event");
-    }, err=> {
-      alert(err);
-    })
-    event[0].set('usersAdmin', adminList);
-    event[0].save()
-    .then(res => {
-      console.log("Admin supprimé de l'event");
-      alert("Vous avez quitté l'event");
-      location.reload();
-    }, err=> {
-      alert(err);
-    })
+    const guest = '{ "Guests": "' + this.clearGuests(memberList) + /*'", "Admins": "' + adminList +*/ '" }';
+    var jguest = JSON.parse(guest);
+    this.http.put<Event>(this.auth.callEvents(event.Id), jguest, this.header)
+    .subscribe(eventResponse => {
+        alert("Vous avez quitté l'event");
+        location.reload();
+      },
+      error => { 
+        alert("Une erreur est survenue");
+      }
+    );
   }
 
   async editEvent(id) {

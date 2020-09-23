@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import * as Parse from 'parse';
 
+import { AuthService } from '../../services/auth.service'
 import { RegisterFormComponent } from './../register/register-form.component';
 import { CreateEventComponent } from './../event/create-event.component';
 
@@ -13,8 +13,11 @@ import { CreateEventComponent } from './../event/create-event.component';
 export class HomePageComponent implements OnInit {
 
   isLoggedIn = false;
-  constructor(public dialog: MatDialog) {
-    if (Parse.User.current()) {
+  token: string;
+
+  constructor(public dialog: MatDialog, private auth: AuthService) {
+    this.token = this.auth.getToken();
+    if (this.token) {
       this.isLoggedIn = true;
     }
   }
@@ -33,5 +36,4 @@ export class HomePageComponent implements OnInit {
     dialogConfig.autoFocus = true;
     this.dialog.open(CreateEventComponent, dialogConfig);
   }
-
 }

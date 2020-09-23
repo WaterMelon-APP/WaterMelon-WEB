@@ -42,7 +42,7 @@
         <p>L'événement est-il public ?</p>
         <!-- Rounded switch -->
         <label class="switch">
-          <input type="checkbox" id= "priv" value="getPrivacy()" (change)="editPrivacy()">
+          <input type="checkbox" id= "priv" checked={{isPublic}} (change)="editPrivacy()">
           <span class="slider round"></span>
         </label>
       </div>

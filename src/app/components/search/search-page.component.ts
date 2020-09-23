@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
-import * as Parse from 'parse';
-import { isIdentifier } from '@angular/compiler';
+import { AuthService } from '../../services/auth.service'
+import { Event } from '../../models/event.model'
 
 @Component({
   selector: 'search-page',
@@ -14,12 +15,16 @@ export class SearchComponent implements OnInit {
 
   eventList;
   research;
-  user;
+  eventL: Array<Event>;
+  header: Object;
+  id: string;
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private auth: AuthService) {
   }
 
   ngOnInit() {
+    this.id = this.auth.getId();
+    this.header = this.auth.getSecureHeader();
     let search = this.route.snapshot.paramMap.get('id');
     const reg = /[_]+/m;
     search = search.replace(reg, " ");
@@ -58,20 +63,25 @@ export class SearchComponent implements OnInit {
       lieu = false;
     }
 
-    this.user = Parse.User.current();
-    const eventList = Parse.Object.extend('Event');
-    const query = new Parse.Query(eventList);
-    query.equalTo('isPrivate', false);
-    let eventL = await query.find();
+
+    this.http.get<Array<Event>>(this.auth.callEventsSearch(), this.header)
+    .subscribe(eventResponse => {
+        this.eventL = eventResponse;
+      },
+      error => { 
+          alert("Une erreur est survenue");
+      }
+    );
+
     this.eventList = [];
     let i = 0;
-    for (let event of eventL) {
+    for (let event of this.eventL) {
       if (i >= 10) {
         break;
       }
-      if (event.get("Owner").id != this.user.id && !this.isIn(event)) {
-        let eventName = event.get("eventName").toLowerCase();
-        let eventPlace = event.get("address");
+      if (event.Owner != this.id && !this.isIn(event)) {
+        let eventName = event.Name.toLowerCase();
+        let eventPlace = event.Address;
         if (eventPlace) {
           eventPlace = eventPlace.toLowerCase();
         }
@@ -83,24 +93,23 @@ export class SearchComponent implements OnInit {
           this.eventList.push(event);
           ++i;
         }
-
       }
     }
   }
 
   isIn(event) {
-    let memberList = event.get('usersGuest');
-    let adminList = event.get('usersAdmin');
+    let memberList = event.Guests;
+    let adminList = event.Admins;
     if (memberList) {
       for (let u of memberList) {
-        if (this.user.id == u) {
+        if (this.id == u) {
           return true;
         }
       }
     }
     if (adminList) {
       for (let u of adminList) {
-        if (this.user.id == u) {
+        if (this.id == u) {
           return true;
         }
       }
@@ -108,26 +117,20 @@ export class SearchComponent implements OnInit {
     return false;
   }
 
-  async joinEvent(id) {
-    const eventList = Parse.Object.extend('Event');
-    const query = new Parse.Query(eventList);
-    query.equalTo('objectId', id);
-    let event = await query.find();
+  async joinEvent(event) {
+    let memberL = event.Guests;
+    memberL.push(this.id);
+    const memberList = '{ "Guests": "' + memberL + '" }';
+    var jmemberList = JSON.parse(memberList);
 
-    let memberList = event[0].get('usersGuest');
-    if (!memberList) {
-      memberList = [];
-    }
-    memberList.push(this.user.id);
-
-    event[0].set('usersGuest', memberList);
-    event[0].save()
-    .then(res => {
-      console.log("Membre ajouté à l'event");
-      alert("Vous avez rejoint l'event");
-    }, err=> {
-      alert(err);
-    })
+    this.http.put<Event>(this.auth.callEvents(event.Id), jmemberList, this.header)
+    .subscribe(userResponse => {
+          alert("Vous avez rejoint l'event");
+        },
+        error => { 
+          alert("Une erreur est survenue");
+      }
+    );
   }
 
   async goToEvent(id) {

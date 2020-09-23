@@ -24,26 +24,26 @@ body {
 }
 
 .cont2 {
-    height: auto;
-    display: flex;
-    flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .cont3 {
-    flex: 0 0 83.33333%;
-    max-width: 83.33333%;
-    align-self: flex-end;
+  flex: 0 0 83.33333%;
+  max-width: 83.33333%;
+  align-self: flex-end;
 }
 
 .cont4 {
-    flex: 0 0 80%;
-    max-width: 80%;
-    align-self: baseline;
+  flex: 0 0 80%;
+  max-width: 80%;
+  align-self: baseline;
 }
 
 #grayBandPrivacy{
@@ -65,27 +65,25 @@ input, mat-label, mat-select {
 }
 
 .masthead {
-    height: 75%;
-
-    padding-bottom: calc(10rem - 72px);
-  /* background-color: #5dad5d; */
+  height: 75%;
+  padding-bottom: calc(10rem - 72px);
 }
 
 hr {
-    max-width: 98%;
-    border-width: 0.2rem;
-    border-color: #f4623a;
-    margin-bottom: 1.5rem;
-    border-color: #fff;
-    margin-top: 1.5rem;
+  max-width: 98%;
+  border-width: 0.2rem;
+  border-color: #f4623a;
+  margin-bottom: 1.5rem;
+  border-color: #fff;
+  margin-top: 1.5rem;
 }
 
 mat-form-field {
-    padding-right: 3em;
+  padding-right: 3em;
 }
 
 table {
-   border-collapse: collapse;
+  border-collapse: collapse;
 }
 tr.item-list-strike {
   border-bottom: 1pt solid black;

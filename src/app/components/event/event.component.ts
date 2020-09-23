@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import * as Parse from 'parse';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import {FormControl, Validators} from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+
+import { AuthService } from '../../services/auth.service'
+import { Event } from '../../models/event.model'
+import { Item, Bring } from '../../models/item.model'
+import { User } from '../../models/user.model'
 
 @Component({
   selector: 'app-event',
@@ -12,7 +17,7 @@ import {FormControl, Validators} from '@angular/forms';
 
 export class EventComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private auth: AuthService) { }
 
   needsprice = new FormControl('', [Validators.required, Validators.requiredTrue]);
   needsquant = new FormControl('', [Validators.required, Validators.requiredTrue]);
@@ -25,13 +30,6 @@ export class EventComponent implements OnInit {
   event;
   nameEvent;
   needsEvent;
-  queryEvent;
-  queryNeeds;
-  queryItem;
-  priceNeeds;
-  namesNeeds;
-  quantNeeds;
-  totalCost;
   payed;
   gived;
   isPrivate;
@@ -43,13 +41,17 @@ export class EventComponent implements OnInit {
   selectedAdmin;
   isOwner;
   isAdmin;
+  header: Object;
+  id: string;
 
   ngOnInit() {
+    this.id = this.auth.getId();
+    this.header = this.auth.getSecureHeader();
     let id = this.route.snapshot.paramMap.get('id');
     this.eventId = id;
     this.itemList = [];
-    this.payed = new Array();
-    this.gived = new Array();
+    this.payed = new Array<Array<Bring>>();
+    this.gived = new Array<Array<Bring>>();
     this.isOwner = false;
     this.isAdmin = false;
     this.findEvent().then(() => {this.privateBand();})
@@ -57,69 +59,77 @@ export class EventComponent implements OnInit {
   }
 
   async findEvent() {
-    const eventList = Parse.Object.extend('Event');
-    const query = new Parse.Query(eventList);
-    query.equalTo('objectId', this.eventId);
-    let events = await query.find();
-    let item = events[0];
-    if (item) {
-      this.event = item;
-      this.nameEvent = this.event.get('eventName');
-      this.needsEvent = this.event.get('itemList');
-      this.memberList = this.event.get('usersGuest');
-      this.adminList = this.event.get('usersAdmin');
-      if (!this.needsEvent) {
-        this.needsEvent = [];
-      }
-      if (!this.memberList) {
-        this.memberList = [];
-      }
-      if (!this.adminList) {
-        this.adminList = [];
-      }
+    this.http.get<Event>(this.auth.callEvents(this.eventId), this.header)
+    .subscribe(eventResponse => {
+        this.event = eventResponse;
+        this.needsEvent = eventResponse.ItemList;
+        this.nameEvent = eventResponse.Name;
+        this.isPrivate = eventResponse.Public;
+        this.memberList = eventResponse.Guests;
+        //this.adminList = eventResponse.Guests;
+        if (!this.needsEvent) {
+          this.needsEvent = [];
+        }
+        if (!this.memberList) {
+          this.memberList = [];
+        }
+        /*if (!this.adminList) {
+          this.adminList = [];
+        }*/
 
-      const user = Parse.User.current();
-      if (user.id == this.event.get("Owner").id) {
-        this.isOwner = true;
-        this.isAdmin = true;
-      }
-      else if (this.adminList.includes(user.id)) {
-        this.isAdmin = true;
-      }
+        if (this.id == this.event.Owner) {
+          this.isOwner = true;
+          this.isAdmin = true;
+        }  
 
-      this.membres = [];
-      this.admins = [];
-      const users = Parse.Object.extend('User');
-      const queryU = new Parse.Query(users);
-      for (let me of this.memberList) {
-        queryU.equalTo('objectId', me);
-        var userList = await queryU.find();
-        this.membres.push(userList[0].get("username"));
-      }
-      for (let me of this.adminList) {
-        queryU.equalTo('objectId', me);
-        var userList = await queryU.find();
-        this.admins.push(userList[0].get("username"));
-      }
+        this.membres = [];
+        //this.admins = [];
+        for (let me of this.memberList) {
+          this.http.get<User>(this.auth.callUsers(me), this.header)
+          .subscribe(userResponse => {
+                this.membres.push(userResponse.Name);
+              },
+              error => { 
+                alert("Une erreur est survenue");
+            }
+          );
+        }
+        /*for (let me of this.adminList) {
+          this.http.get<UserResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + me, this.header)
+          .subscribe(userResponse => {
+                this.admins.push(userResponse.Name);
+              },
+              error => { 
+                alert("Une erreur est survenue");
+            }
+          );
+        }*/
 
-      let queryNeeds = new Parse.Query('Needs');
-      for (let item of this.needsEvent) {
-        await queryNeeds.get(item)
-        .then(res => {
-          this.itemList.push(res);
-          this.payed[res.id] = false;
-          if (res.get("Pay") != null && res.get("Pay")[0] != "") {
-            this.payed[res.id] = true;
-          }
-          this.gived[res.id] = false;
-          if (res.get("Give") != null && res.get("Give")[0] != "") {
-            this.gived[res.id] = true;
-          }
-        }, err => {
-          alert(err);
-        })
+        for (let item of this.needsEvent) {
+          this.http.get<Item>(this.auth.callItems(item), this.header)
+          .subscribe(userResponse => {
+              this.itemList.push(userResponse);
+              this.payed[userResponse.Id] = userResponse.Paye;
+              this.gived[userResponse.Id] = userResponse.Bring;
+              /*if (userResponse.get("Pay") != null && userResponse.get("Pay")[0] != "") {
+                this.payed[userResponse.Id] = true;
+              }
+              this.gived[userResponse.Id] = false;
+              if (userResponse.get("Give") != null && userResponse.get("Give")[0] != "") {
+                this.gived[userResponse.Id] = true;
+              }*/
+  
+            },
+              error => { 
+                alert("Une erreur est survenue");
+            }
+          );
+        }
+      },
+      error => { 
+          alert("Une erreur est survenue");
       }
-    }
+    );
   }
 
   async editEvent() {
@@ -127,13 +137,15 @@ export class EventComponent implements OnInit {
   }
 
   async delEvent() {
-    let item = this.event;
-    item.destroy().then((item) => {
-      alert("L'événement " + item.get('eventName') + " a bien été supprimé.");
-      this.router.navigate(['/list-user']);
-    }, (error) => {
-      alert(error);
-    });
+    this.http.delete(this.auth.callEvents(this.eventId), this.header)
+    .subscribe(userResponse => {
+          alert("L'événement " + this.nameEvent + " a bien été supprimé.");
+          this.router.navigate(['/list-user']);
+        },
+        error => { 
+          alert("Une erreur est survenue");
+      }
+    );
   }
 
   isPersonIn(id) {
@@ -154,28 +166,28 @@ export class EventComponent implements OnInit {
     const pseudoInvitVal = this.pseudoInvit.value as string;
 
     if (pseudoInvitVal) {
-      const users = Parse.Object.extend('User');
-      const query = new Parse.Query(users);
-      query.equalTo('username', pseudoInvitVal);
-      var user = await query.find();
-      if (user[0]) {
-        if (!this.isPersonIn(user[0].id)) {
-          this.memberList.push(user[0].id);
-          this.event.set('usersGuest', this.memberList);
-          this.event.save()
-          .then(res => {
-            alert('Membre ajouté');
-          }, err=> {
-            alert(err);
-          })
+      this.http.get<User>(this.auth.callUsers(pseudoInvitVal), this.header)
+      .subscribe(userResponse => {
+        if (userResponse) {
+          if (!this.isPersonIn(userResponse.Id)) {
+            this.memberList.push(userResponse.Id);
+            const memberList = '{ "Guests": "' + this.memberList + '" }';
+            var jmemberList = JSON.parse(memberList);
+
+            this.http.put<Event>(this.auth.callEvents(this.eventId), jmemberList, this.header)
+            .subscribe(userResponse => {
+                  alert('Membre ajouté');
+                },
+                error => { 
+                  alert("Une erreur est survenue");
+              }
+            );
+        }}
+      },
+        error => { 
+          alert("Cet utilisateur n'existe pas");
         }
-        else {
-          alert("Cet utilisateur est déjà membre ou admin de l'event");
-        }
-      }
-      else {
-        alert("Cet utilisateur n'existe pas");
-      }
+      );
     }
   }
 
@@ -200,46 +212,59 @@ export class EventComponent implements OnInit {
 
   async upMember() {
     if (this.selectedMember) {
-      const users = Parse.Object.extend('User');
-      const query = new Parse.Query(users);
-      query.equalTo('username', this.selectedMember);
-      var user = await query.find();
+      this.http.get<User>(this.auth.callUsers(this.selectedMember), this.header)
+      .subscribe(userResponse => {
+        if (userResponse) {
+          if (!this.isPersonIn(userResponse.Id)) {
+            this.admins.push(this.selectedMember);
+            this.adminList.push(userResponse.Id);
+            this.lessMember(this.selectedMember, userResponse.Id);
 
-      this.admins.push(this.selectedMember);
-      this.adminList.push(user[0].id);
-      this.lessMember(this.selectedMember, user[0].id);
-      this.event.set('usersGuest', this.memberList);
-      this.event.save()
-      .then(res => {
-        console.log('Membre retiré');
-      }, err=> {
-        alert(err);
-      })
-      this.event.set('usersAdmin', this.adminList);
-      this.event.save()
-      .then(res => {
-        alert("Membre passé admin !");
-      }, err=> {
-        alert(err);
-      })
+            const adminList = '{ "Guests": "' + this.memberList + '", "Admins": "' + this.adminList + '" }';
+            var jadminList = JSON.parse(adminList);
+
+            this.http.put<Event>(this.auth.callEvents(this.eventId), jadminList, this.header)
+            .subscribe(userResponse => {
+                  alert('Membre passé admin !');
+                },
+                error => { 
+                  alert("Une erreur est survenue");
+              }
+            );
+        }}
+      },
+        error => { 
+          alert("Cet utilisateur n'existe pas");
+        }
+      );
     }
   }
 
   async delMember() {
     if (this.selectedMember) {
-      const users = Parse.Object.extend('User');
-      const query = new Parse.Query(users);
-      query.equalTo('username', this.selectedMember);
-      var user = await query.find();
+      this.http.get<User>(this.auth.callUsers(this.selectedMember), this.header)
+      .subscribe(userResponse => {
+        if (userResponse) {
+          if (!this.isPersonIn(userResponse.Id)) {
+            this.lessMember(this.selectedMember, userResponse.Id);
 
-      this.lessMember(this.selectedMember, user[0].id);
-      this.event.set('usersGuest', this.memberList);
-      this.event.save()
-      .then(res => {
-        alert("Membre supprimé de l'event");
-      }, err=> {
-        alert(err);
-      })
+            const memberList = '{ "Guests": "' + this.memberList + '" }';
+            var jmemberList = JSON.parse(memberList);
+
+            this.http.put<Event>(this.auth.callEvents(this.eventId), jmemberList, this.header)
+            .subscribe(userResponse => {
+                  alert("Membre supprimé de l'event");
+                },
+                error => { 
+                  alert("Une erreur est survenue");
+              }
+            );
+        }}
+      },
+        error => { 
+          alert("Cet utilisateur n'existe pas");
+        }
+      );
     }
   }
 
@@ -264,46 +289,59 @@ export class EventComponent implements OnInit {
 
   async downAdmin() {
     if (this.selectedAdmin) {
-      const users = Parse.Object.extend('User');
-      const query = new Parse.Query(users);
-      query.equalTo('username', this.selectedAdmin);
-      var user = await query.find();
+      this.http.get<User>(this.auth.callUsers(this.selectedMember), this.header)
+      .subscribe(userResponse => {
+        if (userResponse) {
+          if (!this.isPersonIn(userResponse.Id)) {
+            this.membres.push(this.selectedAdmin);
+            this.memberList.push(userResponse.Id);
+            this.lessAdmin(this.selectedAdmin, userResponse.Id);
+      
+            const adminList = '{ "Guests": "' + this.memberList + '", "Admins": "' + this.adminList + '" }';
+            var jadminList = JSON.parse(adminList);
 
-      this.membres.push(this.selectedAdmin);
-      this.memberList.push(user[0].id);
-      this.lessAdmin(this.selectedAdmin, user[0].id);
-      this.event.set('usersGuest', this.memberList);
-      this.event.save()
-      .then(res => {
-        console.log('Admin retiré');
-      }, err=> {
-        alert(err);
-      })
-      this.event.set('usersAdmin', this.adminList);
-      this.event.save()
-      .then(res => {
-        alert("Admin rétrogradé !");
-      }, err=> {
-        alert(err);
-      })
+            this.http.put<Event>(this.auth.callEvents(this.eventId), jadminList, this.header)
+            .subscribe(userResponse => {
+                  alert("Admin rétrogradé !");
+                },
+                error => { 
+                  alert("Une erreur est survenue");
+              }
+            );
+        }}
+      },
+        error => { 
+          alert("Cet utilisateur n'existe pas");
+        }
+      );
     }
   }
 
   async delAdmin() {
     if (this.selectedAdmin) {
-      const users = Parse.Object.extend('User');
-      const query = new Parse.Query(users);
-      query.equalTo('username', this.selectedAdmin);
-      var user = await query.find();
+      this.http.get<User>(this.auth.callUsers(this.selectedMember), this.header)
+      .subscribe(userResponse => {
+        if (userResponse) {
+          if (!this.isPersonIn(userResponse.Id)) {
+            this.lessAdmin(this.selectedMember, userResponse.Id);
 
-      this.lessAdmin(this.selectedAdmin, user[0].id);
-      this.event.set('usersAdmin', this.adminList);
-      this.event.save()
-      .then(res => {
-        alert("Admin supprimé de l'event");
-      }, err=> {
-        alert(err);
-      })
+            const adminList = '{ "Admin": "' + this.adminList + '" }';
+            var jadminList = JSON.parse(adminList);
+
+            this.http.put<Event>(this.auth.callEvents(this.eventId), jadminList, this.header)
+            .subscribe(userResponse => {
+                  alert("Admin supprimé de l'event");
+                },
+                error => { 
+                  alert("Une erreur est survenue");
+              }
+            );
+        }}
+      },
+        error => { 
+          alert("Cet utilisateur n'existe pas");
+        }
+      );
     }
   }
 
@@ -313,77 +351,62 @@ export class EventComponent implements OnInit {
     const needsquantVal = parseInt(this.needsquant.value as string);
 
     if (needsnameVal != null && needspriceVal != null && needsquantVal != null) {
-      var needs = Parse.Object.extend('Needs');
-      var newNeed = new needs();
+      const needs = '{ "Name": "' + needsnameVal + '", "Quantity": ' + needsquantVal + ', "Price": ' + needspriceVal + ', "About": "' + "" + '", "FromEvent": "' + this.eventId + '", "QuantityLeft": ' + needsquantVal + ' }';
+      var jneeds = JSON.parse(needs);
 
-      newNeed.set('Name', needsnameVal);
-      newNeed.set('Price', needspriceVal);
-      newNeed.set('Quantity', needsquantVal);
-
-      newNeed.save()
-      .then(res => {
-        this.needsEvent.push(newNeed.id);
-        this.event.set('itemList', this.needsEvent);
-        this.event.save()
-        .then(res => {
-          console.log('Maj item list');
-        }, err=> {
-          alert(err);
-        })
-
-        alert('Votre objet a été ajouté avec succès!');
-        location.reload();
-      }, err => {
-        alert(err);
-      })
+      this.http.post<Item>(this.auth.callItems(""), jneeds, this.header)
+      .subscribe(itemResponse => {
+            this.needsEvent.push(itemResponse.Id);
+            alert('Votre objet a été ajouté avec succès!');
+            location.reload();
+          },
+          error => { 
+            alert("Une erreur est survenue");
+        }
+      );
     }
   }
 
   async delItem(item){
     let a = 0;
     for (let i of this.needsEvent) {
-      if (i == item.id) {
+      if (i == item.Id) {
         this.needsEvent.splice(a, 1);
         break;
       }
       ++a;
     }
-    this.event.set('itemList', this.needsEvent);
-    this.event.save()
-    .then(res => {
-      console.log('Maj item list');
-    }, err=> {
-      alert(err);
-    });
 
-    item.destroy().then((item) => {
-      alert("L'item a bien été supprimé.");
-      location.reload();
-    }, (error) => {
-      alert(error);
-    });
+    this.http.delete(this.auth.callItems(item.Id), this.header)
+    .subscribe(userResponse => {
+          alert("L'item a bien été supprimé.");
+          location.reload();
+        },
+        error => { 
+          alert("Une erreur est survenue");
+      }
+    );
   }
 
   async bringItem(item) {
-    const user = Parse.User.current();
-    let payTab = item.get("Pay");
+    let payTab = item.Paye;
     if (!payTab) {
       payTab = new Array();
     }
-    let giveTab = item.get("Give");
+    let giveTab = item.Bring;
     if (!giveTab) {
       giveTab = new Array();
     }
 
     if (this.payed[item.id] == true) {
       var reponse = window.confirm("Votre choix?");
-      if(reponse) {
-        payTab[0] = user.id;
-        let price = item.get("Quantity") * item.get("Price")
-        alert("Paiement de " + item.get("Quantity") + " " + item.get("Name") + " d'une valeur de " + price.toString() + "€.")
+      if (reponse) {
+        payTab[0] = this.id;
+        let price = item.Quantity * item.Price
+        alert("Paiement de " + item.Quantity + " " + item.Name + " d'une valeur de " + price.toString() + "€.")
       }
       else {
-        this.payed[item.id] = false;
+        this.payed[item.Id] = false;
         if (payTab[0]) {
           alert("Remboursement")
         }
@@ -395,37 +418,54 @@ export class EventComponent implements OnInit {
     }
     else {
       if (payTab[0]) {
-        let price = item.get("Quantity") * item.get("Price")
-        alert("Remboursement de " + item.get("Quantity") + " " + item.get("Name") + " d'une valeur de " + price.toString() + "€.")
+        let price = item.Quantity * item.Price
+        alert("Remboursement de " + item.Quantity + " " + item.Name + " d'une valeur de " + price.toString() + "€.")
       }
     payTab[0] = "";
     }
-    if (this.gived[item.id] == true) {
-      giveTab[0] = user.id;
+    if (this.gived[item.Id] == true) {
+      giveTab[0] = this.id;
     }
     else {
       giveTab[0] = "";
     }
-    item.set("Pay", payTab);
-    item.set("Give", giveTab);
-    item.save()
-    .then(res => {
-      console.log('Maj item list');
-    }, err=> {
-      alert(err);
-    });
+    const needs = '{ "Id": "' + item.Id + '", "Name": "' + item.Name + '", "Quantity": ' + item.Quantity + ', "Price": ' + item.Price + ', "About": "' + item.About + '", "Bring": ' + this.dispBrings(this.gived[item.Id]) + ', "Paye": ' + this.dispBrings(this.payed[item.Id]) + ', "FromEvent": ' + this.eventId + '", "QuantityLeft": ' + 0 + ' }';
+    var jneeds = JSON.parse(needs);
+
+    this.http.put<Item>(this.auth.callItems(""), jneeds, this.header)
+    .subscribe(itemResponse => {
+          console.log('Maj item list');
+        },
+        error => { 
+          alert("Une erreur est survenue");
+      }
+    );
+  }
+
+  dispBrings(bring) {
+    let ret: string = "{";
+    let a = 0;
+    if (bring) {
+      for (let b of bring) {
+        if (a) {
+          ret = ret + ", ";
+        }
+        ret = ret + '"' + b.Name + '": ' + b.Quantity;
+        a = 1;
+      }
+    }
+    ret = ret + "}";
   }
 
   async privateBand()
   {
-    const isPriv = this.event.get('isPrivate');
     const band = document.getElementById("grayBandPrivacy");
-    if(isPriv == true)
+    if(this.isPrivate == true)
     {
       band.style.visibility="visible";
       console.log("visible");
     }
-    if(isPriv == false)
+    if(this.isPrivate == false)
     {
       band.style.visibility="hidden";
       console.log("hidden");

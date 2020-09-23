@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import * as Parse from 'parse';
 import { MatDialogRef } from '@angular/material';
+import { HttpClient } from '@angular/common/http';
+
+import { AuthService } from '../../services/auth.service'
+import { Event } from '../../models/event.model'
 
 @Component({
   selector: 'app-create-event',
@@ -12,35 +15,40 @@ export class CreateEventComponent implements OnInit {
 
   eventname = new FormControl('', [Validators.required, Validators.requiredTrue]);
   eventdate = new FormControl('', [Validators.required, Validators.requiredTrue]);
-  constructor(private dialogRef: MatDialogRef<CreateEventComponent>) { }
   dateEvent;
+  header: Object;
+  id: string;
+
+  constructor(private dialogRef: MatDialogRef<CreateEventComponent>, private http: HttpClient, private auth: AuthService) { }
 
   ngOnInit() {
     this.dateEvent = new Date();
+    this.id = this.auth.getId();
+    this.header = this.auth.getSecureHeader();
   }
 
   async createEvent() {
     const eventnameVal = this.eventname.value as string;
     const eventdateVal = this.dateEvent;
     const checkbox = document.getElementById('privCreate') as HTMLInputElement;
-
+    let guests = [];
+    guests.push(this.id);
 
     if (eventnameVal != null ||  eventdateVal != null) {
-      var event = Parse.Object.extend('Event');
-      var newEvent = new event();
+      const event = '{ "Name": "' + eventnameVal + '", "Owner": "' + this.id + '", "Date": "' + eventdateVal.toISOString() + '", "Adress": "' + "" + '", "Guests": ["' + guests + '"], "Public": "' + !checkbox.checked + '", "ItemList": ' + "[]" +  ' }';
+      var jevent = JSON.parse(event);
+      console.log('jevent :>> ', jevent);
 
-
-      newEvent.set('Owner', Parse.User.current());
-      newEvent.set('eventName', eventnameVal);
-      newEvent.set('dateEvent', eventdateVal);
-      newEvent.set('isPrivate', checkbox.checked);
-      newEvent.save()
-        .then(res => {
-          alert('Votre événement a été créé avec succès!');
+      this.http.post<Event>(this.auth.callEvents(""), jevent, this.header)
+      .subscribe(itemResponse => {
+        alert('Votre événement a été créé avec succès!');
+          console.log('itemResponse :>> ', itemResponse);
           this.dialogRef.close();
-        }, err => {
-          alert(err);
-        })
+        },
+        error => { 
+          alert("Une erreur est survenue");
+        }
+      );
     }
   }
 }

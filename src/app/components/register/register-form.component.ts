@@ -1,11 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
-import * as Parse from 'parse';
-import {MatDialogRef} from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material';
+import { HttpClient } from '@angular/common/http';
 
-import { User } from '@models/user';
-
-//import {GoogleSignInSuccess} from 'angular-google-signin';
+import { User } from '../../models/user.model';
+import { AuthService } from '../../services/auth.service'
 
 @Component ({
     selector: 'app-register-form',
@@ -22,50 +21,12 @@ export class RegisterFormComponent implements OnInit {
     firstPasswd = new FormControl('', [Validators.required, Validators.requiredTrue]);
     verifPasswd = new FormControl('', [Validators.required, Validators.requiredTrue]);
 
-    constructor(private dialogRef: MatDialogRef<RegisterFormComponent>) { }
-
-    /*// Auth with Google
-    private myClientId: string = '975933495379-5b34kdfvm2hieivc1iol4ndj76biq7d9.apps.googleusercontent.com';
-
-    onGoogleSignInSuccess(event: GoogleSignInSuccess) {
-      const user = new Parse.User();
-
-      let googleUser: gapi.auth2.GoogleUser = event.googleUser;
-      let id: string = googleUser.getId();
-      let profile: gapi.auth2.BasicProfile = googleUser.getBasicProfile();
-
-      // Print user with info to console
-      const usernameVal = profile.getName();
-      console.log(usernameVal);
-      const emailVal = profile.getEmail();
-      console.log(emailVal);
-      user.set("email", emailVal);
-
-      // Generate login session token
-      const token_id = googleUser.getAuthResponse().id_token;
-      console.log(token_id);
-      Parse.User.signUp(usernameVal, "", null); // comment passer token_id en session ?
-
-      // Enter data into database
-      var userClass = Parse.Object.extend('User');
-      var newUser = new userClass();
-      newUser.set('username', usernameVal);
-      newUser.set('email', emailVal);
-      newUser.set('keyGoogle', token_id);
-      newUser.set('password', 'google');
-
-      newUser.save();
-    }*/
-
-    // Auth with Facebook
-
-    // Local registration
+    constructor(private dialogRef: MatDialogRef<RegisterFormComponent>, private http: HttpClient, private auth: AuthService) { }
 
     ngOnInit() {
     }
 
     getErrorMessage() {
-
     }
 
     async register(user: User) {
@@ -75,34 +36,21 @@ export class RegisterFormComponent implements OnInit {
         const verifPasswdVal = this.verifPasswd.value as string;
         if (usernameVal != null || emailVal != null || firstPasswdVal != null || verifPasswdVal != null) {
             if (firstPasswdVal.localeCompare(verifPasswdVal)) {
-                alert("Passwords don't match");
+                alert("Les mots de passe ne sont pas identiques.");
             } else {
-                Parse.User.signUp(usernameVal, firstPasswdVal, null)
-                .then(res => {
-                    this.dialogRef.close()
-                }, err => {
-                    console.log(err);
-                    console.log(err.code);
-                    let msg;
-                    switch (err.code) {
-                        case 101:
-                            msg = 'Email or Password is wrong.';
-                            break;
-                        case 200:
-                            msg = 'Username/email is required.';
-                            break;
-                        case 201:
-                            msg = 'Password is required.';
-                            break;
-                        case 208:
-                            msg = 'Account already exists.';
-                            break;
-                        default:
-                            //msg = 'Something goes wrong.';
-                            msg = err;
+                const header: Object = this.auth.getHeader();
+                const user = '{ "Email": "' + emailVal + '", "Username": "' + usernameVal + '", "Password": "' + firstPasswdVal + '" }';
+                var juser = JSON.parse(user);
+                console.log('juser :>> ', juser);
+                this.http.post<User>(this.auth.callUsersCreate(), juser, header)
+                    .subscribe(regResponse => {
+                        this.auth.logIn(regResponse.Id, regResponse.Token);
+                        this.dialogRef.close();
+                    },
+                    error => {
+                        alert("Une erreur est survenue");
                     }
-                    alert(msg);
-                });
+                );
             }
         }
     }
