@@ -46,15 +46,15 @@ export class ProfileComponent implements OnInit {
     this.http.get<User>(this.auth.callUsers(this.id), this.header)
     .subscribe(userResponse => {
       this.username = userResponse.Username;
-      this.name = userResponse.Name;
-      this.surname = userResponse.Name;
+      this.name = userResponse.LastName;
+      this.surname = userResponse.FirstName;
       this.email = userResponse.Email;
       this.birthdate = new Date(userResponse.Birthdate);
       this.phone = userResponse.Phone;
       this.events = userResponse.Events;
       this.profile_picture = userResponse.ProfilePicture;
     },
-      error => { 
+      error => {
           alert("Une erreur est survenue");
       }
     );
@@ -90,7 +90,7 @@ export class ProfileComponent implements OnInit {
     console.log('fBioVal :', fBioVal);
     console.log('fSurnameVal :', fSurnameVal);
 
-    const user = '{ "Id": "' + this.id + '", "Name": "' + fNameVal + '", "Username": "' + fUsernameVal + '", "Email": "' + fEmailVal + '", "FirstName": "' + fNameVal + '", "LastName": "' + fSurnameVal + '", "Phone": "' + fPhoneVal + '", "Birthdate": "' + this.birthdate.toISOString() + '", "ProfilePicture": "' + "" + '", "Events": ' + this.events + ' }';
+    const user = '{ "Id": "' + this.id + '", "Name": "' + fNameVal + '", "Username": "' + fUsernameVal + '", "Email": "' + fEmailVal + '", "FirstName": "' + fSurnameVal + '", "LastName": "' + fNameVal + '", "Phone": "' + fPhoneVal + '", "Birthdate": "' + this.birthdate.toISOString() + '", "ProfilePicture": "' + "" + '", "Events": ' + this.events + ' }';
     console.log('user :>> ', user);
     var juser = JSON.parse(user);
 
@@ -99,7 +99,7 @@ export class ProfileComponent implements OnInit {
           alert('Les changements ont bien été enregistré !');
           location.reload();
         },
-        error => { 
+        error => {
           alert("Une erreur est survenue");
       }
     );
