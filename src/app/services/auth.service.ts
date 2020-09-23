@@ -60,7 +60,7 @@ export class AuthService {
   }
 
   callEventsSearch() {
-    return (this.address + "events/search/")
+    return (this.address + "events/")
   }
 
   callEventsSearchfromuser(id) {
@@ -69,6 +69,10 @@ export class AuthService {
 
   callUsers(id){
     return (this.address + "users/" + id)
+  }
+
+  callUsersByName(id){
+    return (this.address + "users/ByName/" + id)
   }
 
   callUsersCreate() {
