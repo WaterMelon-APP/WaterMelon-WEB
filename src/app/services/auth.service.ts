@@ -72,11 +72,11 @@ export class AuthService {
   }
 
   callUsersCreate() {
-    return (this.address + "events/create/")
+    return (this.address + "users/create/")
   }
 
   callUsersLogin() {
-    return (this.address + "events/login/")
+    return (this.address + "users/login/")
   }
 
   callItems(id) {

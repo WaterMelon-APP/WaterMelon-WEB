@@ -39,7 +39,7 @@ export class RegisterFormComponent implements OnInit {
                 alert("Les mots de passe ne sont pas identiques.");
             } else {
                 const header: Object = this.auth.getHeader();
-                const user = '{ "Name": "' + emailVal + '", "Username": "' + usernameVal + '", "Password": "' + firstPasswdVal + '" }';
+                const user = '{ "Email": "' + emailVal + '", "Username": "' + usernameVal + '", "Password": "' + firstPasswdVal + '" }';
                 var juser = JSON.parse(user);
                 console.log('juser :>> ', juser);
                 this.http.post<User>(this.auth.callUsersCreate(), juser, header)
@@ -47,7 +47,7 @@ export class RegisterFormComponent implements OnInit {
                         this.auth.logIn(regResponse.Id, regResponse.Token);
                         this.dialogRef.close();
                     },
-                    error => { 
+                    error => {
                         alert("Une erreur est survenue");
                     }
                 );
