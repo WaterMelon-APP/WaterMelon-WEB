@@ -66,6 +66,17 @@
 
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="isLoggedIn">
+          <a routerLink="/"> <!-- mettre le path vers le component ici -->
+            <button mat-menu-item>
+              <mat-icon>notifications</mat-icon>
+              Notifications
+            </button>
+          </a>
+        </div>
+      </mat-toolbar-row>
+
+      <mat-toolbar-row style="height: 2em">
+        <div *ngIf="isLoggedIn">
           <a routerLink="/search/_">
             <button mat-menu-item>
               <mat-icon>add_location</mat-icon>
