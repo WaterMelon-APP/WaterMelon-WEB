@@ -1,0 +1,17 @@
+<app-nav-component ></app-nav-component>
+
+<body>
+  <div *ngFor="let notification of notificationList" class="container-all">
+    <mat-card class="events">
+      <mat-card-title>
+      </mat-card-title>
+      <p>
+         {{notification.Type}} de {{notification.From}} pour l'événement {{eventName}}
+      </p>
+      <mat-card-content>
+      </mat-card-content>
+    </mat-card>
+    <br>
+  </div>
+
+</body>

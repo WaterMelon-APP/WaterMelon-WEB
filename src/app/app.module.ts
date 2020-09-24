@@ -18,6 +18,7 @@ import { RegisterFormComponent } from './components/register/register-form.compo
 import { CreateEventComponent } from './components/event/create-event.component';
 import { EditEventComponent } from './components/event/edit-event.component';
 import { SearchComponent } from './components/search/search-page.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { SearchComponent } from './components/search/search-page.component';
     RegisterFormComponent,
     CreateEventComponent,
     EventComponent,
-    SearchComponent
+    SearchComponent,
+    NotificationsComponent
   ],
   imports: [
     ReactiveFormsModule,

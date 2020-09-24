@@ -1,0 +1,30 @@
+body {
+    height: auto;
+    width: 79%;
+    margin-top: 6em;
+    margin-left: 300px;
+    background-color: #fff;
+}
+
+h3 {
+    color: grey;
+}
+
+.events mat-card {
+    width: 200px;
+    max-width: 250px;
+    margin-bottom: 1em;
+}
+
+.event-title {
+    background-color: #FD5757;
+}
+
+
+p {
+    color: grey;
+}
+
+mat-expansion-panel {
+    margin-bottom: 1em;
+}
