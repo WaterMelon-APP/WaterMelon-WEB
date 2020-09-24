@@ -37,7 +37,7 @@ export class CreateEventComponent implements OnInit {
     guests.push(this.username);
 
     if (eventnameVal != null ||  eventdateVal != null) {
-      const event = '{ "Name": "' + eventnameVal + '", "Owner": "' + this.id + '", "Date": "' + eventdateVal.toISOString() + '", "Adress": "' + "" + '", "Guests": ["' + guests + '"], "Public": "' + !checkbox.checked + '", "ItemList": ' + "[]" +  ' }';
+      const event = '{ "Name": "' + eventnameVal + '", "Owner": "' + this.username + '", "Date": "' + eventdateVal.toISOString() + '", "Adress": "' + "" + '", "Guests": ["' + guests + '"], "Public": "' + !checkbox.checked + '", "ItemList": ' + "[]" +  ' }';
       var jevent = JSON.parse(event);
       console.log('jevent :>> ', jevent);
 

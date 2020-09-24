@@ -60,6 +60,7 @@
       </script>
       <div class="fb-share-button" data-href="https://watermelonapp.azurewebsites.net/" data-layout="button" data-size="large"></div>
     </div>
+
     <div class="cont4" *ngIf="isAdmin">
       <b>Ajouter un participant</b><br>
       <mat-form-field>
@@ -67,12 +68,13 @@
       </mat-form-field>
       <button mat-button mat-stroked-button id="square-green" (click)="addPerson()">Ajouter à l'évènement</button>
     </div>
+
     <div class="cont4" *ngIf="isOwner">
       <b>Administrateurs</b><br>
       <mat-form-field>
         <mat-label>Admin</mat-label>
         <mat-select [(value)]="selectedAdmin">
-          <mat-option *ngFor="let admin of admins" [value]="admin">
+          <mat-option *ngFor="let admin of adminList" [value]="admin">
             {{admin}}
           </mat-option>
         </mat-select>
@@ -85,7 +87,7 @@
       <mat-form-field>
         <mat-label>Membre</mat-label>
         <mat-select [(value)]="selectedMember">
-          <mat-option *ngFor="let membre of membres" [value]="membre">
+          <mat-option *ngFor="let membre of membreList" [value]="membre">
             {{membre}}
           </mat-option>
         </mat-select>
