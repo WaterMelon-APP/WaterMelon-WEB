@@ -37,7 +37,7 @@ export class LoginFormComponent implements OnInit {
       console.log('juser :>> ', juser);
       this.http.post<User>(this.auth.callUsersLogin(), juser, header)
       .subscribe(logResponse => {
-          this.auth.logIn(logResponse.Id, logResponse.Token);
+          this.auth.logIn(logResponse.Id, logResponse.Token, logResponse.Username);
           this.dialogRef.close();
         },
         error => { 

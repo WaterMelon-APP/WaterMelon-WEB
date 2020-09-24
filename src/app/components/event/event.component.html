@@ -50,7 +50,7 @@
                 <mat-form-field>
                     <mat-label>Admin</mat-label>
                     <mat-select [(value)]="selectedAdmin">
-                        <mat-option *ngFor="let admin of admins" [value]="admin">
+                        <mat-option *ngFor="let admin of adminList" [value]="admin">
                             {{admin}}
                         </mat-option>
                     </mat-select>
@@ -63,13 +63,28 @@
                 <mat-form-field>
                     <mat-label>Membre</mat-label>
                     <mat-select [(value)]="selectedMember">
-                        <mat-option *ngFor="let membre of membres" [value]="membre">
+                        <mat-option *ngFor="let membre of membreList" [value]="membre">
                             {{membre}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <button mat-button mat-stroked-button id="square-green" (click)="upMember()">Passer "Admin"</button>
                 <button mat-button mat-stroked-button id="square-pink" (click)="delMember()">Retirer de l'event</button>
+                <hr>
+            </div>
+
+            <div class="cont4" *ngIf="isAdmin">
+                <b>Invitations en cours</b><br> 
+                <div *ngFor="let invited of invitationList" class="container-all">
+                    {{invited}}
+                </div>
+                <hr>
+            </div>
+            <div class="cont4" *ngIf="isAdmin">
+                <b>Participants</b><br> 
+                <div *ngFor="let member of memberList" class="container-all">
+                    {{member}}
+                </div>
                 <hr>
             </div>
 
