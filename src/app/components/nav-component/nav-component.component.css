@@ -5,6 +5,10 @@
   width: 100%;
 }
 
+a {
+  text-decoration: none;
+}
+
 a.watermelon {
   text-decoration: none;
   color: #fff;
