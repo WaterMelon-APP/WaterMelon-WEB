@@ -44,7 +44,7 @@ export class RegisterFormComponent implements OnInit {
                 console.log('juser :>> ', juser);
                 this.http.post<User>(this.auth.callUsersCreate(), juser, header)
                     .subscribe(regResponse => {
-                        this.auth.logIn(regResponse.Id, regResponse.Token);
+                        this.auth.logIn(regResponse.Id, regResponse.Token, regResponse.Username);
                         this.dialogRef.close();
                     },
                     error => {

@@ -24,6 +24,10 @@ export class AuthService {
     return (localStorage.getItem("token"));
   }
 
+  getUsername() {
+    return (localStorage.getItem("username"));
+  }
+
   getSecureHeader() {
     let header = {
       headers: new HttpHeaders({
@@ -45,14 +49,16 @@ export class AuthService {
     return (header);
   }
 
-  logIn(id, token) {
+  logIn(id, token, username) {
     localStorage.setItem("token", token);
     localStorage.setItem("id", id);
+    localStorage.setItem("username", username);
   }
 
   logOut() {
     localStorage.setItem("token", "");
     localStorage.setItem("id", "");
+    localStorage.setItem("username", "");
   }
 
   callEvents(id) {

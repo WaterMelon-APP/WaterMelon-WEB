@@ -96,6 +96,21 @@
     </div>
 
     <div class="cont4" *ngIf="isAdmin">
+      <b>Invitations en cours</b><br> 
+      <div *ngFor="let invited of invitationList" class="container-all">
+          {{invited}}
+      </div>
+      <hr>
+    </div>
+    <div class="cont4" *ngIf="isAdmin">
+      <b>Participants</b><br> 
+      <div *ngFor="let member of memberList" class="container-all">
+          {{member}}
+      </div>
+      <hr>
+    </div>
+
+    <div class="cont4" *ngIf="isAdmin">
       <b>Ajouter un objet</b><br>
       <mat-form-field>
         <input style matInput placeholder="Nom de l'objet" [formControl]="needsname" required>

@@ -7,4 +7,5 @@ export class Event {
     Guests: Array<string>;
     Public: boolean;
     ItemList: Array<string>;
+    InvitationList: Array<string>;
 }

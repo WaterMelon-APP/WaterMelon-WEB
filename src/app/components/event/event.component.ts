@@ -33,10 +33,12 @@ export class EventComponent implements OnInit {
   payed;
   gived;
   isPrivate;
-  memberList;
-  adminList;
-  membres;
-  admins;
+  memberList: Array<string>;
+  adminList: Array<string>;
+  invitationList: Array<string>;
+  membres: Array<string>;
+  admins: Array<string>;
+  invites: Array<string>;
   selectedMember;
   selectedAdmin;
   isOwner;
@@ -67,6 +69,7 @@ export class EventComponent implements OnInit {
         this.dateEvent = eventResponse.Date;
         this.isPrivate = eventResponse.Public;
         this.memberList = eventResponse.Guests;
+        this.invitationList = eventResponse.InvitationList;
         //this.adminList = eventResponse.Guests;
         if (!this.needsEvent) {
           this.needsEvent = [];
@@ -74,17 +77,21 @@ export class EventComponent implements OnInit {
         if (!this.memberList) {
           this.memberList = [];
         }
-        /*if (!this.adminList) {
+        if (!this.invitationList) {
+          this.invitationList = [];
+        }
+        //if (!this.adminList) {
           this.adminList = [];
-        }*/
+        //}
 
         if (this.id == this.event.Owner) {
           this.isOwner = true;
           this.isAdmin = true;
         }
 
-        this.membres = [];
+        /*this.membres = [];
         //this.admins = [];
+        this.invites = [];
         for (let me of this.memberList) {
           this.http.get<User>(this.auth.callUsers(me), this.header)
           .subscribe(userResponse => {
@@ -95,6 +102,18 @@ export class EventComponent implements OnInit {
             }
           );
         }
+
+        for (let invited of this.invitationList) {
+          this.http.get<User>(this.auth.callUsers(invited), this.header)
+          .subscribe(userResponse => {
+                this.invites.push(userResponse.Username);
+              },
+              error => {
+                alert("Une erreur est survenue");
+            }
+          );
+        }*/
+
         /*for (let me of this.adminList) {
           this.http.get<UserResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + me, this.header)
           .subscribe(userResponse => {

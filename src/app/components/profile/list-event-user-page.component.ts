@@ -15,6 +15,7 @@ export class ListEventUserPageComponent implements OnInit {
 
   eventList;
   inviteList;
+  username: string;
   header: Object;
   id: string;
 
@@ -23,7 +24,8 @@ export class ListEventUserPageComponent implements OnInit {
   ngOnInit() {
     this.id = this.auth.getId();
     this.header = this.auth.getSecureHeader();
-    this.EvenTListByUsr();
+    this.username = this.auth.getUsername();
+    this.EventListByUsr();
     this.createInviteList();
   }
 
@@ -32,7 +34,7 @@ export class ListEventUserPageComponent implements OnInit {
     invites = [];
     this.inviteList = [];
 
-    this.http.get<Array<Event>>(this.auth.callEventsSearchfromuser(this.id), this.header)
+    this.http.get<Array<Event>>(this.auth.callEventsSearchfromuser(this.username), this.header)
     .subscribe(eventResponse => {
         invites = eventResponse;
       },
@@ -47,12 +49,12 @@ export class ListEventUserPageComponent implements OnInit {
     }
   }
 
-  async EvenTListByUsr() {
+  async EventListByUsr() {
     let events: Array<Event>;
     events = [];
     this.eventList = [];
-
-    this.http.get<Array<Event>>(this.auth.callEventsSearchfromuser(this.id), this.header)
+    console.log('object :>> ', this.auth.callEventsSearchfromuser(this.username));
+    this.http.get<Array<Event>>(this.auth.callEventsSearchfromuser(this.username), this.header)
     .subscribe(eventResponse => {
         this.eventList = eventResponse;
       },
