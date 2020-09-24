@@ -92,4 +92,16 @@ export class AuthService {
   callItems(id) {
     return (this.address + "items/" + id)
   }
+
+  callInvitations(id) {
+    return (this.address + "invitations/" + id)
+  }
+
+  callInvitationsAccept(id) {
+    return (this.address + "invitations/acceptinvitation/" + id)
+  }
+
+  callInvitationsRefuse(id) {
+    return (this.address + "invitations/refuseinvitation/" + id)
+  }
 }

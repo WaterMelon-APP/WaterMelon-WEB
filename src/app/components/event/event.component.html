@@ -87,7 +87,7 @@
       <mat-form-field>
         <mat-label>Membre</mat-label>
         <mat-select [(value)]="selectedMember">
-          <mat-option *ngFor="let membre of membreList" [value]="membre">
+          <mat-option *ngFor="let membre of memberList" [value]="membre">
             {{membre}}
           </mat-option>
         </mat-select>
@@ -99,7 +99,7 @@
 
     <div class="cont4" *ngIf="isAdmin">
       <b>Invitations en cours</b><br> 
-      <div *ngFor="let invited of invitationList" class="container-all">
+      <div *ngFor="let invited of invites" class="container-all">
           {{invited}}
       </div>
       <hr>

@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth.service'
 import { Event } from '../../models/event.model'
 import { Item, Bring } from '../../models/item.model'
 import { User } from '../../models/user.model'
+import { Invitation } from '../../models/invitation.model'
 
 @Component({
   selector: 'app-event',
@@ -33,6 +34,7 @@ export class EventComponent implements OnInit {
   payed;
   gived;
   isPrivate;
+  username: string;
   dateEvent: Date;
   memberList: Array<string>;
   adminList: Array<string>;
@@ -49,6 +51,7 @@ export class EventComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.auth.getId();
+    this.username = this.auth.getUsername();
     this.header = this.auth.getSecureHeader();
     let id = this.route.snapshot.paramMap.get('id');
     this.eventId = id;
@@ -84,16 +87,15 @@ export class EventComponent implements OnInit {
         //if (!this.adminList) {
           this.adminList = [];
         //}
-
-        if (this.id == this.event.Owner) {
+        if (this.username == this.event.Owner) {
           this.isOwner = true;
           this.isAdmin = true;
         }
 
-        /*this.membres = [];
+        //this.membres = [];
         //this.admins = [];
         this.invites = [];
-        for (let me of this.memberList) {
+        /*for (let me of this.memberList) {
           this.http.get<User>(this.auth.callUsers(me), this.header)
           .subscribe(userResponse => {
                 this.membres.push(userResponse.Username);
@@ -102,18 +104,20 @@ export class EventComponent implements OnInit {
                 alert("Une erreur est survenue");
             }
           );
-        }
+        }*/
 
-        for (let invited of this.invitationList) {
-          this.http.get<User>(this.auth.callUsers(invited), this.header)
+        for (let invitation of this.invitationList) {
+          this.http.get<Invitation>(this.auth.callInvitations(invitation), this.header)
           .subscribe(userResponse => {
-                this.invites.push(userResponse.Username);
-              },
-              error => {
-                alert("Une erreur est survenue");
+              if (!userResponse.Status) {
+                this.invites.push(userResponse.To);
+              }
+            },
+            error => {
+              alert("Une erreur est survenue");
             }
           );
-        }*/
+        }
 
         /*for (let me of this.adminList) {
           this.http.get<UserResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + me, this.header)
@@ -187,28 +191,19 @@ export class EventComponent implements OnInit {
     const pseudoInvitVal = this.pseudoInvit.value as string;
 
     if (pseudoInvitVal) {
-      this.http.get<User>(this.auth.callUsersByName(pseudoInvitVal), this.header)
-      .subscribe(userResponse => {
-        if (userResponse) {
-          if (!this.isPersonIn(userResponse.Id)) {
-            this.memberList.push(userResponse.Id);
-            const memberList = '{ "Guests": "' + this.memberList + '" }';
-            var jmemberList = JSON.parse(memberList);
-
-            this.http.put<Event>(this.auth.callEvents(this.eventId), jmemberList, this.header)
-            .subscribe(userResponse => {
-                  alert('Membre ajouté');
-                },
-                error => {
-                  alert("Une erreur est survenue");
-              }
-            );
-        }}
-      },
-        error => {
-          alert("Cet utilisateur n'existe pas");
-        }
-      );
+      if (!this.isPersonIn(pseudoInvitVal)) {
+        const invitation = '{ "From": "' + this.username + '", "To": "' + pseudoInvitVal + '", "EventId": "' + this.eventId + '" }';
+        var jinvitation = JSON.parse(invitation);
+        console.log('jinvitation :>> ', jinvitation);
+        this.http.post<Invitation>(this.auth.callInvitations(""), jinvitation, this.header)
+        .subscribe(userResponse => {
+              alert('Invitation envoyé');
+            },
+            error => {
+              alert("Une erreur est survenue");
+          }
+        );
+      }
     }
   }
 
