@@ -6,6 +6,10 @@ body {
     background-color: #fff;
 }
 
+.create{
+    background-color: #47D278;
+}
+
 .event-name {
     font-weight: bold;
     font-size: larger;
