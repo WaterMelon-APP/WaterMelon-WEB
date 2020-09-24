@@ -471,4 +471,11 @@ export class EventComponent implements OnInit {
     }
   }
 
+  async sendTweet()
+  {
+    const link = "https://watermelonapp.azurewebsites.net/"; //+ //add le lien de l event
+    var text = "Hey%2C%20je%20viens%20de%20cr%C3%A9er%20mon%20%C3%A9v%C3%A9nement%20" + this.nameEvent + "%20rejoint%20moi%20!" + link;
+    const tweet_url = "http://twitter.com/intent/tweet?text=" + text;
+    window.open(tweet_url, "_blank");
+  }
 }
