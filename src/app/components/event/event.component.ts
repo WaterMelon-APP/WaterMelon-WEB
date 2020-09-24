@@ -33,6 +33,7 @@ export class EventComponent implements OnInit {
   payed;
   gived;
   isPrivate;
+  dateEvent: Date;
   memberList: Array<string>;
   adminList: Array<string>;
   invitationList: Array<string>;
