@@ -64,6 +64,7 @@ export class EventComponent implements OnInit {
         this.event = eventResponse;
         this.needsEvent = eventResponse.ItemList;
         this.nameEvent = eventResponse.Name;
+        this.dateEvent = eventResponse.Date;
         this.isPrivate = eventResponse.Public;
         this.memberList = eventResponse.Guests;
         //this.adminList = eventResponse.Guests;
