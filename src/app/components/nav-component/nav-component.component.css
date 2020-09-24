@@ -28,6 +28,14 @@ a.watermelon {
   padding: 0 14px;
 }
 
+.notification {
+  display: inline-block;
+  margin-top: 0.5em;
+  font-size: 0.7em;
+  position: fixed;
+  right: 27em;
+}
+
 .search-bar {
   display: inline-block;
   margin-top: 0.5em;
