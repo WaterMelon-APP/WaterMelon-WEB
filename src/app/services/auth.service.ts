@@ -111,3 +111,4 @@ export class AuthService {
   callInvitationsRefuse(id) {
     return (this.address + "invitations/refuseinvitation/" + id)
 }
+}

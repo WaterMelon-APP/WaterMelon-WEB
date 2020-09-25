@@ -22,7 +22,7 @@
         <button mat-button [matMenuTriggerFor]="menu" (click)="getNotifications()">Notifications
           <mat-icon>notifications</mat-icon>
         </button>
-        <mat-menu #menu="matMenu">
+        <mat-menu class="notif-menu" #menu="matMenu">
           <button mat-menu-item *ngFor="let notification of notificationList"> {{notification.Type}} de {{notification.From}} pour l'événement {{eventName}}</button>
         </mat-menu>
       </div>
