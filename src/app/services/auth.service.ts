@@ -93,6 +93,14 @@ export class AuthService {
     return (this.address + "items/" + id)
   }
 
+  callItemGive(id) {
+    return (this.address + "items/give/" + id)
+  }
+
+  callItemPay(id) {
+    return (this.address + "items/pay/" + id)
+  }
+
   callNotificationsTo(username) {
     return (this.address + "notifications/getNotificationsTo/" + username)
   }

@@ -137,8 +137,8 @@
         <td class="linetrought"> {{item.Name}} </td>
         <td class="linetrought"> {{item.Price}} </td>
         <td class="linetrought"> {{item.Quantity}} </td>
-        <mat-checkbox class="selected-pay" [(ngModel)]="payed[item.id]"> Paye </mat-checkbox>
-        <mat-checkbox class="selected-bring" [(ngModel)]="gived[item.id]"> Apporte </mat-checkbox>
+        <mat-checkbox class="selected-pay" [(ngModel)]="payed[item.Id]"> Paye </mat-checkbox>
+        <mat-checkbox class="selected-bring" [(ngModel)]="gived[item.Id]"> Apporte </mat-checkbox>
         <button mat-button mat-stroked-button color="primary" (click)="bringItem(item)"> Confirmer</button>
         <button class="delete" mat-stroked-button mat-icon-button (click)="delItem(item)">
           <mat-icon>delete_sweep</mat-icon>
