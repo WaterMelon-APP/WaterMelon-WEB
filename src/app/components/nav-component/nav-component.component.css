@@ -29,6 +29,7 @@ a.watermelon {
 }
 
 .notification {
+  background-color: #47D278 !important;
   display: inline-block;
   margin-top: 0.5em;
   font-size: 0.7em;
@@ -91,4 +92,11 @@ mat-toolbar-row div {
   margin:none;
   height: 2em;
   width: 100%;
+}
+
+.notif-menu {
+  background-color: #47D278 !important;
+  width: auto;
+  padding: auto;
+
 }
