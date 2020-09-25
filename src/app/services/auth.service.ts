@@ -120,4 +120,3 @@ export class AuthService {
     return (this.address + "invitations/refuseinvitation/" + id)
   }
 }
-}
