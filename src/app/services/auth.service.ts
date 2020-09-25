@@ -5,7 +5,7 @@ import { HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthService {
-  address="https://watermelon-api-dev-as.azurewebsites.net/api/"
+  address = "https://watermelon-api-dev-as.azurewebsites.net/api/"
 
   constructor() {
     if (!localStorage.getItem("token")) {
@@ -31,9 +31,9 @@ export class AuthService {
   getSecureHeader() {
     let header = {
       headers: new HttpHeaders({
-          Accept: 'application/json',
-          'Content-Type':  'application/json',
-          'Authorization': 'Bearer ' + this.getToken(),
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.getToken(),
       })
     };
     return (header);
@@ -42,8 +42,8 @@ export class AuthService {
   getHeader() {
     let header = {
       headers: new HttpHeaders({
-          Accept: 'application/json',
-          'Content-Type':  'application/json'
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
       })
     };
     return (header);
@@ -73,11 +73,11 @@ export class AuthService {
     return (this.address + "events/searchfromuser/" + id)
   }
 
-  callUsers(id){
+  callUsers(id) {
     return (this.address + "users/" + id)
   }
 
-  callUsersByName(id){
+  callUsersByName(id) {
     return (this.address + "users/ByName/" + id)
   }
 
@@ -91,6 +91,14 @@ export class AuthService {
 
   callItems(id) {
     return (this.address + "items/" + id)
+  }
+
+  callItemGive(id) {
+    return (this.address + "items/give/" + id)
+  }
+
+  callItemPay(id) {
+    return (this.address + "items/pay/" + id)
   }
 
   callNotificationsTo(username) {
@@ -110,5 +118,6 @@ export class AuthService {
 
   callInvitationsRefuse(id) {
     return (this.address + "invitations/refuseinvitation/" + id)
+  }
 }
 }

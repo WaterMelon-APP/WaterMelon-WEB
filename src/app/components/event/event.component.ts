@@ -27,12 +27,14 @@ export class EventComponent implements OnInit {
   payeQuantity = new FormControl('', [Validators.required, Validators.requiredTrue]);
   giveQuantity = new FormControl('', [Validators.required, Validators.requiredTrue]);
   eventId;
-  itemList;
+  itemList: Array<Item>;
   event;
   nameEvent;
-  needsEvent;
+  needsEvent: Array<string>;
   payed;
+  paye;
   gived;
+  give;
   isPrivate;
   username: string;
   dateEvent: Date;
@@ -56,8 +58,10 @@ export class EventComponent implements OnInit {
     let id = this.route.snapshot.paramMap.get('id');
     this.eventId = id;
     this.itemList = [];
-    this.payed = new Array<Array<Bring>>();
-    this.gived = new Array<Array<Bring>>();
+    this.paye = new Array<Array<Bring>>();
+    this.give = new Array<Array<Bring>>();
+    this.gived = [];
+    this.payed = [];
     this.isOwner = false;
     this.isAdmin = false;
     this.findEvent().then(() => {this.privateBand();})
@@ -134,8 +138,29 @@ export class EventComponent implements OnInit {
           this.http.get<Item>(this.auth.callItems(item), this.header)
           .subscribe(userResponse => {
               this.itemList.push(userResponse);
-              this.payed[userResponse.Id] = userResponse.Paye;
-              this.gived[userResponse.Id] = userResponse.Bring;
+              console.log('userResponse :>> ', userResponse);
+              this.paye[userResponse.Id] = userResponse.Pay;
+              this.give[userResponse.Id] = userResponse.Bring;
+              console.log('this.payed :>> ', this.payed);
+              console.log('this.gived :>> ', this.gived);
+              console.log('this.paye :>> ', this.paye);
+              console.log('this.give :>> ', this.give);
+            if (this.paye[userResponse.Id]) {
+                this.payed[userResponse.Id] = true;
+              }
+              else if (!this.paye[userResponse.Id]) {
+                this.payed[userResponse.Id] = false;
+              }
+              if (this.give[userResponse.Id]) {
+                this.gived[userResponse.Id] = true;
+              }
+              else if (!this.give[userResponse.Id]){
+                this.gived[userResponse.Id] = false;
+              }
+              console.log('this.payed :>> ', this.payed);
+              console.log('this.gived :>> ', this.gived);
+              console.log('this.paye :>> ', this.paye);
+              console.log('this.give :>> ', this.give);
               /*if (userResponse.get("Pay") != null && userResponse.get("Pay")[0] != "") {
                 this.payed[userResponse.Id] = true;
               }
@@ -384,15 +409,6 @@ export class EventComponent implements OnInit {
   }
 
   async delItem(item){
-    let a = 0;
-    for (let i of this.needsEvent) {
-      if (i == item.Id) {
-        this.needsEvent.splice(a, 1);
-        break;
-      }
-      ++a;
-    }
-
     this.http.delete(this.auth.callItems(item.Id), this.header)
     .subscribe(userResponse => {
           alert("L'item a bien été supprimé.");
@@ -445,32 +461,31 @@ export class EventComponent implements OnInit {
     else {
       giveTab[0] = "";
     }
-    const needs = '{ "Id": "' + item.Id + '", "Name": "' + item.Name + '", "Quantity": ' + item.Quantity + ', "Price": ' + item.Price + ', "About": "' + item.About + '", "Bring": ' + this.dispBrings(this.gived[item.Id]) + ', "Paye": ' + this.dispBrings(this.payed[item.Id]) + ', "FromEvent": ' + this.eventId + '", "QuantityLeft": ' + 0 + ' }';
+    const needs = '{ "userId": "' + this.id + '", "Quantity": ' + item.Quantity + ' }'
+    console.log('needs :>> ', needs);
     var jneeds = JSON.parse(needs);
 
-    this.http.put<Item>(this.auth.callItems(""), jneeds, this.header)
-    .subscribe(itemResponse => {
-          console.log('Maj item list');
-        },
-        error => {
-          alert("Une erreur est survenue");
-      }
-    );
-  }
-
-  dispBrings(bring) {
-    let ret: string = "{";
-    let a = 0;
-    if (bring) {
-      for (let b of bring) {
-        if (a) {
-          ret = ret + ", ";
+    if (this.payed[item.Id] == true) {
+      console.log('this.auth.callItemPay(item.Id) :>> ', this.auth.callItemPay(item.Id));
+      this.http.put<Item>(this.auth.callItemPay(item.Id), jneeds, this.header)
+      .subscribe(itemResponse => {
+            console.log('Maj item list');
+          },
+          error => {
+            alert("Une erreur est survenue");
         }
-        ret = ret + '"' + b.Name + '": ' + b.Quantity;
-        a = 1;
-      }
+      );
     }
-    ret = ret + "}";
+    else if (this.gived[item.Id] == true) {
+      this.http.put<Item>(this.auth.callItemGive(item.Id), jneeds, this.header)
+      .subscribe(itemResponse => {
+            console.log('Maj item list');
+          },
+          error => {
+            alert("Une erreur est survenue");
+        }
+      );
+    }
   }
 
   async privateBand(){
