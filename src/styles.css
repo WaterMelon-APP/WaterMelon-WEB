@@ -1,5 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
-html, body { height: 100%; }
-body { margin: 0 auto; font-family: Roboto, "Helvetica Neue", sans-serif; } 
+/*
+
+Main colors
+
+GREEN =  #47D278  OR  rgb(71, 210, 118)
+PINK  =  #FD5757
+
+*/
+
+html, body {
+    height: 100%;
+}
+
+body { 
+    margin: 0 auto;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-color: #fff;
+} 
+
+/* List all the mat- elements to prestyle */
+
+
+

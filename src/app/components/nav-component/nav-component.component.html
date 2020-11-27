@@ -1,26 +1,40 @@
-<mat-sidenav-container class="top-toolbar">
-  <mat-sidenav-content>
-    <mat-toolbar class="top-nav">
-      <a class="watermelon" routerLink="/">
-        <img src="favicon.ico" style="padding-right: 10px; padding-left: 20px" height="25px" />
-        <span>Watermelon</span>
-      </a>
+<div class="top-nav">
+  <a class="watermelon" routerLink="/">
+    <img src="favicon.ico" style="padding-right: 10px; padding-left: 20px" height="25px" />
+    <span>Watermelon</span>
+  </a>
 
-      <!-- Search bar -->
-      <div class="search-bar">
-        <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Rechercher" [formControl]="search">
-        </mat-form-field>
-        <button class="search" mat-stroked-button mat-icon-button (click)="searchEvents()">
+  <!-- Search bar -->
+  <div class="search-bar">
+      <form style="display: inline-block">
+        <input type="text" placeholder="Rechercher" [formControl]="search">
+      
+        <button class="dropdown">
+          <mat-icon>keyboard_arrow_down</mat-icon>
+          <div class="dropdown-content">
+            <ul>
+              <li>Lieu</li>
+              <li>Nom</li>
+              <li>Date unique</li>
+              <li>Plage de dates</li>
+            </ul>
+          </div>
+        </button>
+
+        <button class="search" (click)="searchEvents()">
           <mat-icon>search</mat-icon>
         </button>
-        <mat-checkbox class="example-margin" [(ngModel)]="nom">Nom</mat-checkbox>
-        <mat-checkbox class="example-margin" [(ngModel)]="lieu">Lieu</mat-checkbox>
-      </div>
+  
+      </form>
+</div>
 
-    </mat-toolbar>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    
+
+    
+
+   <!-- <mat-checkbox class="example-margin" [(ngModel)]="nom">Nom</mat-checkbox>
+    <mat-checkbox class="example-margin" [(ngModel)]="lieu">Lieu</mat-checkbox>
+ -->
 
 <mat-sidenav-container class="main-nav">
   <mat-sidenav-content class="example-sidenav">
@@ -29,7 +43,7 @@
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="isLoggedIn">
           <a routerLink="/list-user">
-            <button mat-menu-item>
+            <button class="nav-element">
               <mat-icon>event_note</mat-icon>
               Mes événements
             </button>
@@ -40,7 +54,7 @@
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="isLoggedIn">
           <a routerLink="/profile">
-            <button mat-menu-item>
+            <button class="nav-element">
               <mat-icon>perm_identity</mat-icon>
               Mon profil
             </button>
@@ -50,7 +64,7 @@
 
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="isLoggedIn">
-          <button mat-menu-item (click)="createEvent()">
+          <button class="nav-element" (click)="createEvent()">
             <mat-icon>playlist_add</mat-icon>
             Créer un événement
           </button>
@@ -60,7 +74,7 @@
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="isLoggedIn">
           <a routerLink="/search/_">
-            <button mat-menu-item>
+            <button class="nav-element">
               <mat-icon>add_location</mat-icon>
               Découvrir
             </button>
@@ -70,7 +84,7 @@
 
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="!isLoggedIn">
-          <button mat-menu-item (click)="Login()">
+          <button class="nav-element" (click)="Login()">
             <mat-icon>fingerprint</mat-icon>
             <span>Sign in</span>
           </button>
@@ -79,7 +93,7 @@
 
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="!isLoggedIn">
-          <button mat-menu-item (click)="Register()">
+          <button class="nav-element" (click)="Register()">
             <mat-icon>accessibility_new</mat-icon>
             <span>Register</span>
           </button>
@@ -88,7 +102,7 @@
 
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="isLoggedIn">
-          <button mat-menu-item (click)="signOut()">
+          <button class="nav-element" (click)="signOut()">
             <mat-icon>exit_to_app</mat-icon>
             <span>Se déconnecter</span>
           </button>
