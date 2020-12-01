@@ -64,51 +64,95 @@ button, button:active {
 
 form, .bar, .div-dropdown, .search-button {
   display: inline-block;
+  margin: 0;
 }
 
 .search-bar {
-  display: inline;
-  margin: 0;
+  display: inline-block;
   height: 40px;
-  width: 40%;
   position: fixed;
   top: 15px;
-  left: 45%;
-  border: solid 1px #000;
+  left: 700px;
 }
 
-.search-bar form input[type="text"] {
-  padding: 10px;
+.search-bar input {
+  position: fixed;
+  height: 12px;
+  width: 175px;
+  margin: 0;
+  padding: 12px 10px 12px 15px;
   border: solid 2px #FD5757;
   border-radius: 20px 0 0 20px;
 }
 
-.search-bar .dropdown {
-  display: inline-block;
-  margin: 0;
+.search-bar .dropdown, .search-bar .search, .icon {
+  position: fixed;
   height: 40px;
   width: 50px;
   background-color: #FD5757;
   color: #fff;
 }
 
-.search-bar .dropdown .dropdown-content {
-    background-color: #FD5757;
-    display: none;
-    width: 200px;
+.dropdown {
+  left: 900px;
 }
 
-.search-bar .dropdown .dropdown-content li {
+.icon {
+  left: 950px;
+  border-right: solid 2px #fff;
+  border-left: solid 2px #fff;
+}
+
+.search-bar .dropdown .dropdown-content {
+  position: relative;
+  display: none;
+  width: 180px;
+  border-radius: 0 10px 10px 10px;
+}
+
+.dropdown .dropdown-content button {
   list-style-type: none;
-  padding: 7px;
+  width: 175px;
+  height: 50px;
   margin: 0;
   background-color: #fff;
-  border: solid 2px #FD5757;
-  color: #333;
+  border: solid 1px darkgrey;
+  color: #464646;
+  font-weight: bold;
+}
+
+.dropdown .dropdown-content button:hover {
+  background-color: #FD5757;
+  color: white;
+}
+
+#first-button {
+  border-radius: 0 10px 0 0;
+}
+
+#last-button {
+  border-radius: 0 0 10px 10px;
+}
+
+.dropdown-content button mat-icon {
+  padding-right: 10px;
+}
+
+.search-bar .dropdown:hover {
+  height: 40px;
+  margin: 0;
 }
 
 .search-bar .dropdown:hover .dropdown-content {
   display: inline-block;
+  position: relative;
+  margin-top: 12px;
+}
+
+.search-bar .search {
+  border-radius: 0 20px 20px 0;
+  left: 1000px;
+
 }
 
 a.watermelon {
@@ -116,11 +160,6 @@ a.watermelon {
   color: #fff;
   font-size: 24px;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-.search {
-  width: 1em;
-  padding: 0 2em 0 1em;
 }
 
 mat-checkbox {

@@ -21,5 +21,7 @@ body {
 
 /* List all the mat- elements to prestyle */
 
-
+button:active{
+    border: 0;
+}
 
