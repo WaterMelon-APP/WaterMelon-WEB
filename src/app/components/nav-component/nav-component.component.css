@@ -138,7 +138,7 @@ form, .bar, .div-dropdown, .search-button {
   padding-right: 10px;
 }
 
-.search-bar .dropdown:hover {
+.search-bar .dropdown:hover, .notif-bell:hover {
   height: 40px;
   margin: 0;
 }
@@ -164,4 +164,37 @@ a.watermelon {
 
 mat-checkbox {
   padding-left: 1em;
+}
+
+/* Notifications */
+
+.notif-number, .notif-bell {
+  position: fixed;
+  top: 15px;
+}
+
+.notif-number {
+  margin-top: 5px;
+  right: 75px;
+  text-align: center;
+  font-size: 14px;
+  padding: 5px 10px;
+  color: #FFF;
+  background-color: #FD5757;
+  border-radius: 100%;
+}
+
+.notif-bell {
+  right: 40px;
+  background: none !important;
+}
+
+.notif-bell mat-icon {
+  color: #FD5757;
+  padding: 0;
+  font-size: 38px;
+}
+
+.notif-bell mat-icon:hover {
+  color: #464646;
 }

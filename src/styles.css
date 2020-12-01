@@ -7,6 +7,8 @@ Main colors
 GREEN =  #47D278  OR  rgb(71, 210, 118)
 PINK  =  #FD5757
 
+GREY = #464646
+
 */
 
 html, body {
@@ -21,7 +23,13 @@ body {
 
 /* List all the mat- elements to prestyle */
 
-button:active{
+button {
+    background-color: 0;
     border: 0;
 }
 
+.watermelon-card {
+    border: solid 2px #FD5757;
+    background-color: #fff;
+    border-radius: 10px;
+}
