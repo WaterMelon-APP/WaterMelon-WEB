@@ -111,19 +111,23 @@
 
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="!isLoggedIn">
-          <button class="nav-element" (click)="Login()">
-            <mat-icon>fingerprint</mat-icon>
-            <span>Sign in</span>
-          </button>
+          <a routerLink="/login/">
+            <button class="nav-element">
+              <mat-icon>fingerprint</mat-icon>
+              <span>Sign in</span>
+            </button>
+          </a>
         </div>
       </mat-toolbar-row>
 
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="!isLoggedIn">
-          <button class="nav-element" (click)="Register()">
-            <mat-icon>accessibility_new</mat-icon>
-            <span>Register</span>
-          </button>
+          <a routerLink="/register/">
+            <button class="nav-element">
+              <mat-icon>accessibility_new</mat-icon>
+              <span>Register</span>
+            </button>
+          </a>
         </div>
       </mat-toolbar-row>
 

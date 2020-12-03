@@ -55,6 +55,9 @@ button, button:active {
 
 .top-nav {
   display: inline-block;
+  position: fixed;
+  top: 0;
+  left: 0;
   background-color: #47D278;
   margin: none;
   height: 50px;

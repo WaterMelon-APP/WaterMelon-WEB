@@ -33,3 +33,59 @@ button {
     background-color: #fff;
     border-radius: 10px;
 }
+
+mat-form-field-label { color:rgba(255,255,255,.7)}
+.mat-hint{color:rgba(255,255,255,.7)}
+.mat-form-field.mat-focused .mat-form-field-label{color:#c2185b}
+.mat-form-field.mat-focused .mat-form-field-label.mat-accent{color:#b0bec5}
+.mat-form-field.mat-focused .mat-form-field-label.mat-warn{color:#f44336}
+.mat-focused .mat-form-field-required-marker{color:#b0bec5}
+.mat-form-field-ripple{background-color:#fff}
+.mat-form-field.mat-focused .mat-form-field-ripple{background-color:#c2185b}
+.mat-form-field.mat-focused .mat-form-field-ripple.mat-accent{background-color:#b0bec5}
+.mat-form-field.mat-focused .mat-form-field-ripple.mat-warn{background-color:#f44336}
+.mat-form-field-type-mat-native-select.mat-focused:not(.mat-form-field-invalid) .mat-form-field-infix::after{color:#c2185b}
+.mat-form-field-type-mat-native-select.mat-focused:not(.mat-form-field-invalid).mat-accent .mat-form-field-infix::after{color:#b0bec5}
+.mat-form-field-type-mat-native-select.mat-focused:not(.mat-form-field-invalid).mat-warn .mat-form-field-infix::after{color:#f44336}
+.mat-form-field.mat-form-field-invalid .mat-form-field-label{color:#f44336}
+.mat-form-field.mat-form-field-invalid .mat-form-field-label .mat-form-field-required-marker,.mat-form-field.mat-form-field-invalid .mat-form-field-label.mat-accent{color:#f44336}
+.mat-form-field.mat-form-field-invalid .mat-form-field-ripple,.mat-form-field.mat-form-field-invalid .mat-form-field-ripple.mat-accent{background-color:#f44336}
+.mat-error{color:#f44336}
+.mat-form-field-appearance-legacy .mat-form-field-label{color:rgba(255,255,255,.7)}
+.mat-form-field-appearance-legacy .mat-hint{color:rgba(255,255,255,.7)}
+.mat-form-field-appearance-legacy .mat-form-field-underline{background-color:rgba(255,255,255,.7)}
+.mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline{background-image:linear-gradient(to right,rgba(255,255,255,.7) 0,rgba(255,255,255,.7) 33%,transparent 0);background-size:4px 100%;background-repeat:repeat-x}
+.mat-form-field-appearance-standard .mat-form-field-underline{background-color:rgba(255,255,255,.7)}
+.mat-form-field-appearance-standard.mat-form-field-disabled .mat-form-field-underline{background-image:linear-gradient(to right,rgba(255,255,255,.7) 0,rgba(255,255,255,.7) 33%,transparent 0);background-size:4px 100%;background-repeat:repeat-x}
+.mat-form-field-appearance-fill .mat-form-field-flex{background-color:rgba(255,255,255,.1)}.mat-form-field-appearance-fill.mat-form-field-disabled .mat-form-field-flex{background-color:rgba(255,255,255,.05)}
+.mat-form-field-appearance-fill .mat-form-field-underline::before{background-color:rgba(255,255,255,.5)}
+.mat-form-field-appearance-fill.mat-form-field-disabled .mat-form-field-label{color:rgba(255,255,255,.5)}
+.mat-form-field-appearance-fill.mat-form-field-disabled .mat-form-field-underline::before{background-color:transparent}
+.mat-form-field-appearance-outline .mat-form-field-outline{color:rgba(255,255,255,.3)}
+.mat-form-field-appearance-outline .mat-form-field-outline-thick{color:#fff}
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick{color:#c2185b}
+.mat-form-field-appearance-outline.mat-focused.mat-accent .mat-form-field-outline-thick{color:#b0bec5}
+.mat-form-field-appearance-outline.mat-focused.mat-warn .mat-form-field-outline-thick{color:#f44336}
+.mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick{color:#f44336}
+.mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-label{color:rgba(255,255,255,.5)}
+.mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-outline{color:rgba(255,255,255,.15)}
+.mat-icon.mat-primary{color:#c2185b}
+.mat-icon.mat-accent{color:#b0bec5}
+.mat-icon.mat-warn{color:#f44336}
+.mat-form-field-type-mat-native-select .mat-form-field-infix::after{color:rgba(255,255,255,.7)}
+.mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after,.mat-input-element:disabled{color:rgba(255,255,255,.5)}
+.mat-input-element{caret-color:#c2185b}
+.mat-input-element::placeholder{color:rgba(255,255,255,.5)}
+.mat-input-element::-moz-placeholder{color:rgba(255,255,255,.5)}
+.mat-input-element::-webkit-input-placeholder{color:rgba(255,255,255,.5)}
+.mat-input-element:-ms-input-placeholder{color:rgba(255,255,255,.5)}
+.mat-input-element option{color:rgba(0,0,0,.87)}
+.mat-input-element option:disabled{color:rgba(0,0,0,.38)}
+.mat-accent .mat-input-element{caret-color:#b0bec5}
+.mat-form-field-invalid .mat-input-element,.mat-warn .mat-input-element{caret-color:#f44336}
+.mat-form-field-type-mat-native-select.mat-form-field-invalid .mat-form-field-infix::after{color:#f44336}
+.mat-form-field.mat-focused.mat-primary .mat-select-arrow{color:#c2185b}
+.mat-form-field.mat-focused.mat-accent .mat-select-arrow{color:#b0bec5}
+.mat-form-field.mat-focused.mat-warn .mat-select-arrow{color:#f44336}
+.mat-form-field .mat-select.mat-select-invalid .mat-select-arrow{color:#f44336}
+.mat-form-field .mat-select.mat-select-disabled .mat-select-arrow{color:rgba(255,255,255,.5)}
