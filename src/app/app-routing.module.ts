@@ -16,9 +16,7 @@ const routes: Routes = [
   {path: 'list-user', component: ListEventUserPageComponent},
   {path: 'event/:id', component: EventComponent },
   {path: 'event-edit/:id', component: EditEventComponent},
-  {path: 'search/:id', component: SearchComponent},
-  {path: 'register', component: RegisterFormComponent},
-  {path: 'login', component: LoginFormComponent}
+  {path: 'search/:id', component: SearchComponent}
 ];
 
 @NgModule({
@@ -32,5 +30,4 @@ export const routingComponent = [HomePageComponent,
                                 EventComponent,
                                 EditEventComponent,
                                 SearchComponent,
-                                RegisterFormComponent,
-                                LoginFormComponent]
+                                ]

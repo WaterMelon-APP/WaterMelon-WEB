@@ -1,21 +1,4 @@
-.signin {
-  margin-left: 40%;
-  width: 400px;
-  background-color: #FD5757;
-  border-radius: 10px;
-  color: #fff;
-}
-
-input {
-  padding: 10px;
-}
-
-mat-form-field {
-  margin: 20px 0 20px 0;
-}
-
 h3 {
-  padding-top: 50px;
   text-align: center;
   color: #fff;
 }
