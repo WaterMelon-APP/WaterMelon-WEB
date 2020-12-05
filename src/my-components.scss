@@ -1,0 +1,533 @@
+// Material Theming
+// After importing all MDC Web components, apply mixins to theme individual components
+
+// .mdc-button {
+//   @include mdc-button-shape-radius(50%);
+// }
+
+// Checkbox and radio
+
+.mdc-checkbox, .mdc-radio {
+    margin-right: 4px;
+  }
+  
+  // Switch
+  
+  .mdc-switch {
+    @include mdc-rtl-reflexive-box(margin, right, 20px);
+  }
+  
+  // Top app bar
+  
+  .component-wrapper .mdc-top-app-bar {
+    @include mdc-elevation(4);
+    position: relative;
+    z-index: 1;
+  
+    &:not(.mdc-top-app-bar--short) {
+      width: 100%;
+    }
+  }
+  
+  // Card
+  
+  .mdc-card {
+    width: 100%;
+    color: $mdc-theme-on-surface;
+  
+    .demo-card__primary {
+      padding: 1rem;
+    }
+  
+    .demo-card__title,
+    .demo-card__subtitle {
+      margin: 0;
+    }
+  
+    .demo-card__secondary {
+      padding: 0 1rem 8px;
+      opacity: 0.87;
+    }
+  }
+  
+  // Linear progress
+  
+  .mdc-linear-progress {
+    width: 100%;
+  }
+  
+  // Menu
+  
+  .mdc-menu-surface--anchor > .mdc-menu {
+    position: relative;
+    z-index: 1;
+  }
+  
+  // Select
+  
+  .mdc-select {
+    width: 160px;
+  }
+  
+  // Drawer
+  
+  .drawer-component-wrapper {
+    background: rgba(0, 0, 0, 0.3);
+  
+    .mdc-drawer {
+      @include mdc-elevation(16);
+  
+      .mdc-drawer__content {
+        padding: 0;
+      }
+    }
+  }
+  
+  // Text field
+  
+  .mdc-text-field {
+    width: 100%;
+  }
+  
+  // Tabs
+  .component-wrapper .mdc-tab-bar {
+    background: $mdc-theme-primary;
+  
+    .mdc-tab {
+      @include mdc-tab-text-label-color($mdc-theme-on-primary);
+  
+      .mdc-tab__ripple {
+        @include mdc-states($mdc-theme-on-primary);
+      }
+    }
+  
+    .mdc-tab-indicator {
+      @include mdc-tab-indicator-underline-color($mdc-theme-on-primary);
+    }
+  }
+  
+  // Snackbar
+  
+  .mdc-snackbar {
+    position: relative;
+    margin: 0;
+    justify-content: start;
+    z-index: 1;
+  }
+  
+  
+  // List
+  
+  .component-wrapper > .mdc-list {
+    border: 1px solid rgba(0,0,0,.1);
+    background: $mdc-theme-background;
+  
+    .mdc-list-item__graphic {
+      background-color: if(mdc-theme-contrast-tone($mdc-theme-background) == "dark",
+        rgba(0, 0, 0, 0.12),
+        rgba(255, 255, 255, 0.12));
+      color: if(mdc-theme-contrast-tone($mdc-theme-background) == "dark",
+        rgba(0, 0, 0, 0.68),
+        rgba(255, 255, 255, 0.68));
+    }
+  }
+  
+  // Image list
+  
+  .mdc-image-list {
+    @include mdc-image-list-masonry-columns(2);
+  
+    max-width: 400px;
+    max-height: 600px;
+    margin: 0;
+  }
+  
+  .component-wrapper {
+    &.button-component-wrapper, &.fab-component-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+    // Offset built-in padding to left-align all components
+  
+    &.chips-component-wrapper {
+      @include mdc-rtl-reflexive-box(margin, left, -8px);
+    }
+  
+    &.checkbox-component-wrapper, &.radio-component-wrapper {
+      @include mdc-rtl-reflexive-box(margin, left, -10px);
+    }
+  
+    &.icon-button-component-wrapper {
+      @include mdc-rtl-reflexive-box(margin, left, -12px);
+    }
+  }
+  
+  // card-event-admin 
+  
+  .card-event-admin {
+    width: 250px;
+    height: 300px;
+    color: $mdc-theme-on-surface;
+    border: solid 2px $mdc-theme-primary;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  
+    .demo-card__title,
+    .demo-card__subtitle {
+      margin: 0;
+    }
+  
+    .demo-card__secondary {
+      padding: 0 1rem 8px;
+      opacity: 0.87;
+    }
+    
+    .header {
+      height: 70px;
+      width: 250px;
+      color: #fff;
+      margin: 0;
+      background-color: $mdc-theme-primary;
+      border-radius: 20px 20px 0 0;
+      margin: -2px;
+    }
+  
+    .header h3 {
+      padding-top: 10px;
+    }
+    
+    .primary-content {
+      margin-top: 10px;  
+    }
+    
+    .primary-content p {
+      font-size: 14px;
+    }
+    
+    .date-time {
+      font-weight: bold;
+    }
+  
+    .icons {
+      margin-top: 70px;
+      margin: 15px;  
+    }
+  
+    .delete {
+      background-color: grey;
+    }
+    
+    .buttons {
+      margin: 0 auto;
+    }
+  }
+  
+  // card-discovery 
+  
+    .dislike {
+      background-color: $mdc-theme-primary;
+      color: white;
+    }
+    .like{
+      color: white;
+    }
+    
+  // card-edit-event 
+  
+  .card-edit-event {
+    width: 550px;
+    color: $mdc-theme-on-surface;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    border: solid 2px $mdc-theme-primary;
+  
+    .demo-card__title,
+    .demo-card__subtitle {
+      margin: 0;
+    }
+  
+    .demo-card__secondary {
+      padding: 0 1rem 8px;
+      opacity: 0.87;
+    }
+    
+    input {
+      border: 0;
+      padding: 5px;
+      border-bottom: solid grey 1px;
+    }
+    
+    .header {
+        width: 550px;
+        padding-bottom: 20px;
+        border-radius: 20px 20px 0 0;
+        background-color: $mdc-theme-primary;
+        margin: -2px;
+      
+      input {
+        margin-top: 15px;
+        color: #fff;
+        background-color: $mdc-theme-primary;
+        border: none;
+        border-bottom: solid 2px #fff;
+        text-align: center;
+        padding: 5px;
+        font-size: 26px;
+      }
+    }
+  
+    .header h3 {
+      padding-top: 10px;
+    }
+    
+    .primary-content {
+      margin-top: 10px;  
+    }
+    
+    .primary-content p {
+      font-size: 14px;
+    }
+    
+    .date-time {
+      font-weight: bold;
+    }
+    
+    .buttons {
+      margin: 0 auto;
+      margin-bottom: 30px;
+    }
+  
+    .pub {
+      border-radius: 50px 0 0 50px;
+    }
+    
+    .pub:active {
+      color: $mdc-theme-primary;
+      background-color: #fff;
+      border: solid 1px $mdc-theme-primary;
+    }
+    
+    .priv {
+      border-radius: 0 50px 50px 0;    
+    }
+    
+    .priv:active {
+      color: #fff;
+      background-color: $mdc-theme-primary;
+      border: 0;
+    }
+  }
+  
+  // alert
+  .my-dialog {
+    position: relative;
+    justify-content: start;
+    color: $mdc-theme-on-surface;
+    border: solid 2px $mdc-theme-primary;
+    border-radius: 20px;
+    z-index: 1;
+    width: 550px;
+  
+    .my-dialog__surface {
+      max-width: 100%;
+    }
+    .my-dialog-content {
+      font-weight: bold; 
+      text-align: justify;
+    }
+    .mdc-button{
+      margin: 0 auto;
+    }
+    .close {
+      padding: 20px;
+    }
+  }
+  
+            
+  // search-bar 
+            
+  // nav menu 
+            
+  // notif menu
+  .notif-menu {
+    position: relative;
+    width: 350px;
+    height: 380px;
+    border: solid 2px $mdc-theme-primary;
+    border-radius: 20px 0px 20px 20px;
+    z-index: 1;
+    
+    .notif-button{
+      position: absolute;
+      bottom: 0;
+      height:30px;
+      width: 354px;
+      margin: -2px;
+      color: white;
+      background-color: $mdc-theme-primary;
+      border: solid 2px $mdc-theme-primary;
+      border-radius: 0px 0px 20px 20px;
+    }
+  }
+            
+  // event-header 
+  
+  .event-header {
+    width: 100%;
+    background-color: $mdc-theme-primary;
+    color: #fff;
+    padding: 25px;
+    
+    .title {
+      font-size: 50px;
+    }
+    
+    .date-time, .address {
+      text-align: right;
+    }
+    
+    .social {
+      margin-top: 15px;
+      color: #fff;
+    }
+    
+    .facebook {
+      background-color: #3b5998;
+      color: #fff;    
+    }
+  
+    .twitter {
+      background-color: #55acee;
+      color: #fff;    
+    }
+  
+    .edit {
+      float: right;
+    }
+  }
+                      
+  // list-object 
+  
+  .list-object {
+    width: 550px;
+    
+    .head {
+      color: $mdc-theme-primary;
+      border-bottom: solid 1px $mdc-theme-primary;
+    
+      .list-add {
+        border: 0;
+        background: 0;
+        color: $mdc-theme-primary; 
+      }
+    }
+  }
+    
+    .event {
+      border-radius: 0;
+    }
+      
+    th {
+      font-size: 12px;
+      color: grey;
+    }
+    
+    .status {
+      padding: 10px;
+      border-radius: 20px;
+    }
+    
+    .green {
+      height:1px;
+      width:1px;
+      background-color: $mdc-theme-secondary;    
+      margin: 0 auto;
+    }
+    
+    .red {
+      height:1px;
+      width:1px;
+      background-color: $mdc-theme-primary;
+      margin: 0 auto;
+    }
+  
+    .orange {
+      height:1px;
+      width:1px;
+      background-color: #FE985E;    
+      margin: 0 auto;
+    }
+    
+  
+            
+  // list-member 
+  .list-member {
+    width: 550px;
+    
+    .head {
+      color: $mdc-theme-primary;
+      border-bottom: solid 1px $mdc-theme-primary;
+    
+      .list-add {
+        border: 0;
+        background: 0;
+        color: $mdc-theme-primary; 
+      }
+    }
+  }
+  
+  // notif-invit-menu
+  .notif-invit-menu {
+    position: relative;
+    width: 348px;
+  /*  height: 70px; */
+    border: solid 2px $mdc-theme-primary;
+    z-index: 1;
+  
+    .notif-icons{
+      font-size: 30px;
+      margin: 20px;
+      margin-left: 30px;
+      color: $mdc-theme-primary;
+      vertical-align: middle;
+    }
+  
+      .notif-text{
+        font-size: 14px;
+      }
+    
+    .notif {
+      padding: 0 25px 10px 25px;
+      border: 0;
+      background: 0;
+      font-weight: bold;
+    }
+    
+    .accept {
+       color: $mdc-theme-secondary; 
+    }
+  
+    .refuse {
+       color: $mdc-theme-primary; 
+       float: right;
+    }
+  
+  }
+          
+  // notif-info-menu 
+  .notif-info-menu{
+    position: relative;
+    width: 348px;
+    height: 70px;
+    border: solid 2px $mdc-theme-primary;
+    z-index: 1;
+  }        
+  // notif-invit 
+            
+  // notif-modif-event 
+            
+  // notif-invit-response 
