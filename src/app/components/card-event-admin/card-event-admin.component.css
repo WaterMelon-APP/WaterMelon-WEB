@@ -37,17 +37,23 @@
       font-weight: bold;
     }
   
-    .icons {
-      margin-top: 70px;
-      margin: 15px;  
-    }
+.buttons {
+    margin: 0 auto;
+    margin-top: 70px;
+}
+
+.buttons button {
+  border-radius: 30px;
+  padding: 10px 12px;;
+}
   
-    .delete {
-      background-color: grey;
-    }
+.delete {
+    background-color: grey;
+    margin-right: 35px;
+}
     
-    .buttons {
-      margin: 0 auto;
-    }
-  
+.edit {
+  background-color: #47D278;
+}
+
   

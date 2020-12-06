@@ -36,22 +36,20 @@
       font-weight: bold;
     }
   
-    .icons {
-      margin-top: 70px;
-      margin: 15px;  
-    }
-  
-    .delete {
-      background-color: grey;
-    }
-    
     .buttons {
       margin: 0 auto;
-    }
+      margin-top: 70px;
+  }
+  
+  .buttons button {
+    border-radius: 30px;
+    padding: 10px 12px;;
+  }
 
     .dislike {
         background-color: #FD5757;
         color: white;
+        margin-right: 35px;
       }
 
       .like{
