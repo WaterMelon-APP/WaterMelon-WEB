@@ -2,6 +2,7 @@
     width: 250px;
     height: 300px;
     color: #333333;
+    border-radius: 20px;
     border: solid 2px #FD5757;
     padding: 0;
     margin: 0;
@@ -9,6 +10,7 @@
 }
 
 .header {
+      border: solid 2px #FD5757;
       height: 70px;
       width: 250px;
       color: #fff;

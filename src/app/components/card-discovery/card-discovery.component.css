@@ -4,11 +4,13 @@
     color: #333333;
     border: solid 2px #FD5757;
     padding: 0;
+    border-radius: 20px;
     margin: 0;
     text-align: center;
 }
 
 .header {
+      border: solid 2px #FD5757;
       height: 70px;
       width: 250px;
       color: #fff;

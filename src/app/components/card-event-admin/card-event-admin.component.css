@@ -6,7 +6,24 @@
     padding: 0;
     margin: 0;
     text-align: center;
+    border-radius: 20px;
 }
+
+.header {
+  border: solid 2px #FD5757;
+  height: 70px;
+  width: 250px;
+  color: #fff;
+  margin: 0;
+  background-color: #FD5757;
+  border-radius: 20px 20px 0 0;
+  margin: -2px;
+}
+
+.header h3 {
+  padding-top: 10px;
+}
+
     
 .primary-content {
       margin-top: 10px;  
