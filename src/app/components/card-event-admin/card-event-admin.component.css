@@ -1,0 +1,36 @@
+.card-event-admin {
+    width: 250px;
+    height: 300px;
+    color: #333;
+    border: solid 2px #FD5757;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+    
+.primary-content {
+      margin-top: 10px;  
+    }
+    
+.primary-content p {
+      font-size: 14px;
+    }
+    
+.date-time {
+      font-weight: bold;
+    }
+  
+    .icons {
+      margin-top: 70px;
+      margin: 15px;  
+    }
+  
+    .delete {
+      background-color: grey;
+    }
+    
+    .buttons {
+      margin: 0 auto;
+    }
+  
+  
