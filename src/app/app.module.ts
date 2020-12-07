@@ -28,6 +28,7 @@ import { NotifInvitMenuComponent } from './components/notif-invit-menu/notif-inv
 import { NotifInfoMenuComponent } from './components/notif-info-menu/notif-info-menu.component';
 import { NotifModifEventComponent } from './components/notif-modif-event/notif-modif-event.component';
 import { NotifInvitResponseComponent } from './components/notif-invit-response/notif-invit-response.component';
+import { DisplayEventComponent } from './components/display-event/display-event.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { NotifInvitResponseComponent } from './components/notif-invit-response/n
     NotifInvitMenuComponent,
     NotifInfoMenuComponent,
     NotifModifEventComponent,
-    NotifInvitResponseComponent
+    NotifInvitResponseComponent,
+    DisplayEventComponent
   ],
   imports: [
     ReactiveFormsModule,

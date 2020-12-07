@@ -19,6 +19,12 @@
     border-radius: 100%;
 }
 
+.upload {
+	padding: 10px 15px;
+	color: #fff;
+	background-color: #FD5757;
+}
+
 /*--Form style--*/
 
 input {

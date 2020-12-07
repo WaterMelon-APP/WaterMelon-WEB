@@ -1,0 +1,84 @@
+<section class="event-header">
+    <div class="title">{{title}}</div>
+    <div class="private">événement {{isPrivate}}</div>
+    
+    <div class="date-time">
+      <span>{{date}}</span>
+      <span>{{time}}</span>
+    </div>
+    <div class="address">{{place}}</div>
+    
+    <button class="social facebook">f
+    </button>
+    <button class="social twitter">t
+    </button>
+    <button class="social edit">
+      <span class="mdc-fab__icon material-icons">edit</span>
+    </button>
+</section>
+<br>
+<section class="list-object">
+    <h2>Liste d'objets</h2>
+    <table width="100%">
+        <tr class="first">
+            <td colspan="2">Ajouter un objet</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="plus"><button class="add">+</button></td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <th>Prix</th>
+            <th>Quantité</th>
+            <th>Contribution</th>
+            <th>Contributeur</th>
+            <th>Status</th>
+        </tr>
+        <tr>
+            <td>Chips</td>
+            <td>2,50 €</td>
+            <td>3</td>
+            <td>3</td>
+            <td>Lysa Damon</td>
+            <td><div class="status green"></div></td>
+        </tr>
+        <tr>
+            <td>Coca-Cola</td>
+            <td>4,00 €</td>
+            <td>2</td>
+            <td>1</td>
+            <td>Angèle Plessis</td>
+            <td><div class="status orange"></div></td>
+        </tr>
+    </table>
+</section>
+<br><br>
+<section class="list-object">
+    <h2>Liste des invité(e)s</h2>
+        <table width="100%">
+            <tr class="first">
+                <td colspan="2">Ajouter un(e) invité(e)</td>
+                <td class="empty"></td>
+                <td class="last plus"><button class="add">+</button></td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <th>Présence</th>
+                <th class="empty"></th>
+                <th class="last">Apporte</th>
+            </tr>
+            <tr>
+                <td>Lysa Damon</td>
+                <td><div class="status green"></div></td>
+                <td class="empty"></td>
+                <td class="last">Chips (3)</td>
+            </tr>
+            <tr>
+                <td>Angèle Plessis</td>
+                <td><div class="status red"></div></td>
+                <td class="empty"></td>
+                <td class="last"></td>
+            </tr>
+        </table>
+    </section>

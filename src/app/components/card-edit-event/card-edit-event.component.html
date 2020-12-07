@@ -1,16 +1,13 @@
 <section>
     <div class="card-edit-event">
       <div class="header">
-
         <input style matInput placeholder="{{nameEvent}}" [formControl]="eventname" required>
         <button mat-button color="#FD5757" (click)="editName()">
           <span class="mdc-fab__icon material-icons">edit</span>
         </button>
-
-
       </div>
+      
       <div class="primary-content">
-
         <input style matInput placeholder="{{addressEvent}}" [formControl]="eventaddress" required>
         <button mat-button color="#FD5757" (click)="editAddress()">
           <span class="mdc-fab__icon material-icons">edit</span>
@@ -22,9 +19,7 @@
         <button mat-button color="#FD5757" (click)="editDate()">
           <span class="mdc-fab__icon material-icons">edit</span>
         </button>
-
   <!--        <input matInput [matTimepicker]="picker" placeholder="12:00"> -->
-
       </div>       
           
         <div class="buttons">
