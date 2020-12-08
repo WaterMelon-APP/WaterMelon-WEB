@@ -4,6 +4,7 @@
     <span>Watermelon</span>
   </a>
 
+
   <!-- Search bar -->
   <div class="search-bar">
       <input type="text" placeholder="Rechercher" [formControl]="search">
@@ -63,6 +64,39 @@
 
 <!-- Side navigation -->
 
+      <div class="notification">
+        <button mat-button [matMenuTriggerFor]="menu" (click)="getNotifications()">Notifications
+          <mat-icon>notifications</mat-icon>
+        </button>
+        <mat-menu class="notif-menu" #menu="matMenu">
+          <button mat-menu-item *ngFor="let notification of notificationList" (click)="goToNotif()">
+            <p *ngIf='notification.Type == "invitation"'>
+              {{notification.Type}} de {{notification.From}} pour l'événement {{eventNameList[notification.Id]}}
+            </p>
+            <p *ngIf='notification.Type != "invitation"'> 
+              {{notification.About}}
+            </p>
+      
+            <mat-card-content *ngIf='notification.Type == "invitation"'>
+              <br>
+              <button class="answer-yes" (click)="acceptInvite(notification)">Accepter</button>
+              <button class="answer-no" (click)="refuseInvite(notification)">Refuser</button>
+              <br><br>
+            </mat-card-content>
+            <mat-card-content *ngIf='notification.Type != "invitation"'>
+              <br>
+              <button class="answer-yes" (click)="validateNotif(notification)">OK</button>
+              <br><br>
+            </mat-card-content>
+          </button>
+          
+        </mat-menu>
+      </div>
+
+    </mat-toolbar>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
 <mat-sidenav-container class="main-nav">
   <mat-sidenav-content class="example-sidenav">
     <mat-toolbar class="mat-toolbar-main">
@@ -95,6 +129,17 @@
             <mat-icon>playlist_add</mat-icon>
             Créer un événement
           </button>
+        </div>
+      </mat-toolbar-row>
+
+      <mat-toolbar-row style="height: 2em">
+        <div *ngIf="isLoggedIn">
+          <a routerLink="/notifications">
+            <button mat-menu-item>
+              <mat-icon>notifications</mat-icon>
+              Notifications
+            </button>
+          </a>
         </div>
       </mat-toolbar-row>
 

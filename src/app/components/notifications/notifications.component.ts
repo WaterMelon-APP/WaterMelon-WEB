@@ -10,21 +10,17 @@ import { CreateEventComponent } from '../event/create-event.component';
 import { AuthService } from '../../services/auth.service'
 import { User } from '../../models/user.model'
 import { Event } from '../../models/event.model'
-import { Notification} from '../../models/notification.model'
+import { Notification } from '../../models/notification.model'
 
 
 @Component({
-  selector: 'app-nav-component',
-  templateUrl: './nav-component.component.html',
-  styleUrls: ['./nav-component.component.css']
+  selector: 'notifications',
+  templateUrl: './notifications.component.html',
+  styleUrls: ['./notifications.component.css']
 })
 
-export class NavComponentComponent implements OnInit {
+export class NotificationsComponent implements OnInit {
 
-  isLoggedIn = false;
-  lieu = true;
-  nom = true;
-  token: string;
   header: Object;
   id: string;
   username;
@@ -33,11 +29,6 @@ export class NavComponentComponent implements OnInit {
   eventNameList;
 
   constructor(public dialog: MatDialog, private router: Router, private auth: AuthService, private http: HttpClient) {
-    this.token = this.auth.getToken();
-    console.log('this.token :>> ', this.token);
-    if (this.token) {
-      this.isLoggedIn = true;
-    }
   }
 
   ngOnInit() {
@@ -46,66 +37,7 @@ export class NavComponentComponent implements OnInit {
     this.username = this.auth.getUsername();
     this.notificationsList = [];
     this.eventNameList = [];
-  }
-
-  search = new FormControl('', [Validators.required, Validators.requiredTrue]);
-
-  signOut() {
-    this.auth.logOut();
-    this.isLoggedIn = false;
-  }
-
-  Login() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-    this.dialog.open(LoginFormComponent, dialogConfig).afterClosed().subscribe(() => {
-      if (this.auth.getToken()) {
-        this.isLoggedIn = true;
-        this.token = this.auth.getToken();
-        console.log('this.token :>> ', this.token);
-      }
-    });
-  }
-
-  Register() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-    this.dialog.open(RegisterFormComponent, dialogConfig);
-  }
-
-  createEvent() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-    this.dialog.open(CreateEventComponent, dialogConfig);
-  }
-
-  async searchEvents() {
-    let research = this.search.value as string;
-    research = research.toLowerCase();
-    research = research.trim();
-    const reg = /\s+/gm;
-    research = research.replace(reg, "_");
-    if (research == "") {
-      research = "_";
-    }
-    else {
-      if (this.lieu) {
-        research = "1".concat(research);
-      }
-      else {
-        research = "0".concat(research);
-      }
-      if (this.nom) {
-        research = "1".concat(research);
-      }
-      else {
-        research = "0".concat(research);
-      }
-    }
-    this.router.navigate(['/search', research])
-      .then(() => {
-        window.location.reload();
-      });
+    this.getNotifications();
   }
 
   async getNotifications() {
@@ -132,10 +64,6 @@ export class NavComponentComponent implements OnInit {
           alert("Une erreur est survenue");
         }
       );
-  }
-
-  async goToNotif() {
-    this.router.navigate(['/notifications'])
   }
 
   async acceptInvite(notif) {

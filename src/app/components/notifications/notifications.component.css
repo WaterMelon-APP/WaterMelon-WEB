@@ -1,0 +1,54 @@
+body {
+    height: auto;
+    width: 79%;
+    margin-top: 6em;
+    margin-left: 300px;
+    background-color: #fff;
+}
+
+h3 {
+    color: grey;
+}
+
+.events mat-card {
+    width: 200px;
+    max-width: 250px;
+    margin-bottom: 1em;
+}
+
+.event-title {
+    background-color: #FD5757;
+}
+
+
+p {
+    color: grey;
+}
+
+mat-expansion-panel {
+    margin-bottom: 1em;
+}
+
+.answer-yes, .answer-no {
+    padding: 10px 30px;
+    color: #fff;
+    padding: 10px 30px;
+    border-radius: 4px;
+}
+
+a:hover {
+    color: grey;
+    border: solid 1px grey;
+}
+
+.answer-yes {
+    background-color: #47D278;
+    border: solid 1px #47D278;
+    margin-right: 25px;
+    margin-top: 25px;
+}
+
+.answer-no {
+    background-color: #FD5757;
+    border: solid 1px #FD5757;
+}

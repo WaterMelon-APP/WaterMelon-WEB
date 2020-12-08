@@ -17,7 +17,7 @@ export class SearchComponent implements OnInit {
   research;
   eventL: Array<Event>;
   header: Object;
-  id: string;
+  id: string; 
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private auth: AuthService) {
   }
@@ -68,7 +68,7 @@ export class SearchComponent implements OnInit {
     .subscribe(eventResponse => {
         this.eventL = eventResponse;
       },
-      error => { 
+      error => {
           alert("Une erreur est survenue");
       }
     );
@@ -127,7 +127,7 @@ export class SearchComponent implements OnInit {
     .subscribe(userResponse => {
           alert("Vous avez rejoint l'event");
         },
-        error => { 
+        error => {
           alert("Une erreur est survenue");
       }
     );

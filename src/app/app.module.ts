@@ -18,6 +18,7 @@ import { RegisterFormComponent } from './components/register/register-form.compo
 import { CreateEventComponent } from './components/event/create-event.component';
 import { EditEventComponent } from './components/event/edit-event.component';
 import { SearchComponent } from './components/search/search-page.component';
+
 import { CardEventAdminComponent } from './components/card-event-admin/card-event-admin.component';
 import { CardEventMemberComponent } from './components/card-event-member/card-event-member.component';
 import { CardDiscoveryComponent } from './components/card-discovery/card-discovery.component';
@@ -29,6 +30,9 @@ import { NotifInfoMenuComponent } from './components/notif-info-menu/notif-info-
 import { NotifModifEventComponent } from './components/notif-modif-event/notif-modif-event.component';
 import { NotifInvitResponseComponent } from './components/notif-invit-response/notif-invit-response.component';
 import { DisplayEventComponent } from './components/display-event/display-event.component';
+
+import { NotificationsComponent } from './components/notifications/notifications.component';
+
 
 @NgModule({
   declarations: [
@@ -46,6 +50,7 @@ import { DisplayEventComponent } from './components/display-event/display-event.
     CreateEventComponent,
     EventComponent,
     SearchComponent,
+    
     CardEventAdminComponent,
     CardEventMemberComponent,
     CardDiscoveryComponent,
@@ -56,7 +61,9 @@ import { DisplayEventComponent } from './components/display-event/display-event.
     NotifInfoMenuComponent,
     NotifModifEventComponent,
     NotifInvitResponseComponent,
-    DisplayEventComponent
+    DisplayEventComponent,
+    
+    NotificationsComponent
   ],
   imports: [
     ReactiveFormsModule,

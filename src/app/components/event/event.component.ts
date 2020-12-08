@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth.service'
 import { Event } from '../../models/event.model'
 import { Item, Bring } from '../../models/item.model'
 import { User } from '../../models/user.model'
+import { Invitation } from '../../models/invitation.model'
 
 @Component({
   selector: 'app-event',
@@ -26,17 +27,23 @@ export class EventComponent implements OnInit {
   payeQuantity = new FormControl('', [Validators.required, Validators.requiredTrue]);
   giveQuantity = new FormControl('', [Validators.required, Validators.requiredTrue]);
   eventId;
-  itemList;
+  itemList: Array<Item>;
   event;
   nameEvent;
-  needsEvent;
+  needsEvent: Array<string>;
   payed;
+  paye;
   gived;
+  give;
   isPrivate;
-  memberList;
-  adminList;
-  membres;
-  admins;
+  username: string;
+  dateEvent: Date;
+  memberList: Array<string>;
+  adminList: Array<string>;
+  invitationList: Array<string>;
+  membres: Array<string>;
+  admins: Array<string>;
+  invites: Array<string>;
   selectedMember;
   selectedAdmin;
   isOwner;
@@ -46,12 +53,15 @@ export class EventComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.auth.getId();
+    this.username = this.auth.getUsername();
     this.header = this.auth.getSecureHeader();
     let id = this.route.snapshot.paramMap.get('id');
     this.eventId = id;
     this.itemList = [];
-    this.payed = new Array<Array<Bring>>();
-    this.gived = new Array<Array<Bring>>();
+    this.paye = new Array<Array<Bring>>();
+    this.give = new Array<Array<Bring>>();
+    this.gived = [];
+    this.payed = [];
     this.isOwner = false;
     this.isAdmin = false;
     this.findEvent().then(() => {this.privateBand();})
@@ -64,8 +74,10 @@ export class EventComponent implements OnInit {
         this.event = eventResponse;
         this.needsEvent = eventResponse.ItemList;
         this.nameEvent = eventResponse.Name;
+        this.dateEvent = eventResponse.Date;
         this.isPrivate = eventResponse.Public;
         this.memberList = eventResponse.Guests;
+        this.invitationList = eventResponse.InvitationList;
         //this.adminList = eventResponse.Guests;
         if (!this.needsEvent) {
           this.needsEvent = [];
@@ -73,33 +85,50 @@ export class EventComponent implements OnInit {
         if (!this.memberList) {
           this.memberList = [];
         }
-        /*if (!this.adminList) {
+        if (!this.invitationList) {
+          this.invitationList = [];
+        }
+        //if (!this.adminList) {
           this.adminList = [];
-        }*/
-
-        if (this.id == this.event.Owner) {
+        //}
+        if (this.username == this.event.Owner) {
           this.isOwner = true;
           this.isAdmin = true;
-        }  
+        }
 
-        this.membres = [];
+        //this.membres = [];
         //this.admins = [];
-        for (let me of this.memberList) {
+        this.invites = [];
+        /*for (let me of this.memberList) {
           this.http.get<User>(this.auth.callUsers(me), this.header)
           .subscribe(userResponse => {
-                this.membres.push(userResponse.Name);
+                this.membres.push(userResponse.Username);
               },
-              error => { 
+              error => {
                 alert("Une erreur est survenue");
             }
           );
+        }*/
+
+        for (let invitation of this.invitationList) {
+          this.http.get<Invitation>(this.auth.callInvitations(invitation), this.header)
+          .subscribe(userResponse => {
+              if (!userResponse.Status) {
+                this.invites.push(userResponse.To);
+              }
+            },
+            error => {
+              alert("Une erreur est survenue");
+            }
+          );
         }
+
         /*for (let me of this.adminList) {
           this.http.get<UserResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + me, this.header)
           .subscribe(userResponse => {
                 this.admins.push(userResponse.Name);
               },
-              error => { 
+              error => {
                 alert("Une erreur est survenue");
             }
           );
@@ -109,8 +138,29 @@ export class EventComponent implements OnInit {
           this.http.get<Item>(this.auth.callItems(item), this.header)
           .subscribe(userResponse => {
               this.itemList.push(userResponse);
-              this.payed[userResponse.Id] = userResponse.Paye;
-              this.gived[userResponse.Id] = userResponse.Bring;
+              console.log('userResponse :>> ', userResponse);
+              this.paye[userResponse.Id] = userResponse.Pay;
+              this.give[userResponse.Id] = userResponse.Bring;
+              console.log('this.payed :>> ', this.payed);
+              console.log('this.gived :>> ', this.gived);
+              console.log('this.paye :>> ', this.paye);
+              console.log('this.give :>> ', this.give);
+            if (this.paye[userResponse.Id]) {
+                this.payed[userResponse.Id] = true;
+              }
+              else if (!this.paye[userResponse.Id]) {
+                this.payed[userResponse.Id] = false;
+              }
+              if (this.give[userResponse.Id]) {
+                this.gived[userResponse.Id] = true;
+              }
+              else if (!this.give[userResponse.Id]){
+                this.gived[userResponse.Id] = false;
+              }
+              console.log('this.payed :>> ', this.payed);
+              console.log('this.gived :>> ', this.gived);
+              console.log('this.paye :>> ', this.paye);
+              console.log('this.give :>> ', this.give);
               /*if (userResponse.get("Pay") != null && userResponse.get("Pay")[0] != "") {
                 this.payed[userResponse.Id] = true;
               }
@@ -118,15 +168,15 @@ export class EventComponent implements OnInit {
               if (userResponse.get("Give") != null && userResponse.get("Give")[0] != "") {
                 this.gived[userResponse.Id] = true;
               }*/
-  
+
             },
-              error => { 
+              error => {
                 alert("Une erreur est survenue");
             }
           );
         }
       },
-      error => { 
+      error => {
           alert("Une erreur est survenue");
       }
     );
@@ -142,7 +192,7 @@ export class EventComponent implements OnInit {
           alert("L'événement " + this.nameEvent + " a bien été supprimé.");
           this.router.navigate(['/list-user']);
         },
-        error => { 
+        error => {
           alert("Une erreur est survenue");
       }
     );
@@ -166,28 +216,19 @@ export class EventComponent implements OnInit {
     const pseudoInvitVal = this.pseudoInvit.value as string;
 
     if (pseudoInvitVal) {
-      this.http.get<User>(this.auth.callUsers(pseudoInvitVal), this.header)
-      .subscribe(userResponse => {
-        if (userResponse) {
-          if (!this.isPersonIn(userResponse.Id)) {
-            this.memberList.push(userResponse.Id);
-            const memberList = '{ "Guests": "' + this.memberList + '" }';
-            var jmemberList = JSON.parse(memberList);
-
-            this.http.put<Event>(this.auth.callEvents(this.eventId), jmemberList, this.header)
-            .subscribe(userResponse => {
-                  alert('Membre ajouté');
-                },
-                error => { 
-                  alert("Une erreur est survenue");
-              }
-            );
-        }}
-      },
-        error => { 
-          alert("Cet utilisateur n'existe pas");
-        }
-      );
+      if (!this.isPersonIn(pseudoInvitVal)) {
+        const invitation = '{ "From": "' + this.username + '", "To": "' + pseudoInvitVal + '", "EventId": "' + this.eventId + '" }';
+        var jinvitation = JSON.parse(invitation);
+        console.log('jinvitation :>> ', jinvitation);
+        this.http.post<Invitation>(this.auth.callInvitations(""), jinvitation, this.header)
+        .subscribe(userResponse => {
+              alert('Invitation envoyé');
+            },
+            error => {
+              alert("Une erreur est survenue");
+          }
+        );
+      }
     }
   }
 
@@ -212,7 +253,7 @@ export class EventComponent implements OnInit {
 
   async upMember() {
     if (this.selectedMember) {
-      this.http.get<User>(this.auth.callUsers(this.selectedMember), this.header)
+      this.http.get<User>(this.auth.callUsersByName(this.selectedMember), this.header)
       .subscribe(userResponse => {
         if (userResponse) {
           if (!this.isPersonIn(userResponse.Id)) {
@@ -227,13 +268,13 @@ export class EventComponent implements OnInit {
             .subscribe(userResponse => {
                   alert('Membre passé admin !');
                 },
-                error => { 
+                error => {
                   alert("Une erreur est survenue");
               }
             );
         }}
       },
-        error => { 
+        error => {
           alert("Cet utilisateur n'existe pas");
         }
       );
@@ -242,7 +283,7 @@ export class EventComponent implements OnInit {
 
   async delMember() {
     if (this.selectedMember) {
-      this.http.get<User>(this.auth.callUsers(this.selectedMember), this.header)
+      this.http.get<User>(this.auth.callUsersByName(this.selectedMember), this.header)
       .subscribe(userResponse => {
         if (userResponse) {
           if (!this.isPersonIn(userResponse.Id)) {
@@ -255,13 +296,13 @@ export class EventComponent implements OnInit {
             .subscribe(userResponse => {
                   alert("Membre supprimé de l'event");
                 },
-                error => { 
+                error => {
                   alert("Une erreur est survenue");
               }
             );
         }}
       },
-        error => { 
+        error => {
           alert("Cet utilisateur n'existe pas");
         }
       );
@@ -289,14 +330,14 @@ export class EventComponent implements OnInit {
 
   async downAdmin() {
     if (this.selectedAdmin) {
-      this.http.get<User>(this.auth.callUsers(this.selectedMember), this.header)
+      this.http.get<User>(this.auth.callUsersByName(this.selectedMember), this.header)
       .subscribe(userResponse => {
         if (userResponse) {
           if (!this.isPersonIn(userResponse.Id)) {
             this.membres.push(this.selectedAdmin);
             this.memberList.push(userResponse.Id);
             this.lessAdmin(this.selectedAdmin, userResponse.Id);
-      
+
             const adminList = '{ "Guests": "' + this.memberList + '", "Admins": "' + this.adminList + '" }';
             var jadminList = JSON.parse(adminList);
 
@@ -304,13 +345,13 @@ export class EventComponent implements OnInit {
             .subscribe(userResponse => {
                   alert("Admin rétrogradé !");
                 },
-                error => { 
+                error => {
                   alert("Une erreur est survenue");
               }
             );
         }}
       },
-        error => { 
+        error => {
           alert("Cet utilisateur n'existe pas");
         }
       );
@@ -319,7 +360,7 @@ export class EventComponent implements OnInit {
 
   async delAdmin() {
     if (this.selectedAdmin) {
-      this.http.get<User>(this.auth.callUsers(this.selectedMember), this.header)
+      this.http.get<User>(this.auth.callUsersByName(this.selectedMember), this.header)
       .subscribe(userResponse => {
         if (userResponse) {
           if (!this.isPersonIn(userResponse.Id)) {
@@ -332,13 +373,13 @@ export class EventComponent implements OnInit {
             .subscribe(userResponse => {
                   alert("Admin supprimé de l'event");
                 },
-                error => { 
+                error => {
                   alert("Une erreur est survenue");
               }
             );
         }}
       },
-        error => { 
+        error => {
           alert("Cet utilisateur n'existe pas");
         }
       );
@@ -360,7 +401,7 @@ export class EventComponent implements OnInit {
             alert('Votre objet a été ajouté avec succès!');
             location.reload();
           },
-          error => { 
+          error => {
             alert("Une erreur est survenue");
         }
       );
@@ -368,21 +409,12 @@ export class EventComponent implements OnInit {
   }
 
   async delItem(item){
-    let a = 0;
-    for (let i of this.needsEvent) {
-      if (i == item.Id) {
-        this.needsEvent.splice(a, 1);
-        break;
-      }
-      ++a;
-    }
-
     this.http.delete(this.auth.callItems(item.Id), this.header)
     .subscribe(userResponse => {
           alert("L'item a bien été supprimé.");
           location.reload();
         },
-        error => { 
+        error => {
           alert("Une erreur est survenue");
       }
     );
@@ -429,36 +461,34 @@ export class EventComponent implements OnInit {
     else {
       giveTab[0] = "";
     }
-    const needs = '{ "Id": "' + item.Id + '", "Name": "' + item.Name + '", "Quantity": ' + item.Quantity + ', "Price": ' + item.Price + ', "About": "' + item.About + '", "Bring": ' + this.dispBrings(this.gived[item.Id]) + ', "Paye": ' + this.dispBrings(this.payed[item.Id]) + ', "FromEvent": ' + this.eventId + '", "QuantityLeft": ' + 0 + ' }';
+    const needs = '{ "userId": "' + this.id + '", "Quantity": ' + item.Quantity + ' }'
+    console.log('needs :>> ', needs);
     var jneeds = JSON.parse(needs);
 
-    this.http.put<Item>(this.auth.callItems(""), jneeds, this.header)
-    .subscribe(itemResponse => {
-          console.log('Maj item list');
-        },
-        error => { 
-          alert("Une erreur est survenue");
-      }
-    );
-  }
-
-  dispBrings(bring) {
-    let ret: string = "{";
-    let a = 0;
-    if (bring) {
-      for (let b of bring) {
-        if (a) {
-          ret = ret + ", ";
+    if (this.payed[item.Id] == true) {
+      console.log('this.auth.callItemPay(item.Id) :>> ', this.auth.callItemPay(item.Id));
+      this.http.put<Item>(this.auth.callItemPay(item.Id), jneeds, this.header)
+      .subscribe(itemResponse => {
+            console.log('Maj item list');
+          },
+          error => {
+            alert("Une erreur est survenue");
         }
-        ret = ret + '"' + b.Name + '": ' + b.Quantity;
-        a = 1;
-      }
+      );
     }
-    ret = ret + "}";
+    else if (this.gived[item.Id] == true) {
+      this.http.put<Item>(this.auth.callItemGive(item.Id), jneeds, this.header)
+      .subscribe(itemResponse => {
+            console.log('Maj item list');
+          },
+          error => {
+            alert("Une erreur est survenue");
+        }
+      );
+    }
   }
 
-  async privateBand()
-  {
+  async privateBand(){
     const band = document.getElementById("grayBandPrivacy");
     if(this.isPrivate == true)
     {
@@ -472,4 +502,11 @@ export class EventComponent implements OnInit {
     }
   }
 
+  async sendTweet()
+  {
+    const link = "https://watermelonapp.azurewebsites.net/"; //+ //add le lien de l event
+    var text = "Hey%2C%20je%20viens%20de%20cr%C3%A9er%20mon%20%C3%A9v%C3%A9nement%20" + this.nameEvent + "%20rejoint%20moi%20!" + link;
+    const tweet_url = "http://twitter.com/intent/tweet?text=" + text;
+    window.open(tweet_url, "_blank");
+  }
 }

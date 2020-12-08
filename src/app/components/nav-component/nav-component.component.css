@@ -1,4 +1,22 @@
 
+.top-nav {
+  background-color: #47D278;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+a.watermelon {
+  text-decoration: none;
+  color: #fff;
+  font-size: 24px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
 .sidenav-container {
   height: 100%;
 }
@@ -9,6 +27,32 @@
 
 .example-icon {
   padding: 0 14px;
+}
+
+.notification {
+  background-color: #47D278 !important;
+  display: inline-block;
+  margin-top: 0.5em;
+  font-size: 0.7em;
+  position: fixed;
+  right: 27em;
+}
+
+.search-bar {
+  display: inline-block;
+  margin-top: 0.5em;
+  font-size: 0.7em;
+  position: fixed;
+  right: 1em;
+}
+
+.search {
+  width: 1em;
+  padding: 0 2em 0 1em;
+}
+
+mat-checkbox {
+  padding-left: 1em;
 }
 
 .main-nav {
@@ -200,4 +244,10 @@ mat-checkbox {
 
 .notif-bell mat-icon:hover {
   color: #464646;
+}
+
+.notif-menu {
+  background-color: #47D278 !important;
+  width: auto;
+  padding: auto;
 }

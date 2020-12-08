@@ -17,6 +17,7 @@ export class CreateEventComponent implements OnInit {
   eventdate = new FormControl('', [Validators.required, Validators.requiredTrue]);
   dateEvent;
   header: Object;
+  username: string;
   id: string;
 
   constructor(private dialogRef: MatDialogRef<CreateEventComponent>, private http: HttpClient, private auth: AuthService) { }
@@ -24,6 +25,7 @@ export class CreateEventComponent implements OnInit {
   ngOnInit() {
     this.dateEvent = new Date();
     this.id = this.auth.getId();
+    this.username = this.auth.getUsername();
     this.header = this.auth.getSecureHeader();
   }
 
@@ -32,10 +34,10 @@ export class CreateEventComponent implements OnInit {
     const eventdateVal = this.dateEvent;
     const checkbox = document.getElementById('privCreate') as HTMLInputElement;
     let guests = [];
-    guests.push(this.id);
+    guests.push(this.username);
 
     if (eventnameVal != null ||  eventdateVal != null) {
-      const event = '{ "Name": "' + eventnameVal + '", "Owner": "' + this.id + '", "Date": "' + eventdateVal.toISOString() + '", "Adress": "' + "" + '", "Guests": ["' + guests + '"], "Public": "' + !checkbox.checked + '", "ItemList": ' + "[]" +  ' }';
+      const event = '{ "Name": "' + eventnameVal + '", "Owner": "' + this.username + '", "Date": "' + eventdateVal.toISOString() + '", "Adress": "' + "" + '", "Guests": ["' + guests + '"], "Public": "' + !checkbox.checked + '", "ItemList": ' + "[]" +  ' }';
       var jevent = JSON.parse(event);
       console.log('jevent :>> ', jevent);
 
