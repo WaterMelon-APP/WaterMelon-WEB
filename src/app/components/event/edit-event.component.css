@@ -1,8 +1,9 @@
 body {
-  height: auto;
-  width: 79%;
-  margin-top: 6em;
   margin-left: 300px;
+  margin-top: 6em;
+  width: 79%;
+
+  height: auto;
   background-color: #fff;
 }
 

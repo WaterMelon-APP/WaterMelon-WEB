@@ -1,0 +1,28 @@
+.notif-invit-menu {
+    position: relative;
+    width: 398px;
+  /*  height: 70px; */
+    border: solid 2px #FD5757;
+    z-index: 1;
+}
+  
+    .notif-icons{
+      font-size: 30px;
+      margin: 20px;
+      margin-left: 20px;
+      color: #FD5757;
+      vertical-align: middle;
+    }
+  
+      .notif-text{
+        font-size: 14px;
+      }
+    
+    .notif {
+      padding: 0 25px 10px 25px;
+      border: 0;
+      background: 0;
+      font-weight: bold;
+    }
+
+  

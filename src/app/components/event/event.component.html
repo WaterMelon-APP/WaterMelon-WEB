@@ -2,148 +2,131 @@
 
 <body>
 
-  <div class="container" align="center">
-    <div class="row" id="title">
-      <div class="col-sm-3"></div>
-      <div class="col-sm-6" id="pink">
-        <mat-icon>event</mat-icon>
-        <p style="font-size: large;">{{nameEvent}}</p>
-        <p>{{dateEvent | date: 'short'}}</p>
-        <br>
-        <mat-icon>lock</mat-icon>
-      </div>
-      <div class="col-sm-3"></div>
-    </div>
-    <div class="row" id="title">
-      <div class="col-sm-3"></div>
-      <div class="col-sm-6">
-        <div class="row" id="attributes">
+  <section class="event-header">
+    <div class="title">{{nameEvent}}</div>
+    <div class="private">événement privé</div> <!-- ou public ? -->
+    
+    <div class="date-time">
+      <span>{{dateEvent | date: 'short'}}</span>
+    </div>  
+    <!-- <div class="address">{{addressEvent}}</div> -->
+    
+    <!-- Facebook & Twitter -->
+    <br>  
 
-          <div class="col-sm-6" id="grayBandPrivacy">
-            Privé
-          </div>
-          <div class="col-sm-6">
-            <button *ngIf="isOwner" class="delete" mat-stroked-button mat-icon-button (click)="delEvent()">
-              <mat-icon>delete_sweep</mat-icon>
+    <button class="social twitter" (click)="sendTweet()">t</button>
+    <meta property="og:url" content="https://watermelonapp.azurewebsites.net/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Watermelon" />
+    <meta property="og:description" content="Partager vos événements sur Watermelon" />
+    <meta property="og:image" content="https://watermelonapp.azurewebsites.net/favicon.ico" />
+    <!-- Load Facebook SDK for JavaScript -->
+    <span id="fb-root"></span>
+    <script>
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v3.0";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <span data-href="https://watermelonapp.azurewebsites.net/" data-layout="button" data-size="large">
+      <button class="social facebook">f
+      </button>
+    </span>
+
+    <button class="social edit" *ngIf="isOwner" (click)="editEvent()">
+      <span class="mdc-fab__icon material-icons">edit</span>
+    </button>
+    <button class="social delete" *ngIf="isOwner" (click)="delEvent()">
+      <span class="mdc-fab__icon material-icons">delete</span>
+    </button>
+</section>
+<br>
+
+<section class="list-object">
+    <h2>Liste d'objets</h2>
+    <table width="100%">
+        <tr>
+            <th>Description</th>
+            <th>Prix</th>
+            <th>Quantité</th>
+            <th>Contribution</th>
+            <th>Contributeur</th>
+            <th></th>
+        </tr>
+        <tr *ngFor="let item of itemList">
+          <td> {{item.Name}} </td>
+          <td> {{item.Price}} </td>
+          <td> {{item.Quantity}} </td>
+          <td></td>
+          <td></td>
+          <td style="text-align: right">
+            <button *ngIf="isOwner" class="trash" (click)="delItem(item)">
+              <mat-icon>delete</mat-icon>
             </button>
-            <button *ngIf="isOwner" class="button-edit" mat-stroked-button mat-icon-button (click)="editEvent()">
-              <mat-icon>edit</mat-icon>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-3"></div>
-    </div>
-  </div>
-
-  <br><br>
-
-  <section class="masthead">
-    <div class="cont4">
-      <button mat-button mat-stroked-button id="square-green" (click)="sendTweet()">Twitter</button>
-      <meta property="og:url" content="https://watermelonapp.azurewebsites.net/" />
-      <meta property="og:type" content="website" />
-      <meta property="og:title" content="Watermelon" />
-      <meta property="og:description" content="Partager vos événements sur Watermelon" />
-      <meta property="og:image" content="https://watermelonapp.azurewebsites.net/favicon.ico" />
-      <!-- Load Facebook SDK for JavaScript -->
-      <div id="fb-root"></div>
-      <script>
-        (function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) return;
-          js = d.createElement(s);
-          js.id = id;
-          js.src = "https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v3.0";
-          fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-      </script>
-      <div class="fb-share-button" data-href="https://watermelonapp.azurewebsites.net/" data-layout="button" data-size="large"></div>
-    </div>
-
-    <div class="cont4" *ngIf="isAdmin">
-      <b>Ajouter un participant</b><br>
-      <mat-form-field>
-        <input style matInput id="input-pseudo" placeholder="Pseudo" [formControl]="pseudoInvit" required>
-      </mat-form-field>
-      <button mat-button mat-stroked-button id="square-green" (click)="addPerson()">Ajouter à l'évènement</button>
-    </div>
-
-    <div class="cont4" *ngIf="isOwner">
-      <b>Administrateurs</b><br>
-      <mat-form-field>
-        <mat-label>Admin</mat-label>
-        <mat-select [(value)]="selectedAdmin">
-          <mat-option *ngFor="let admin of adminList" [value]="admin">
-            {{admin}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <button mat-button mat-stroked-button id="square-green" (click)="downAdmin()">Rétrograder</button>
-      <button mat-button mat-stroked-button id="square-pink" (click)="delAdmin()">Retirer de l'event</button>
-    </div>
-    <div class="cont4" *ngIf="isAdmin">
-      <b>Participants</b><br>
-      <mat-form-field>
-        <mat-label>Membre</mat-label>
-        <mat-select [(value)]="selectedMember">
-          <mat-option *ngFor="let membre of memberList" [value]="membre">
-            {{membre}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <button mat-button mat-stroked-button id="square-green" (click)="upMember()">Passer "Admin"</button>
-      <button mat-button mat-stroked-button id="square-pink" (click)="delMember()">Retirer de l'event</button>
-      <hr>
-    </div>
-
-    <div class="cont4" *ngIf="isAdmin">
-      <b>Invitations en cours</b><br> 
-      <div *ngFor="let invited of invites" class="container-all">
-          {{invited}}
-      </div>
-      <hr>
-    </div>
-    <div class="cont4" *ngIf="isAdmin">
-      <b>Participants</b><br> 
-      <div *ngFor="let member of memberList" class="container-all">
-          {{member}}
-      </div>
-      <hr>
-    </div>
-
-    <div class="cont4" *ngIf="isAdmin">
-      <b>Ajouter un objet</b><br>
-      <mat-form-field>
-        <input style matInput placeholder="Nom de l'objet" [formControl]="needsname" required>
-      </mat-form-field>
-      <mat-form-field>
-        <input type="number" min="1" value="1" style matInput placeholder="Prix" [formControl]="needsprice" required>
-      </mat-form-field>
-      <mat-form-field>
-        <input type="number" min="1" value="1" style matInput placeholder="Quantité" [formControl]="needsquant" required>
-      </mat-form-field>
-      <button mat-button mat-stroked-button id="square-green" (click)="createNeeds()">Ajouter l'objet</button>
-      <div id="cost"><b>Coût total = {{totalCost}}</b></div><br>
-    </div>
-
-    <table id="object-list">
-      <tr>
-        <th>Nom</th>
-        <th>Prix</th>
-        <th>Quantité</th>
-      </tr>
-      <tr class="item-list-strike" *ngFor="let item of itemList">
-        <td class="linetrought"> {{item.Name}} </td>
-        <td class="linetrought"> {{item.Price}} </td>
-        <td class="linetrought"> {{item.Quantity}} </td>
-        <mat-checkbox class="selected-pay" [(ngModel)]="payed[item.Id]"> Paye </mat-checkbox>
-        <mat-checkbox class="selected-bring" [(ngModel)]="gived[item.Id]"> Apporte </mat-checkbox>
-        <button mat-button mat-stroked-button color="primary" (click)="bringItem(item)"> Confirmer</button>
-        <button class="delete" mat-stroked-button mat-icon-button (click)="delItem(item)">
-          <mat-icon>delete_sweep</mat-icon>
-        </button>
+          </td>
+        </tr>
+        <tr *ngIf="isAdmin" class="first">
+          <td colspan="6">Ajouter un objet</td>
+        </tr>
+        <tr *ngIf="isAdmin" class="add-object">
+          <td><input placeholder="Nom de l'objet" [formControl]="needsname" required></td>
+          <td><input type="number" min="1" value="1" placeholder="Prix" [formControl]="needsprice" required></td>
+          <td><input type="number" min="1" value="1" placeholder="Quantité" [formControl]="needsquant" required></td>
+          <td><!--Coût total : {{totalCost}}--></td>
+          <td></td>
+          <td class="plus">
+            <button (click)="createNeeds()" class="add">+</button>
+          </td>
       </tr>
     </table>
-  </section>
+</section>
+
+<br><br>
+<section class="list-object">
+    <h2>Liste des invité(e)s</h2>
+        <table width="100%">
+            <tr>
+                <th>Pseudo</th>
+                <th colspan="5"></th>
+            </tr>
+            <tr *ngFor="let membre of memberList">
+              <td> {{membre}} </td>
+              <td colspan="4"></td>
+              <td style="text-align: right">
+                <button *ngIf="isOwner" class="trash" (click)="delMember()">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+        </table>
+
+        <br><br>
+        <table width="300">
+          <tr *ngIf="isAdmin" class="first">
+            <td colspan="2"><b>Ajouter un(e) invité(e)</b></td>
+          </tr>
+          <tr *ngIf="isAdmin" class="add-object">
+            <td><input placeholder="Pseudo" [formControl]="pseudoInvit" required></td>
+            <td class="plus">
+              <button (click)="addPerson()" class="add">+</button>
+            </td>
+          </tr>
+        </table>
+        <br><br>
+        <table width="300">
+          <tr *ngIf="isAdmin" class="first">
+            <td><b>Invitations en cours</b></td>
+          </tr>
+          <tr *ngIf="isAdmin" class="add-object">
+            <td *ngFor="let invited of invites">
+              {{invited}}
+            </td>
+          </tr>
+        </table>
+    </section>
+    <br><br><br>
 </body>
