@@ -2,79 +2,33 @@
 
 <body>
 
-  <h3>Mes événements</h3>
+  <h3 class="title">Mes événements</h3>
   <div *ngFor="let event of eventList" class="container-all">
-    <mat-card class="events">
-      <mat-card-title>
-        <button class="event-title" mat-stroked-button (click)="goToEvent(event.Id)">
-          {{event.Name}}
-        </button>
-      </mat-card-title>
 
-      <p>
-        {{event.Date | date: 'short'}}
-      </p>
-      <p>
-        {{event.Address}}
-      </p>
-
-      <mat-card-content>
-        <button class="delete" mat-stroked-button mat-icon-button (click)="delEvent(event.Id)">
-          <mat-icon>delete_sweep</mat-icon>
-        </button>
-        <button class="edit" mat-stroked-button mat-icon-button (click)="editEvent(event.Id)">
-          <mat-icon>edit</mat-icon>
-        </button>
-      </mat-card-content>
-    </mat-card>
-    <br>
+    <div class="card-event-admin">
+      <div class="header" (click)="goToEvent(event.Id)">
+        <h3>{{event.Name}}</h3>                  
+      </div>
+      <div class="primary-content">
+            <br>
+            <p class="date-time">{{event.Date | date: 'short'}}</p>
+            <p>{{event.Address}}</p>
+      </div>                  
+      <div class="buttons">
+           <button class="mdc-fab icons delete" (click)="delEvent(event.Id)">
+             <span class="mdc-fab__icon material-icons">delete_outline</span>
+           </button>
+           <button class="mdc-fab icons edit" (click)="editEvent(event.Id)">
+             <span class="mdc-fab__icon material-icons">edit</span>
+           </button>
+      </div>
+    </div>
   </div>
 
-    <!-- Publicité -->
-    <mat-card class="events">
-      <mat-card-content>
-        <p>Publicité</p>
-      </mat-card-content>
-    </mat-card>
-    <br>
-
-
-  <mat-list>
-    <mat-divider></mat-divider>
-  </mat-list>
-
-  <h3>Invitations</h3>
-  <div *ngFor="let event of inviteList" class="container-all">
-    <mat-card class="events">
-      <mat-card-title>
-        <button class="event-title" mat-stroked-button (click)="goToEvent(event.Id)">
-          {{event.Name}}
-        </button>
-      </mat-card-title>
-
-      <p>
-        {{event.DateEvent | date: 'short'}}
-      </p>
-      <p>
-        {{event.Address}}
-      </p>
-
-      <mat-card-content>
-        <button style="background-color: grey;" mat-stroked-button (click)="quitEvent(event)">
-          Quitter l'event
-        </button>
-      </mat-card-content>
-    </mat-card>
-    <br>
-
-
-  </div>
   <!-- Publicité -->
-  <mat-card class="events">
-    <mat-card-content>
-      <p>Publicité</p>
-    </mat-card-content>
-  </mat-card>
+  <div class="card-event-admin publicite">
+     <p>Publicité</p>
+  </div>
   <br>
 
 </body>
