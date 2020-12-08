@@ -7,8 +7,10 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { EventComponent } from './components/event/event.component';
 import { EditEventComponent } from './components/event/edit-event.component';
 import { SearchComponent } from './components/search/search-page.component';
-import { NotificationsComponent } from './components/notifications/notifications.component';
 
+import { LoginFormComponent } from './components/login-form/login-form.component';
+import { RegisterFormComponent } from './components/register/register-form.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -32,3 +34,4 @@ export const routingComponent = [HomePageComponent,
                                 EditEventComponent,
                                 SearchComponent,
                                 NotificationsComponent]
+
