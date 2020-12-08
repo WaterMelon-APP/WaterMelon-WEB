@@ -1,7 +1,6 @@
 <app-nav-component></app-nav-component>
 
 <body>
-
     <div align="center">
         <div class="row" id="event-name">
             <div class="col-sm-1"></div>
@@ -21,4 +20,80 @@
             <div class="col-sm-1"></div>
         </div>  
     </div>
+
+    <!--   DISPLAY CUSTOM COMPONENTS   -->
+
+    <section style="margin: 300px">
+
+        <!--   card-event-admin   -->
+        <p>card-event-admin</p>
+        <app-card-event-admin
+            [title]="'Barbecue'"
+            [date]="'22/07/2020'"
+            [time]="'12:30 AM'"
+            [place]="'7 rue des Bananes, 75020, Paris'">
+        </app-card-event-admin>
+    
+        <!--   card-event-member   -->
+        <br><p>card-event-member</p>
+        <app-card-event-member
+            [title]="'Barbecue'"
+            [date]="'22/07/2020'"
+            [time]="'12:30 AM'"
+            [place]="'7 rue des Bananes, 75020, Paris'"
+            [listItems]="'Coca-Cola, vin rouge'">
+        </app-card-event-member>
+
+        <!--   card-discovery   -->
+        <br><p>card-discovery</p>
+        <app-card-discovery
+            [title]="'Barbecue'"
+            [date]="'22/07/2020'"
+            [time]="'12:30 AM'"
+            [place]="'7 rue des Bananes, 75020, Paris'">
+        </app-card-discovery>
+
+        <!--   card-edit-event   -->
+        <br><p>card-edit-event</p>
+        <app-card-edit-event></app-card-edit-event>
+
+        <!--   alert   -->
+        <br><p>alert</p>
+        <app-alert
+            [text]="'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam mauris lacus, dictum sit amet congue et, tincidunt vitae nisi. Nulla ut mi quis lorem volutpat porta. Etiam at nibh id libero efficitur blandit vel fringilla ex. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse eleifend erat vel dictum fermentum.'">
+        </app-alert>
+
+        <!--   display-event   -->
+        <br><p>display-event</p>
+        <app-display-event
+            [title]="'Barbecue'"
+            [isPrivate]="'privé'"
+            [date]="'22/07/2020'"
+            [time]="'12:30 AM'"
+            [place]="'7 rue des Bananes, 75020, Paris'">
+        </app-display-event>
+        
+        <!--   notif-menu   -->
+        <br><p>notif-menu</p>
+        <app-notif-menu></app-notif-menu>
+
+        <!--   notif-invit-menu   -->
+        <br><p>notif-invit-menu</p>
+        <app-notif-invit-menu></app-notif-invit-menu>
+
+        <!--   notif-info-menu   -->
+        <br><p>notif-info-menu</p>
+        <app-notif-info-menu></app-notif-info-menu>   
+
+        <!--   notif-modif-event   -->
+        <br><p>notif-modif-event</p>
+        <app-notif-modif-event></app-notif-modif-event>  
+
+        <!--   notif-invit-response   -->
+        <br><p>notif-invit-response</p>
+        <app-notif-invit-response></app-notif-invit-response>
+
+        <br>    
+    </section>
+    
 </body>

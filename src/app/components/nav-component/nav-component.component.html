@@ -1,22 +1,68 @@
-<mat-sidenav-container class="top-toolbar">
-  <mat-sidenav-content>
-    <mat-toolbar class="top-nav">
-      <a class="watermelon" routerLink="/">
-        <img src="favicon.ico" style="padding-right: 10px; padding-left: 20px" height="25px" />
-        <span>Watermelon</span>
-      </a>
+<div class="top-nav">
+  <a class="watermelon" routerLink="/">
+    <img src="favicon.ico" style="padding-right: 10px; padding-left: 20px" height="25px" />
+    <span>Watermelon</span>
+  </a>
 
-      <!-- Search bar -->
-      <div class="search-bar">
-        <mat-form-field class="example-form-field">
-          <input matInput type="text" placeholder="Rechercher" [formControl]="search">
-        </mat-form-field>
-        <button class="search" mat-stroked-button mat-icon-button (click)="searchEvents()">
-          <mat-icon>search</mat-icon>
-        </button>
-        <mat-checkbox class="example-margin" [(ngModel)]="nom">Nom</mat-checkbox>
-        <mat-checkbox class="example-margin" [(ngModel)]="lieu">Lieu</mat-checkbox>
-      </div>
+
+  <!-- Search bar -->
+  <div class="search-bar">
+      <input type="text" placeholder="Rechercher" [formControl]="search">
+
+      <button class="dropdown">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+        <div class="dropdown-content">
+          <!--  [(ngModel)]="nom" et "lieu" -->
+          <button id="first-button">
+            <mat-icon>place</mat-icon>
+            Lieu
+          </button>
+          <button>
+            <mat-icon>text_format</mat-icon>
+            Nom
+          </button>
+          <button> 
+            <mat-icon>event</mat-icon>
+            Date unique
+          </button>
+          <button id="last-button">
+            <mat-icon>date_range</mat-icon>
+            Plage de dates
+          </button>
+        </div>
+      </button>
+
+      <button class="icon">
+        <mat-icon>text_format</mat-icon>
+        <!--  <mat-icon>place</mat-icon>
+          <mat-icon>date_range</mat-icon>
+          <mat-icon>event</mat-icon> -->
+      </button>
+
+      <button class="search" (click)="searchEvents()">
+        <mat-icon>search</mat-icon>
+      </button>
+
+  </div>
+
+  <!-- Notifcations -->
+
+  <div class="notif-number">2</div>
+  <div class="notif-bell">
+    <mat-icon>notifications_none</mat-icon>
+    
+    <!--
+    <div ng-app="demo" ng-controller="myCtrl">
+      <select ng-model="selectedName" ng-options="x for x in names">
+      </select>
+    </div>
+    -->
+  </div>
+  
+
+</div>
+
+<!-- Side navigation -->
 
       <div class="notification">
         <button mat-button [matMenuTriggerFor]="menu" (click)="getNotifications()">Notifications
@@ -58,7 +104,7 @@
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="isLoggedIn">
           <a routerLink="/list-user">
-            <button mat-menu-item>
+            <button class="nav-element">
               <mat-icon>event_note</mat-icon>
               Mes événements
             </button>
@@ -69,7 +115,7 @@
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="isLoggedIn">
           <a routerLink="/profile">
-            <button mat-menu-item>
+            <button class="nav-element">
               <mat-icon>perm_identity</mat-icon>
               Mon profil
             </button>
@@ -79,7 +125,7 @@
 
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="isLoggedIn">
-          <button mat-menu-item (click)="createEvent()">
+          <button class="nav-element" (click)="createEvent()">
             <mat-icon>playlist_add</mat-icon>
             Créer un événement
           </button>
@@ -100,7 +146,7 @@
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="isLoggedIn">
           <a routerLink="/search/_">
-            <button mat-menu-item>
+            <button class="nav-element">
               <mat-icon>add_location</mat-icon>
               Découvrir
             </button>
@@ -110,25 +156,25 @@
 
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="!isLoggedIn">
-          <button mat-menu-item (click)="Login()">
-            <mat-icon>fingerprint</mat-icon>
-            <span>Sign in</span>
-          </button>
+            <button class="nav-element" (click)="Login()">
+              <mat-icon>fingerprint</mat-icon>
+              <span>Sign in</span>
+            </button>
         </div>
       </mat-toolbar-row>
 
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="!isLoggedIn">
-          <button mat-menu-item (click)="Register()">
-            <mat-icon>accessibility_new</mat-icon>
-            <span>Register</span>
-          </button>
+            <button class="nav-element" (click)="Register()">
+              <mat-icon>accessibility_new</mat-icon>
+              <span>Register</span>
+            </button>
         </div>
       </mat-toolbar-row>
 
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="isLoggedIn">
-          <button mat-menu-item (click)="signOut()">
+          <button class="nav-element" (click)="signOut()">
             <mat-icon>exit_to_app</mat-icon>
             <span>Se déconnecter</span>
           </button>

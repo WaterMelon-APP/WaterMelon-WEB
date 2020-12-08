@@ -1,5 +1,63 @@
 /* You can add global styles to this file, and also import other style files */
 
+
+/*
+
+Main colors
+
+GREEN =  #47D278  OR  rgb(71, 210, 118)
+PINK  =  #FD5757
+
+GREY = #464646
+
+*/
+
 @import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
 html, body { height: 100%; }
 body { margin: 0 auto; font-family: Roboto, "Helvetica Neue", sans-serif; } 
+
+html, body {
+    height: 100%;
+}
+
+body { 
+    margin: 0 auto;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-color: #fff;
+} 
+
+/* List all the mat- elements to prestyle */
+
+button {
+    background-color: 0;
+    border: 0;
+}
+
+.watermelon-card {
+    border: solid 2px #FD5757;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+/* MDC Styles */
+
+.mdc-card {
+    width: 100%;
+    color: #333333;
+    }
+  
+    .mdc-card .demo-card__primary {
+      padding: 1rem;
+    }
+  
+    .mdc-card .demo-card__title,
+    .mdc-card .demo-card__subtitle {
+      margin: 0;
+    }
+  
+    .mdc-card .demo-card__secondary {
+      padding: 0 1rem 8px;
+      opacity: 0.87;
+    }
+
+
