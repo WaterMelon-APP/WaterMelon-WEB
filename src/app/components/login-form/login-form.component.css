@@ -1,3 +1,7 @@
+h3 {
+  color: #FD5757;
+  text-align: center;
+}
 
 .example-container {
   display: flex;

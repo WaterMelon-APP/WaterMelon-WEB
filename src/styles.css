@@ -66,4 +66,6 @@ button {
 
 .mat-menu-panel{
     background: #ffffff;
+    border: solid 2px #FD5757;
+    border-radius: 30px;
 }
