@@ -1,52 +1,49 @@
 <app-nav-component></app-nav-component>
 
 <body>
-
-    <div class="container">
-
-      <div align="center">
-        <div class="row" id="event-name">
-            <div class="col-sm-3"></div>
-            <div class="col-sm-6" id="pink">
-                <mat-icon>event</mat-icon>
-                <p class="event-name">{{nameEvent}}</p>
-                <p>{{dateEvent | date:'short'}}</p>
-                <p>{{addressEvent}}</p>
-            </div>
-            <div class="col-sm-3"></div>
-        </div>
+  <section>
+    <div class="card-edit-event">
+      <div class="header">
+        <input style matInput placeholder="{{nameEvent}}" [formControl]="eventname">
+        <button mat-button color="#FD5757" (click)="editName()">
+          <span class="mdc-fab__icon material-icons header-edit">edit</span>
+        </button>
+      </div>
+      
+      <div class="primary-content">
+        <br><br>
+        <input class="address" style matInput placeholder="{{addressEvent}}" [formControl]="eventaddress">
+        <button mat-button color="#FD5757" (click)="editAddress()">
+          <span class="mdc-fab__icon material-icons edit">edit</span>
+        </button>
         
-      </div>
-
-      <div class="cont4">
-        <h3>Modifier les infos</h3>
-        <mat-form-field>
-          <input style matInput placeholder="{{nameEvent}}" [formControl]="eventname" required>
-        </mat-form-field>
-        <button mat-button color="#FD5757" (click)="editName()">Modifier le nom</button>
-      </div>
-      <div class="cont4">
-        <mat-form-field>
-          <input matInput [(ngModel)]="dateEvent" [matDatepicker]="picker" required>
-          <mat-datepicker-toggle color="#FD5757" matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-        <button mat-button color="#FD5757" (click)="editDate()">Modifier la date</button>
-      </div>
-      <div class="cont4">
-        <mat-form-field>
-          <input style matInput placeholder="{{addressEvent}}" [formControl]="eventaddress" required>
-        </mat-form-field>
-        <button mat-button color="#FD5757" (click)="editAddress()">Modifier l'adresse</button>
-
-        <p>L'événement est-il public ?</p>
-        <!-- Rounded switch -->
-        <label class="switch">
-          <input type="checkbox" id= "priv" checked={{isPublic}} (change)="editPrivacy()">
-          <span class="slider round"></span>
-        </label>
-      </div>
-      <br>
-    </div>
-
+        <input class="date" matInput [(ngModel)]="dateEvent" [matDatepicker]="picker" placeholder="{{dateEvent | date:'short'}}">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <button mat-button color="#FD5757" (click)="editDate()">
+          <span class="mdc-fab__icon material-icons edit">edit</span>
+        </button>
+      </div>       
+          
+        <div class="buttons">
+          <!-- select class active or non-active -->
+          <div *ngIf="isPublic; else private">
+            <button class="public active">
+              Public
+            </button>
+            <button class="prive non-active" (click)="editPrivacy()">
+              Privé
+            </button>  
+          </div>
+          <ng-template #private>
+            <button class="public non-active" (click)="editPrivacy()">
+              Public
+            </button>
+            <button class="prive active">
+              Privé
+            </button>  
+          </ng-template>
+        </div>
+     </div>
+  </section>
 </body>
