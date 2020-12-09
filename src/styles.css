@@ -60,12 +60,22 @@ button {
       opacity: 0.87;
     }
 
-.mat-dialog-container{
+.mat-dialog-container {
     border: solid 2px #FD5757;
+    background:  #FD5757;
+    color: #fff;
 }
 
-.mat-menu-panel{
-    background: #ffffff;
+.mat-menu-panel {
+    background: #fff;
     border: solid 2px #FD5757;
     border-radius: 30px;
+}
+
+.mat-calendar {
+    background:  #FD5757;    
+}
+
+.mat-calendar-body-cell-content.mat-calendar-body-selected.mat-calendar-body-today, .mat-calendar-body-cell-content.mat-calendar-body-selected {
+    background:  #47D278; 
 }
