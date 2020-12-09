@@ -1,8 +1,7 @@
-.all {
+body {
 	background-color: #fff;
-	position: absolute;
-	top: 4em;
-	left: 500px;
+	margin-top: 8em;
+	width: 100%;
 }
 
 .profile-card {
@@ -20,9 +19,10 @@
 }
 
 .upload {
+    margin-left: 46%;
 	padding: 10px 15px;
-	color: #fff;
-	background-color: #FD5757;
+	color: #FD5757;
+	border: solid 1px #FD5757;
 }
 
 /*--Form style--*/

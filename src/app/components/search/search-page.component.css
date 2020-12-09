@@ -10,29 +10,66 @@ h3 {
     color: grey;
 }
 
-.events mat-card {
-    width: 200px;
-    max-width: 250px;
-    margin-bottom: 1em;
+.card-event-admin {
+    width: 250px;
+    height: 300px;
+    color: #333333;
+    border: solid 2px #FD5757;
+    padding: 0;
+    border-radius: 20px;
+    margin: 0;
+    text-align: center;
 }
 
-.event-title {
-    background-color: #FD5757;
-}
+.header {
+      border: solid 2px #FD5757;
+      height: 70px;
+      width: 250px;
+      color: #fff;
+      margin: 0;
+      background-color: #FD5757;
+      border-radius: 20px 20px 0 0;
+      margin: -2px;
+    }
+  
+    .header h3 {
+      padding-top: 10px;
+    }
+    
+    .primary-content {
+      margin-top: 10px;  
+    }
+    
+    .primary-content p {
+      font-size: 14px;
+    }
+    
+    .date-time {
+      font-weight: bold;
+    }
+  
+    .buttons {
+      margin: 0 auto;
+      margin-top: 70px;
+  }
+  
+  .buttons button {
+    border-radius: 30px;
+    padding: 10px 12px;;
+  }
 
 
-p {
-    color: grey;
-}
+  .dislike {
+      background-color: #FD5757;
+      color: white;
+      margin-right: 35px;
+  }
 
-.join {
-    background-color: #47D278; 
-}
+  .like{
+      background-color: #47D278;
+      color: white;
+  }
 
-.edit {
-    background-color: rgb(58, 58, 194); 
-}
-
-mat-expansion-panel {
-    margin-bottom: 1em;
+  .publicite {
+    height: 100px;
 }

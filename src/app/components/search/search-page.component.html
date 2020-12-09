@@ -5,34 +5,30 @@
   <h3>Découvrir</h3>
   <h5>Evénements publics</h5>
   <div *ngFor="let event of eventList" class="container-all">
-    <mat-card class="events">
-      <mat-card-title>
-        <button class="event-title" mat-stroked-button (click)="goToEvent(event.id)">
-          {{event.get('eventName')}}
-        </button>
-      </mat-card-title>
 
-      <p>
-        {{event.get('dateEvent')  | date: 'short'}}
-      </p>
-      <p>
-        {{event.get('address')}}
-      </p>
-
-      <mat-card-content>
-        <button class="join" mat-stroked-button (click)="joinEvent(event.id)">
-          Rejoindre l'event
+    <div class="card-event-admin">
+      <div class="header" (click)="goToEvent(event.Id)">
+        <h3>{{event.Name}}</h3>                  
+      </div>
+      <div class="primary-content">
+            <br>
+            <p class="date-time">{{event.Date | date: 'short'}}</p>
+            <p>{{event.Address}}</p>
+      </div>                  
+      <div class="buttons">
+        <button class="mdc-fab icons dislike" (click)="joinEvent(event.id)">
+          <span class="mdc-fab__icon material-icons">clear</span>
         </button>
-      </mat-card-content>
-    </mat-card>
-    <br>
+        <button class="mdc-fab icons like" aria-label="Favorite">
+          <span class="mdc-fab__icon material-icons">done</span>
+        </button>
+     </div>
+    </div>
   </div>
-  
-    <!-- Publicité -->
-    <mat-card class="events">
-      <mat-card-content>
-        <p>Publicité</p>
-      </mat-card-content>
-    </mat-card>
-    <br>
+
+  <!-- Publicité -->
+  <div class="card-event-admin publicite">
+     <p>Publicité</p>
+  </div>
+  <br>
 </body>

@@ -2,6 +2,7 @@
 .top-nav {
   background-color: #47D278;
   position: fixed;
+  z-index: 10;
   top: 0;
   width: 100%;
 }
@@ -123,7 +124,7 @@ form, .bar, .div-dropdown, .search-button {
   display: inline-block;
   height: 40px;
   position: fixed;
-  top: 15px;
+  top: 10px;
   left: 700px;
 }
 
