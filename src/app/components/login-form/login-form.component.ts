@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MatDialogRef} from '@angular/material';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../../services/auth.service'
+import { AuthService } from '../../services/auth.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 import { User } from '../../models/user.model';
 
@@ -20,7 +21,7 @@ export class LoginFormComponent implements OnInit {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required, Validators.requiredTrue]);
 
-  constructor(private dialogRef: MatDialogRef<LoginFormComponent>, private http: HttpClient, private auth: AuthService) { }
+  constructor(private dialogRef: MatDialogRef<LoginFormComponent>, private http: HttpClient, private auth: AuthService, private _snackBar: MatSnackBar) { }
 
   getErrorMessage() { }
 
@@ -30,7 +31,7 @@ export class LoginFormComponent implements OnInit {
     const emailVal = this.email.value as string;
     const passwordVal = this.password.value as string;
     if (emailVal != null || passwordVal != null) {
-      
+
       const header: Object = this.auth.getHeader();
       const user = '{ "Username": "' + emailVal + '", "Password": "' + passwordVal + '" }';
       var juser = JSON.parse(user);
@@ -40,10 +41,15 @@ export class LoginFormComponent implements OnInit {
           this.auth.logIn(logResponse.Id, logResponse.Token, logResponse.Username);
           this.dialogRef.close();
         },
-        error => { 
-            alert("Une erreur est survenue");
+        error => {
+            this.openSnackBar("Une erreur est survenue", "Fermer");
         }
       );
     }
+  }
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 5000,
+    });
   }
 }

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 import { AuthService } from '../../services/auth.service'
 import { Event } from '../../models/event.model'
@@ -11,6 +13,8 @@ import { Event } from '../../models/event.model'
   templateUrl: './create-event.component.html',
   styleUrls: ['./create-event.component.css']
 })
+
+
 export class CreateEventComponent implements OnInit {
 
   eventname = new FormControl('', [Validators.required, Validators.requiredTrue]);
@@ -20,7 +24,7 @@ export class CreateEventComponent implements OnInit {
   username: string;
   id: string;
 
-  constructor(private dialogRef: MatDialogRef<CreateEventComponent>, private http: HttpClient, private auth: AuthService) { }
+  constructor(private dialogRef: MatDialogRef<CreateEventComponent>, private http: HttpClient, private auth: AuthService, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.dateEvent = new Date();
@@ -40,17 +44,22 @@ export class CreateEventComponent implements OnInit {
       const event = '{ "Name": "' + eventnameVal + '", "Owner": "' + this.username + '", "Date": "' + eventdateVal.toISOString() + '", "Adress": "' + "" + '", "Guests": ["' + guests + '"], "Public": "' + !checkbox.checked + '", "ItemList": ' + "[]" +  ' }';
       var jevent = JSON.parse(event);
       console.log('jevent :>> ', jevent);
-
       this.http.post<Event>(this.auth.callEvents(""), jevent, this.header)
       .subscribe(itemResponse => {
-        alert('Votre événement a été créé avec succès!');
+        this.openSnackBar("Votre événement a été créé avec succès!", "Fermer");
           console.log('itemResponse :>> ', itemResponse);
           this.dialogRef.close();
         },
-        error => { 
-          alert("Une erreur est survenue");
+        error => {
+          this.openSnackBar("Une erreur est survenue", "Fermer");
         }
       );
     }
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 5000,
+    });
   }
 }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 import { AuthService } from '../../services/auth.service'
 import { Event } from '../../models/event.model'
 
@@ -17,9 +19,9 @@ export class SearchComponent implements OnInit {
   research;
   eventL: Array<Event>;
   header: Object;
-  id: string; 
+  id: string;
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private auth: AuthService) {
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private auth: AuthService, private _snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -69,7 +71,7 @@ export class SearchComponent implements OnInit {
         this.eventL = eventResponse;
       },
       error => {
-          alert("Une erreur est survenue");
+          this.openSnackBar("Une erreur est survenue", "Fermer");
       }
     );
 
@@ -125,15 +127,21 @@ export class SearchComponent implements OnInit {
 
     this.http.put<Event>(this.auth.callEvents(event.Id), jmemberList, this.header)
     .subscribe(userResponse => {
-          alert("Vous avez rejoint l'event");
+          this.openSnackBar("Vous avez rejoint l'event", "Fermer");
         },
         error => {
-          alert("Une erreur est survenue");
+          this.openSnackBar("Une erreur est survenue", "Fermer");
       }
     );
   }
 
   async goToEvent(id) {
     this.router.navigate(['/event', id])
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 5000,
+    });
   }
 }

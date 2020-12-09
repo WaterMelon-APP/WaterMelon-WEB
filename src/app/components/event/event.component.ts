@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import {FormControl, Validators} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 import { AuthService } from '../../services/auth.service'
 import { Event } from '../../models/event.model'
@@ -18,7 +19,7 @@ import { Invitation } from '../../models/invitation.model'
 
 export class EventComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private auth: AuthService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private auth: AuthService, private _snackBar: MatSnackBar) { }
 
   needsprice = new FormControl('', [Validators.required, Validators.requiredTrue]);
   needsquant = new FormControl('', [Validators.required, Validators.requiredTrue]);
@@ -105,7 +106,7 @@ export class EventComponent implements OnInit {
                 this.membres.push(userResponse.Username);
               },
               error => {
-                alert("Une erreur est survenue");
+                this.openSnackBar("Une erreur est survenue");
             }
           );
         }*/
@@ -118,7 +119,7 @@ export class EventComponent implements OnInit {
               }
             },
             error => {
-              alert("Une erreur est survenue");
+              this.openSnackBar("Une erreur est survenue", "Fermer");
             }
           );
         }
@@ -129,7 +130,7 @@ export class EventComponent implements OnInit {
                 this.admins.push(userResponse.Name);
               },
               error => {
-                alert("Une erreur est survenue");
+                this.openSnackBar("Une erreur est survenue");
             }
           );
         }*/
@@ -171,13 +172,13 @@ export class EventComponent implements OnInit {
 
             },
               error => {
-                alert("Une erreur est survenue");
+                this.openSnackBar("Une erreur est survenue", "Fermer");
             }
           );
         }
       },
       error => {
-          alert("Une erreur est survenue");
+          this.openSnackBar("Une erreur est survenue", "Fermer");
       }
     );
   }
@@ -189,11 +190,12 @@ export class EventComponent implements OnInit {
   async delEvent() {
     this.http.delete(this.auth.callEvents(this.eventId), this.header)
     .subscribe(userResponse => {
-          alert("L'événement " + this.nameEvent + " a bien été supprimé.");
+          const text = "L'événement " + this.nameEvent + " a bien été supprimé.";
+          this.openSnackBar(text, "Fermer");
           this.router.navigate(['/list-user']);
         },
         error => {
-          alert("Une erreur est survenue");
+          this.openSnackBar("Une erreur est survenue", "Fermer");
       }
     );
   }
@@ -222,10 +224,10 @@ export class EventComponent implements OnInit {
         console.log('jinvitation :>> ', jinvitation);
         this.http.post<Invitation>(this.auth.callInvitations(""), jinvitation, this.header)
         .subscribe(userResponse => {
-              alert('Invitation envoyé');
+              this.openSnackBar('Invitation envoyé', "Fermer");
             },
             error => {
-              alert("Une erreur est survenue");
+              this.openSnackBar("Une erreur est survenue", "Fermer");
           }
         );
       }
@@ -266,16 +268,16 @@ export class EventComponent implements OnInit {
 
             this.http.put<Event>(this.auth.callEvents(this.eventId), jadminList, this.header)
             .subscribe(userResponse => {
-                  alert('Membre passé admin !');
+                  this.openSnackBar('Membre passé admin !', "Fermer");
                 },
                 error => {
-                  alert("Une erreur est survenue");
+                  this.openSnackBar("Une erreur est survenue", "Fermer");
               }
             );
         }}
       },
         error => {
-          alert("Cet utilisateur n'existe pas");
+          this.openSnackBar("Cet utilisateur n'existe pas", "Fermer");
         }
       );
     }
@@ -294,16 +296,16 @@ export class EventComponent implements OnInit {
 
             this.http.put<Event>(this.auth.callEvents(this.eventId), jmemberList, this.header)
             .subscribe(userResponse => {
-                  alert("Membre supprimé de l'event");
+                  this.openSnackBar("Membre supprimé de l'event", "Fermer");
                 },
                 error => {
-                  alert("Une erreur est survenue");
+                  this.openSnackBar("Une erreur est survenue", "Fermer");
               }
             );
         }}
       },
         error => {
-          alert("Cet utilisateur n'existe pas");
+          this.openSnackBar("Cet utilisateur n'existe pas", "Fermer");
         }
       );
     }
@@ -343,16 +345,16 @@ export class EventComponent implements OnInit {
 
             this.http.put<Event>(this.auth.callEvents(this.eventId), jadminList, this.header)
             .subscribe(userResponse => {
-                  alert("Admin rétrogradé !");
+                  this.openSnackBar("Admin rétrogradé !", "Fermer");
                 },
                 error => {
-                  alert("Une erreur est survenue");
+                  this.openSnackBar("Une erreur est survenue", "Fermer");
               }
             );
         }}
       },
         error => {
-          alert("Cet utilisateur n'existe pas");
+          this.openSnackBar("Cet utilisateur n'existe pas", "Fermer");
         }
       );
     }
@@ -371,16 +373,16 @@ export class EventComponent implements OnInit {
 
             this.http.put<Event>(this.auth.callEvents(this.eventId), jadminList, this.header)
             .subscribe(userResponse => {
-                  alert("Admin supprimé de l'event");
+                  this.openSnackBar("Admin supprimé de l'event", "Fermer");
                 },
                 error => {
-                  alert("Une erreur est survenue");
+                  this.openSnackBar("Une erreur est survenue", "Fermer");
               }
             );
         }}
       },
         error => {
-          alert("Cet utilisateur n'existe pas");
+          this.openSnackBar("Cet utilisateur n'existe pas", "Fermer");
         }
       );
     }
@@ -398,11 +400,11 @@ export class EventComponent implements OnInit {
       this.http.post<Item>(this.auth.callItems(""), jneeds, this.header)
       .subscribe(itemResponse => {
             this.needsEvent.push(itemResponse.Id);
-            alert('Votre objet a été ajouté avec succès!');
+            this.openSnackBar('Votre objet a été ajouté avec succès!', "Fermer");
             location.reload();
           },
           error => {
-            alert("Une erreur est survenue");
+            this.openSnackBar("Une erreur est survenue", "Fermer");
         }
       );
     }
@@ -411,11 +413,11 @@ export class EventComponent implements OnInit {
   async delItem(item){
     this.http.delete(this.auth.callItems(item.Id), this.header)
     .subscribe(userResponse => {
-          alert("L'item a bien été supprimé.");
+          this.openSnackBar("L'item a bien été supprimé.", "Fermer");
           location.reload();
         },
         error => {
-          alert("Une erreur est survenue");
+          this.openSnackBar("Une erreur est survenue", "Fermer");
       }
     );
   }
@@ -434,24 +436,26 @@ export class EventComponent implements OnInit {
       var reponse = window.confirm("Votre choix?");
       if (reponse) {
         payTab[0] = this.id;
-        let price = item.Quantity * item.Price
-        alert("Paiement de " + item.Quantity + " " + item.Name + " d'une valeur de " + price.toString() + "€.")
+        let price = item.Quantity * item.Price;
+        const text="Paiement de " + item.Quantity + " " + item.Name + " d'une valeur de " + price.toString() + "€.";
+        this.openSnackBar(text, "Fermer");
       }
       else {
         this.payed[item.Id] = false;
         if (payTab[0]) {
-          alert("Remboursement")
+          this.openSnackBar("Remboursement", "Fermer");
         }
         else {
-          alert("Paiement annulé");
+          this.openSnackBar("Paiement annulé", "Fermer");
         }
         payTab[0] = "";
       }
     }
     else {
       if (payTab[0]) {
-        let price = item.Quantity * item.Price
-        alert("Remboursement de " + item.Quantity + " " + item.Name + " d'une valeur de " + price.toString() + "€.")
+        let price = item.Quantity * item.Price;
+        const text="Remboursement de " + item.Quantity + " " + item.Name + " d'une valeur de " + price.toString() + "€.";
+        this.openSnackBar(text, "Fermer");
       }
     payTab[0] = "";
     }
@@ -472,7 +476,7 @@ export class EventComponent implements OnInit {
             console.log('Maj item list');
           },
           error => {
-            alert("Une erreur est survenue");
+            this.openSnackBar("Une erreur est survenue", "Fermer");
         }
       );
     }
@@ -482,7 +486,7 @@ export class EventComponent implements OnInit {
             console.log('Maj item list');
           },
           error => {
-            alert("Une erreur est survenue");
+            this.openSnackBar("Une erreur est survenue", "Fermer");
         }
       );
     }
@@ -508,5 +512,10 @@ export class EventComponent implements OnInit {
     var text = "Hey%2C%20je%20viens%20de%20cr%C3%A9er%20mon%20%C3%A9v%C3%A9nement%20" + this.nameEvent + "%20rejoint%20moi%20!" + link;
     const tweet_url = "http://twitter.com/intent/tweet?text=" + text;
     window.open(tweet_url, "_blank");
+  }
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 5000,
+    });
   }
 }

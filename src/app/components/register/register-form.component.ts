@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
+
+import {MatSnackBar} from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 
 import { User } from '../../models/user.model';
@@ -21,7 +23,7 @@ export class RegisterFormComponent implements OnInit {
     firstPasswd = new FormControl('', [Validators.required, Validators.requiredTrue]);
     verifPasswd = new FormControl('', [Validators.required, Validators.requiredTrue]);
 
-    constructor(private dialogRef: MatDialogRef<RegisterFormComponent>, private http: HttpClient, private auth: AuthService) { }
+    constructor(private dialogRef: MatDialogRef<RegisterFormComponent>, private http: HttpClient, private auth: AuthService, private _snackBar: MatSnackBar) { }
 
     ngOnInit() {
     }
@@ -36,7 +38,7 @@ export class RegisterFormComponent implements OnInit {
         const verifPasswdVal = this.verifPasswd.value as string;
         if (usernameVal != null || emailVal != null || firstPasswdVal != null || verifPasswdVal != null) {
             if (firstPasswdVal.localeCompare(verifPasswdVal)) {
-                alert("Les mots de passe ne sont pas identiques.");
+                this.openSnackBar("Les mots de passe ne sont pas identiques.", "Fermer");
             } else {
                 const header: Object = this.auth.getHeader();
                 const user = '{ "Email": "' + emailVal + '", "Username": "' + usernameVal + '", "Password": "' + firstPasswdVal + '" }';
@@ -48,10 +50,16 @@ export class RegisterFormComponent implements OnInit {
                         this.dialogRef.close();
                     },
                     error => {
-                        alert("Une erreur est survenue");
+                        this.openSnackBar("Une erreur est survenue", "Fermer");
                     }
                 );
             }
         }
+    }
+
+    openSnackBar(message: string, action: string) {
+      this._snackBar.open(message, action, {
+        duration: 5000,
+      });
     }
 }

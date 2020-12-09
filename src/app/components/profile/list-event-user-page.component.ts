@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 import { AuthService } from '../../services/auth.service'
 import { Event } from '../../models/event.model'
@@ -19,7 +20,7 @@ export class ListEventUserPageComponent implements OnInit {
   header: Object;
   id: string;
 
-  constructor(private router: Router, private http: HttpClient, private auth: AuthService) {}
+  constructor(private router: Router, private http: HttpClient, private auth: AuthService, private _snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.id = this.auth.getId();
@@ -38,8 +39,8 @@ export class ListEventUserPageComponent implements OnInit {
     .subscribe(eventResponse => {
         invites = eventResponse;
       },
-      error => { 
-          alert("Une erreur est survenue");
+      error => {
+          this.openSnackBar("Une erreur est survenue", "Fermer");
       }
     );
     for (let invite of invites) {
@@ -58,8 +59,8 @@ export class ListEventUserPageComponent implements OnInit {
     .subscribe(eventResponse => {
         this.eventList = eventResponse;
       },
-      error => { 
-          alert("Une erreur est survenue");
+      error => {
+          this.openSnackBar("Une erreur est survenue", "Fermer");
       }
     );
     for (let event of events) {
@@ -72,11 +73,11 @@ export class ListEventUserPageComponent implements OnInit {
   async delEvent(id) {
     this.http.delete(this.auth.callEvents(id), this.header)
     .subscribe(userResponse => {
-          alert("L'événement a bien été supprimé.");
+          this.openSnackBar("L'événement a bien été supprimé.", "Fermer");
           location.reload();
         },
-        error => { 
-          alert("Une erreur est survenue");
+        error => {
+          this.openSnackBar("Une erreur est survenue", "Fermer");
       }
     );
   }
@@ -131,11 +132,11 @@ export class ListEventUserPageComponent implements OnInit {
     var jguest = JSON.parse(guest);
     this.http.put<Event>(this.auth.callEvents(event.Id), jguest, this.header)
     .subscribe(eventResponse => {
-        alert("Vous avez quitté l'event");
+        this.openSnackBar("Vous avez quitté l'event", "Fermer");
         location.reload();
       },
-      error => { 
-        alert("Une erreur est survenue");
+      error => {
+        this.openSnackBar("Une erreur est survenue", "Fermer");
       }
     );
   }
@@ -146,5 +147,10 @@ export class ListEventUserPageComponent implements OnInit {
 
   async goToEvent(id) {
     this.router.navigate(['/event', id])
+  }
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 5000,
+    });
   }
 }

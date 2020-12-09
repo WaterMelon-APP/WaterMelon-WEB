@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 import { AuthService } from '../../services/auth.service'
 import { User } from '../../models/user.model'
@@ -34,7 +35,7 @@ export class ProfileComponent implements OnInit {
   header: Object;
   id: string;
 
-  constructor(private http: HttpClient, private auth: AuthService) { }
+  constructor(private http: HttpClient, private auth: AuthService, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.id = this.auth.getId();
@@ -55,7 +56,7 @@ export class ProfileComponent implements OnInit {
       this.profile_picture = userResponse.ProfilePicture;
     },
       error => {
-          alert("Une erreur est survenue");
+          this.openSnackBar("Une erreur est survenue", "Fermer");
       }
     );
   }
@@ -96,12 +97,17 @@ export class ProfileComponent implements OnInit {
 
     this.http.put<User>(this.auth.callUsers(this.id), juser, this.header)
     .subscribe(userResponse => {
-          alert('Les changements ont bien été enregistré !');
+          this.openSnackBar('Les changements ont bien été enregistré !', "Fermer");
           location.reload();
         },
         error => {
-          alert("Une erreur est survenue");
+          this.openSnackBar("Une erreur est survenue", "Fermer");
       }
     );
+  }
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 5000,
+    });
   }
 }

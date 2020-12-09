@@ -3,6 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 import { LoginFormComponent } from '../login-form/login-form.component';
 import { RegisterFormComponent } from '../register/register-form.component';
@@ -32,7 +33,7 @@ export class NavComponentComponent implements OnInit {
   notificationsList;
   eventNameList;
 
-  constructor(public dialog: MatDialog, private router: Router, private auth: AuthService, private http: HttpClient) {
+  constructor(public dialog: MatDialog, private router: Router, private auth: AuthService, private http: HttpClient, private _snackBar: MatSnackBar) {
     this.token = this.auth.getToken();
     console.log('this.token :>> ', this.token);
     if (this.token) {
@@ -129,7 +130,7 @@ export class NavComponentComponent implements OnInit {
         }
       },
         error => {
-          alert("Une erreur est survenue");
+          this.openSnackBar("Une erreur est survenue", "Fermer");
         }
       );
   }
@@ -147,12 +148,12 @@ export class NavComponentComponent implements OnInit {
             console.log('response :>> ', response);
           },
           error => {
-            alert("Une erreur est survenue")
+            this.openSnackBar("Une erreur est survenue", "Fermer")
           })
         window.location.reload();
       },
       error => {
-        alert("Une erreur est survenue");
+        this.openSnackBar("Une erreur est survenue", "Fermer");
       })
   }
 
@@ -165,12 +166,12 @@ export class NavComponentComponent implements OnInit {
         console.log('response :>> ', response);
       },
       error => {
-        alert("Une erreur est survenue")
+        this.openSnackBar("Une erreur est survenue", "Fermer")
       })
     window.location.reload();
     },
     error => {
-      alert("Une erreur est survenue");
+      this.openSnackBar("Une erreur est survenue", "Fermer");
     })
   }
 
@@ -181,7 +182,12 @@ export class NavComponentComponent implements OnInit {
       window.location.reload();
     },
     error => {
-      alert("Une erreur est survenue")
+      this.openSnackBar("Une erreur est survenue", "Fermer")
     })
+  }
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 5000,
+    });
   }
 }

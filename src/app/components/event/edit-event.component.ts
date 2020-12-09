@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 import { AuthService } from '../../services/auth.service'
 import { Event } from '../../models/event.model'
@@ -28,7 +29,7 @@ export class EditEventComponent implements OnInit {
   header: Object;
   id: string;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private auth: AuthService) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, private auth: AuthService, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.eventId = this.route.snapshot.paramMap.get('id');
@@ -51,8 +52,8 @@ export class EditEventComponent implements OnInit {
           this.addressEvent = "Modifiez l'adresse"
         }
       },
-      error => { 
-          alert("Une erreur est survenue");
+      error => {
+          this.openSnackBar("Une erreur est survenue", "Fermer");
       }
     );
   }
@@ -65,11 +66,12 @@ export class EditEventComponent implements OnInit {
       var jname = JSON.parse(name);
       this.http.put<Event>(this.auth.callEvents(this.eventId), jname, this.header)
       .subscribe(eventResponse => {
-          alert("Le nom a bien été changé à " + eventnameVal + " !");
+        const text="Le nom a bien été changé à " + eventnameVal + " !";
+          this.openSnackBar(text, "Fermer");
           location.reload();
         },
-        error => { 
-          alert("Une erreur est survenue");
+        error => {
+          this.openSnackBar("Une erreur est survenue", "Fermer");
         }
       );
     }
@@ -83,11 +85,11 @@ export class EditEventComponent implements OnInit {
       var jdate = JSON.parse(date);
       this.http.put<Event>(this.auth.callEvents(this.eventId), jdate, this.header)
       .subscribe(eventResponse => {
-          alert("La date a bien été changé !");
+          this.openSnackBar("La date a bien été changé !", "Fermer");
           location.reload();
         },
-        error => { 
-          alert("Une erreur est survenue");
+        error => {
+          this.openSnackBar("Une erreur est survenue", "Fermer");
         }
       );
     }
@@ -101,11 +103,12 @@ export class EditEventComponent implements OnInit {
       var jaddress = JSON.parse(address);
       this.http.put<Event>(this.auth.callEvents(this.eventId), jaddress, this.header)
       .subscribe(eventResponse => {
-          alert("L'adresse a bien été changé à " + eventaddressVal + " !");
+        const text= "L'adresse a bien été changé à " + eventaddressVal + " !";
+          this.openSnackBar(text, "Fermer");
           location.reload();
         },
-        error => { 
-          alert("Une erreur est survenue");
+        error => {
+          this.openSnackBar("Une erreur est survenue", "Fermer");
         }
       );
     }
@@ -145,12 +148,17 @@ export class EditEventComponent implements OnInit {
     this.http.put<Event>(this.auth.callEvents(this.eventId), jpublic, this.header)
     .subscribe(eventResponse => {
       console.log('eventResponse :>> ', eventResponse);
-        alert("L'événement a bien été modifié");
+        this.openSnackBar("L'événement a bien été modifié", "Fermer");
         location.reload();
       },
-      error => { 
-        alert("Une erreur est survenue");
+      error => {
+        this.openSnackBar("Une erreur est survenue", "Fermer");
       }
     );
+  }
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 5000,
+    });
   }
 }
