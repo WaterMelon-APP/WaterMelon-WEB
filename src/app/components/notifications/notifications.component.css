@@ -2,7 +2,7 @@ body {
     height: auto;
     width: 79%;
     margin-top: 6em;
-    margin-left: 300px;
+    margin-left: 350px;
     background-color: #fff;
 }
 
@@ -19,7 +19,6 @@ h3 {
 .event-title {
     background-color: #FD5757;
 }
-
 
 p {
     color: grey;
@@ -52,3 +51,65 @@ a:hover {
     background-color: #FD5757;
     border: solid 1px #FD5757;
 }
+
+.container-all {
+    border-bottom: solid 2px #FD5757;
+    width: 90%;
+}
+
+/* notif-info-menu */
+.notif-info-menu{
+    position: relative;
+    height: 70px;
+    z-index: 1;
+  }    
+  
+  .notif {
+    padding: 0 25px 10px 25px;
+    border: 0;
+    background: 0;
+    font-weight: bold;
+  }
+
+  /* notif-invit-menu */
+  .notif-invit-menu {
+    position: relative;
+    z-index: 1;
+}
+  
+    .notif-icons{
+      font-size: 30px;
+      margin: 20px;
+      margin-left: 20px;
+      color: #FD5757;
+      vertical-align: middle;
+    }
+  
+      .notif-text{
+        font-size: 14px;
+      }
+    
+    .notif {
+      padding: 0 25px 10px 25px;
+      border: 0;
+      background: 0;
+      font-weight: bold;
+      margin-left: 30px;
+    }
+    
+    .accept {
+        color: #fff;
+        background-color: #47D278; 
+        border: solid 2px #47D278;
+        padding: 10px 20px;
+        border-radius: 30px;
+        margin-left: 60px;
+    }
+  
+    .refuse {
+        color: #FD5757; 
+        border: solid 2px #FD5757;
+        padding: 10px 20px;
+        border-radius: 30px;
+    }
+  
