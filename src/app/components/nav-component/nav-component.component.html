@@ -46,53 +46,52 @@
   </div>
 
   <!-- Notifcations -->
-
-  <div class="notif-number">2</div>
-  <div class="notif-bell">
-    <mat-icon>notifications_none</mat-icon>
-    
-    <!--
-    <div ng-app="demo" ng-controller="myCtrl">
-      <select ng-model="selectedName" ng-options="x for x in names">
-      </select>
-    </div>
-    -->
-  </div>
-  
-
-</div>
-
-<!-- Side navigation -->
-
-      <div class="notification">
-        <button mat-button [matMenuTriggerFor]="menu" (click)="getNotifications()">Notifications
+    <div class="notif-bell">
+        <button mat-button [matMenuTriggerFor]="menu" (click)="getNotifications()">
           <mat-icon>notifications</mat-icon>
         </button>
-        <mat-menu class="notif-menu" #menu="matMenu">
-          <button mat-menu-item *ngFor="let notification of notificationList" (click)="goToNotif()">
-            <p *ngIf='notification.Type == "invitation"'>
-              {{notification.Type}} de {{notification.From}} pour l'événement {{eventNameList[notification.Id]}}
-            </p>
-            <p *ngIf='notification.Type != "invitation"'> 
-              {{notification.About}}
-            </p>
-      
-            <mat-card-content *ngIf='notification.Type == "invitation"'>
-              <br>
-              <button class="answer-yes" (click)="acceptInvite(notification)">Accepter</button>
-              <button class="answer-no" (click)="refuseInvite(notification)">Refuser</button>
-              <br><br>
-            </mat-card-content>
-            <mat-card-content *ngIf='notification.Type != "invitation"'>
-              <br>
-              <button class="answer-yes" (click)="validateNotif(notification)">OK</button>
-              <br><br>
-            </mat-card-content>
-          </button>
-          
+        <mat-menu width="400px" id="notif-menu" #menu="matMenu">
+          <div *ngFor="let notification of notificationList" class="container-all">
+            <div *ngIf='notification.Type == "invitation"'>
+              <section class="notif-invit-menu">
+                <br>
+                <span class="notif-icons material-icons" aria-hidden="true">insert_invitation</span>
+                <span class="notif-text"><b>{{notification.From}}</b> vous a invité(e) a son événement <b>{{eventNameList[notification.Id]}}</b></span>
+              </section>
+            </div>
+            <div *ngIf='notification.Type != "invitation"'> 
+              <section class="notif-info-menu">
+                <span class="notif-icons material-icons" aria-hidden="true">info</span>
+                <span class="notif-text">{{notification.About}}</span>
+              </section>
+            </div>
+        
+            <div *ngIf='notification.Type == "invitation"'>
+                <br>
+                <button class="notif accept" (click)="acceptInvite(notification)">Accepter</button>
+                <button class="notif refuse" (click)="refuseInvite(notification)">Refuser</button>
+                <br><br>  
+            </div>
+            <div *ngIf='notification.Type != "invitation"'>
+                <br>
+                <button class="notif accept" (click)="validateNotif(notification)">OK</button>
+                <br>
+            </div>
+          </div>  
+          <div *ngIf="isLoggedIn">
+            <a routerLink="/notifications">
+              <button class="notif-button">
+                Voir toutes les notifications
+              </button>
+            </a>
+          </div>
         </mat-menu>
+
       </div>
+    </div>
       
+<!-- Side navigation -->
+
 <mat-sidenav-container class="main-nav">
   <mat-sidenav-content class="example-sidenav">
     <mat-toolbar class="mat-toolbar-main">
@@ -131,7 +130,7 @@
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="isLoggedIn">
           <a routerLink="/notifications">
-            <button mat-menu-item>
+            <button class="nav-element">
               <mat-icon>notifications</mat-icon>
               Notifications
             </button>

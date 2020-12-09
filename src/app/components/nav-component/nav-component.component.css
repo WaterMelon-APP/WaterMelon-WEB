@@ -91,6 +91,11 @@ mat-checkbox {
   background-color: rgba(71, 210, 118, 0.5);
 }
 
+.nav-element mat-icon {
+  vertical-align: middle;
+  padding-right: 15px;
+}
+
 button, button:active {
   border: none;
 }
@@ -217,7 +222,7 @@ mat-checkbox {
 
 .notif-number, .notif-bell {
   position: fixed;
-  top: 15px;
+  top: 10px;
 }
 
 .notif-number {
@@ -242,12 +247,59 @@ mat-checkbox {
   font-size: 38px;
 }
 
-.notif-bell mat-icon:hover {
-  color: #464646;
+.notif-bell #notif-menu {
+  max-width: 400px;
 }
 
-.notif-menu {
-  background-color: #47D278 !important;
-  width: auto;
-  padding: auto;
+.container-all {
+  border-bottom: solid 2px #FD5757;
 }
+
+/* notif-info-menu */
+.notif-info-menu{
+  position: relative;
+  height: 60px;
+  z-index: 1;
+}    
+
+.notif {
+  padding-right: 40px;
+  background: 0;
+  font-weight: bold;
+}
+
+/* notif-invit-menu */
+
+  .notif-icons {
+    font-size: 30px;
+    margin: 20px;
+    color: #FD5757;
+    vertical-align: middle;
+    float: left;
+  }
+
+  .notif-text {
+    padding-top: 40px;
+    font-size: 14px;
+  }
+  
+  .notif {
+    font-weight: bold;
+  }
+  
+  .accept {
+      color:  #47D278; 
+      float: left;
+  }
+
+  .refuse {
+      color: #FD5757; 
+  }
+
+  .notif-button{
+    height:30px;
+    width: 100%;
+    color: white;
+    background-color: #FD5757;
+    border: solid 2px #FD5757;
+  }

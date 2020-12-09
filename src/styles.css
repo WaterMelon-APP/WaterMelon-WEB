@@ -39,6 +39,10 @@ button {
     border-radius: 10px;
 }
 
+mat-menu-panel {
+  max-width: 400px !important;
+}
+
 /* MDC Styles */
 
 .mdc-card {
