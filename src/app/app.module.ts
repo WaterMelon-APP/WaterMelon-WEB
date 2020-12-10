@@ -18,18 +18,7 @@ import { RegisterFormComponent } from './components/register/register-form.compo
 import { CreateEventComponent } from './components/event/create-event.component';
 import { EditEventComponent } from './components/event/edit-event.component';
 import { SearchComponent } from './components/search/search-page.component';
-
-import { CardEventAdminComponent } from './components/card-event-admin/card-event-admin.component';
-import { CardEventMemberComponent } from './components/card-event-member/card-event-member.component';
-import { CardDiscoveryComponent } from './components/card-discovery/card-discovery.component';
-import { CardEditEventComponent } from './components/card-edit-event/card-edit-event.component';
-import { AlertComponent } from './components/alert/alert.component';
-import { NotifMenuComponent } from './components/notif-menu/notif-menu.component';
-import { NotifInvitMenuComponent } from './components/notif-invit-menu/notif-invit-menu.component';
-import { NotifInfoMenuComponent } from './components/notif-info-menu/notif-info-menu.component';
-import { NotifModifEventComponent } from './components/notif-modif-event/notif-modif-event.component';
-import { NotifInvitResponseComponent } from './components/notif-invit-response/notif-invit-response.component';
-import { DisplayEventComponent } from './components/display-event/display-event.component';
+import { ResetComponent } from './components/reset/reset.component';
 
 import { NotificationsComponent } from './components/notifications/notifications.component';
 
@@ -50,18 +39,7 @@ import { NotificationsComponent } from './components/notifications/notifications
     EventComponent,
     SearchComponent,
     NotificationsComponent,
-
-    AlertComponent,
-    CardDiscoveryComponent,
-    CardEditEventComponent,
-    CardEventAdminComponent,
-    CardEventMemberComponent,
-    DisplayEventComponent,
-    NotifInfoMenuComponent,
-    NotifInvitMenuComponent,
-    NotifInvitResponseComponent,
-    NotifMenuComponent,
-    NotifModifEventComponent
+    ResetComponent,
 
   ],
   imports: [
