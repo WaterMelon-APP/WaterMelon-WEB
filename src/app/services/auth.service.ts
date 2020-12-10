@@ -89,6 +89,10 @@ export class AuthService {
     return (this.address + "users/login/")
   }
 
+  callUsersForgotPass() {
+    return (this.address + "users/forgotpasswd/")
+  }
+
   callItems(id) {
     return (this.address + "items/" + id)
   }

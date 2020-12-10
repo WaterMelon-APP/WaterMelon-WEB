@@ -8,13 +8,13 @@ import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
 
 @Component({
-  selector: 'app-reset',
-  templateUrl: './reset.component.html',
-  styleUrls: ['./reset.component.css']
+  selector: 'app-change-pass',
+  templateUrl: './change-pass.component.html',
+  styleUrls: ['./change-pass.component.css']
 })
-export class ResetComponent {
-  email = new FormControl('', [Validators.required, Validators.email]);
-  username = new FormControl('', [Validators.required, Validators.requiredTrue]);
+export class ChangePassComponent {
+
+  new_pass = new FormControl('', [Validators.required, Validators.requiredTrue]);
 
   constructor(private router: Router, private _snackBar: MatSnackBar, private http: HttpClient, private auth: AuthService) {}
 
@@ -25,7 +25,7 @@ export class ResetComponent {
   }
 
   async send() {
-    const emailVal = this.email.value as string;
+    /*const emailVal = this.email.value as string;
     const usernameVal = this.username.value as string;
     if (emailVal != null || usernameVal != null) {
 
@@ -43,6 +43,6 @@ export class ResetComponent {
           this.openSnackBar("Une erreur est survenue", "Fermer");
         }
       );
-    }
+    }*/
   }
 }

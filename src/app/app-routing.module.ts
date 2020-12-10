@@ -8,6 +8,7 @@ import { EventComponent } from './components/event/event.component';
 import { EditEventComponent } from './components/event/edit-event.component';
 import { SearchComponent } from './components/search/search-page.component';
 import { ResetComponent } from './components/reset/reset.component';
+import { ChangePassComponent } from './components/reset/change-pass.component';
 
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { RegisterFormComponent } from './components/register/register-form.component';
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'search/:id', component: SearchComponent},
   {path: 'notifications', component: NotificationsComponent},
   {path: 'reset', component: ResetComponent},
+  {path: 'change-pass/:id', component: ChangePassComponent},
 ];
 
 @NgModule({
@@ -36,5 +38,6 @@ export const routingComponent = [HomePageComponent,
                                 EditEventComponent,
                                 SearchComponent,
                                 ResetComponent,
+                                ChangePassComponent,
                                 NotificationsComponent]
 
