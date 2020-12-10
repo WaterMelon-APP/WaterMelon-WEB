@@ -30,7 +30,6 @@ import { NotifInfoMenuComponent } from './components/notif-info-menu/notif-info-
 import { NotifModifEventComponent } from './components/notif-modif-event/notif-modif-event.component';
 import { NotifInvitResponseComponent } from './components/notif-invit-response/notif-invit-response.component';
 import { DisplayEventComponent } from './components/display-event/display-event.component';
-
 import { NotificationsComponent } from './components/notifications/notifications.component';
 
 @NgModule({

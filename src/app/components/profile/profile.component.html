@@ -1,60 +1,76 @@
 <app-nav-component></app-nav-component>
 
-    <body>
-        <div class="container">
-            <img src="/assets/avatar_placeholder_large.png" class="profile-picture">
-            <br>
-            <button mat-button class="upload">
-                <mat-icon>upload</mat-icon>
-                Upload photo
-            </button>
-            <form class="form-style-7">
-                <ul>
-                    <li>
-                        <label for="pseudo">Pseudonyme</label>
-                        <input type="text" [formControl]="fUsername" value={{username}} maxlength="100" disabled>
-                    </li>
-                    <li>
-                        <label for="name">Nom</label>
-                        <input type="text" [formControl]="fName" value={{name}} maxlength="100">
-                    </li>
-                    <li>
-                        <label for="surname">Prénom</label>
-                        <input type="text" [formControl]="fSurname" value={{surname}} maxlength="100">
-                    </li>
-                    <li>
-                        <label for="email">Email</label>
-                        <input type="email" [formControl]="fEmail" value={{email}} maxlength="100">
-                    </li>
-                    <li>
-                        <label for="phone">Numéro de téléphone</label>
-                        <input type="phone" [formControl]="fPhone" value={{phone}} maxlength="100">
-                    </li>
-                    <li>
-                        <label for="bio">A propos de vous</label>
-                        <textarea [formControl]="fBio" value={{bio}} onkeyup="adjust_textarea(this)"></textarea>
-                        <span>Dites quelques chose qui vous décrit</span>
-                    </li>
-                    <!--<li>
+<body>
+  <div class="container">
+    <img src={{photo}} class="profile-picture">
+    <br>
+    <div class="col-md-6 offset-md-3">
+      <h3>Choose File</h3>
+      <div class="form-group">
+        <input type="file" name="image" accept=".jpg" ngf-max-size="4MB" (change)="fileProgress($event)" />
+      </div>
+      <div *ngIf="fileUploadProgress">
+        Upload progress: {{ fileUploadProgress }}
+      </div>
+      <div class="mb-3" *ngIf="uploadedFilePath">
+        {{uploadedFilePath}}
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-primary" (click)="onSubmit()">Submit</button>
+      </div>
+    </div>
+    <button mat-button class="upload">
+      <mat-icon>upload</mat-icon>
+      Upload photo
+    </button>
+    <form class="form-style-7">
+      <ul>
+        <li>
+          <label for="pseudo">Pseudonyme</label>
+          <input type="text" [formControl]="fUsername" value={{username}} maxlength="100" disabled>
+        </li>
+        <li>
+          <label for="name">Nom</label>
+          <input type="text" [formControl]="fName" value={{name}} maxlength="100">
+        </li>
+        <li>
+          <label for="surname">Prénom</label>
+          <input type="text" [formControl]="fSurname" value={{surname}} maxlength="100">
+        </li>
+        <li>
+          <label for="email">Email</label>
+          <input type="email" [formControl]="fEmail" value={{email}} maxlength="100">
+        </li>
+        <li>
+          <label for="phone">Numéro de téléphone</label>
+          <input type="phone" [formControl]="fPhone" value={{phone}} maxlength="100">
+        </li>
+        <li>
+          <label for="bio">A propos de vous</label>
+          <textarea [formControl]="fBio" value={{bio}} onkeyup="adjust_textarea(this)"></textarea>
+          <span>Dites quelques chose qui vous décrit</span>
+        </li>
+        <!--<li>
                         <label for="localisation">Localisation</label>
                         <input type="text" [formControl]="fLocal" value={{localisation}} maxlength="100">
                     </li>-->
-                    <li>
-                        <label for="website">Votre site web</label>
-                        <input type="text" value="No" maxlength="100" disabled>
-                    </li>
-                    <li>
-                        <label for="facebook">Facebook linked</label>
-                        <input type="text" value="No"  maxlength="100" disabled>
-                    </li>
-                    <li>
-                        <label for="date">Date joined</label>
-                        <input type="text" value="{{ creation_date  | date:'short' }}"  maxlength="100" disabled>
-                    </li>
-                    <li>
-                        <input type="submit" (click)="postNewProfile()" value="Save changes">
-                    </li>
-                </ul>
-            </form>
-        </div>
-    </body>
+        <li>
+          <label for="website">Votre site web</label>
+          <input type="text" value="No" maxlength="100" disabled>
+        </li>
+        <li>
+          <label for="facebook">Facebook linked</label>
+          <input type="text" value="No" maxlength="100" disabled>
+        </li>
+        <li>
+          <label for="date">Date joined</label>
+          <input type="text" value="{{ creation_date  | date:'short' }}" maxlength="100" disabled>
+        </li>
+        <li>
+          <input type="submit" (click)="postNewProfile()" value="Save changes">
+        </li>
+      </ul>
+    </form>
+  </div>
+</body>
