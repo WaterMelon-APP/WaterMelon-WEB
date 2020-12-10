@@ -6,11 +6,11 @@
     <div class="title">{{nameEvent}}</div>
     <div class="private">événement privé</div> <!-- ou public ? -->
 
+    <div class="address">{{addressEvent}}</div>
     <div class="date-time">
       <span>{{dateEvent | date: 'short'}}</span>
     </div>
-    <!-- <div class="address">{{addressEvent}}</div> -->
-
+    
     <!-- Facebook & Twitter -->
     <br>
 
@@ -36,7 +36,7 @@
       <button class="social facebook">f
       </button>
     </span>
-  
+
     <button class="social edit" *ngIf="isOwner" (click)="editEvent()">
       <span class="mdc-fab__icon material-icons">edit</span>
     </button>
