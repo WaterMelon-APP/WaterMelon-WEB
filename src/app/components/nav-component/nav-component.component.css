@@ -1,5 +1,4 @@
 
-
 .top-nav {
   background-color: #47D278;
   position: fixed;
@@ -19,12 +18,12 @@ a.watermelon {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.sidenav-container {
-  height: 100%;
-}
+/*.sidenav-container {
+  height:100%;
+}*/
 
 .sidenav {
-  width: 200px;
+  width: 250px;
 }
 
 .example-icon {

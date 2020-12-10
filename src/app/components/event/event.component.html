@@ -36,7 +36,7 @@
       <button class="social facebook">f
       </button>
     </span>
-
+  
     <button class="social edit" *ngIf="isOwner" (click)="editEvent()">
       <span class="mdc-fab__icon material-icons">edit</span>
     </button>
@@ -117,12 +117,12 @@
           </tr>
         </table>
         <br><br>
-        <table width="300">
-          <tr *ngIf="isAdmin" class="first">
+        <table *ngIf="isAdmin" class="encours" width="300">
+          <tr class="first">
             <td><b>Invitations en cours</b></td>
           </tr>
-          <tr *ngIf="isAdmin" class="add-object">
-            <td *ngFor="let invited of invites">
+          <tr class="add-object" *ngFor="let invited of invites">
+            <td>
               {{invited}}
             </td>
           </tr>
