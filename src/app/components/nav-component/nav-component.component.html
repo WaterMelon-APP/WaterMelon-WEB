@@ -3,11 +3,10 @@
     <img src="favicon.ico" style="padding-right: 10px; padding-left: 20px" height="25px" />
     <span>Watermelon</span>
   </a>
-
+  
   <!-- Search bar -->
   <div class="search-bar">
       <input type="text" placeholder="Rechercher" [formControl]="search">
-
       <button class="dropdown">
         <mat-icon>keyboard_arrow_down</mat-icon>
         <div class="dropdown-content">
@@ -30,18 +29,15 @@
           </button>
         </div>
       </button>
-
       <button class="icon">
         <mat-icon>text_format</mat-icon>
         <!--  <mat-icon>place</mat-icon>
           <mat-icon>date_range</mat-icon>
           <mat-icon>event</mat-icon> -->
       </button>
-
       <button class="search" (click)="searchEvents()">
         <mat-icon>search</mat-icon>
       </button>
-
   </div>
 
   <!-- Notifcations -->
@@ -78,7 +74,7 @@
           </div>  
           <div *ngIf="isLoggedIn">
             <a routerLink="/notifications">
-              <button class="notif-button">
+              <button mat-button class="notif-button">
                 Voir toutes les notifications
               </button>
             </a>
@@ -92,11 +88,10 @@
 <mat-sidenav-container class="main-nav">
   <mat-sidenav-content class="example-sidenav">
     <mat-toolbar class="mat-toolbar-main">
-
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="isLoggedIn">
           <a routerLink="/list-user">
-            <button class="nav-element">
+            <button mat-button class="nav-element">
               <mat-icon>event_note</mat-icon>
               Mes événements
             </button>
@@ -107,7 +102,7 @@
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="isLoggedIn">
           <a routerLink="/profile">
-            <button class="nav-element">
+            <button mat-button class="nav-element">
               <mat-icon>perm_identity</mat-icon>
               Mon profil
             </button>
@@ -117,7 +112,7 @@
 
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="isLoggedIn">
-          <button class="nav-element" (click)="createEvent()">
+          <button mat-button class="nav-element" (click)="createEvent()">
             <mat-icon>playlist_add</mat-icon>
             Créer un événement
           </button>
@@ -127,7 +122,7 @@
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="isLoggedIn">
           <a routerLink="/notifications">
-            <button class="nav-element">
+            <button mat-button class="nav-element">
               <mat-icon>notifications</mat-icon>
               Notifications
             </button>
@@ -138,7 +133,7 @@
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="isLoggedIn">
           <a routerLink="/search/_">
-            <button class="nav-element">
+            <button mat-button class="nav-element">
               <mat-icon>add_location</mat-icon>
               Découvrir
             </button>
@@ -148,7 +143,7 @@
 
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="!isLoggedIn">
-            <button class="nav-element" (click)="Login()">
+            <button mat-button class="nav-element" (click)="Login()">
               <mat-icon>fingerprint</mat-icon>
               <span>Sign in</span>
             </button>
@@ -157,7 +152,7 @@
 
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="!isLoggedIn">
-            <button class="nav-element" (click)="Register()">
+            <button mat-button class="nav-element" (click)="Register()">
               <mat-icon>accessibility_new</mat-icon>
               <span>Register</span>
             </button>
@@ -166,7 +161,7 @@
 
       <mat-toolbar-row style="height: 2em">
         <div *ngIf="isLoggedIn">
-          <button class="nav-element" (click)="signOut()">
+          <button mat-button class="nav-element" (click)="signOut()">
             <mat-icon>exit_to_app</mat-icon>
             <span>Se déconnecter</span>
           </button>
