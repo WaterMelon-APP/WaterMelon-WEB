@@ -39,6 +39,7 @@ export class EventComponent implements OnInit {
   isPrivate;
   username: string;
   dateEvent: Date;
+  addressEvent: string;
   memberList: Array<string>;
   adminList: Array<string>;
   invitationList: Array<string>;
@@ -79,6 +80,7 @@ export class EventComponent implements OnInit {
         this.isPrivate = eventResponse.Public;
         this.memberList = eventResponse.Guests;
         this.invitationList = eventResponse.InvitationList;
+        this.addressEvent = eventResponse.Address;
         //this.adminList = eventResponse.Guests;
         if (!this.needsEvent) {
           this.needsEvent = [];

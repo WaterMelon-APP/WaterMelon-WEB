@@ -4,6 +4,9 @@
       <input style matInput placeholder="Nom de votre événement" [formControl]="eventname" required>
   </mat-form-field>
   <mat-form-field style="padding-right: 3em;">
+    <input style matInput placeholder="Adresse" [formControl]="eventaddress" required>
+  </mat-form-field>
+  <mat-form-field style="padding-right: 3em;">
       <input matInput [(ngModel)]="dateEvent" [matDatepicker]="picker" required>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>

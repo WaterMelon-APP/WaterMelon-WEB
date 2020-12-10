@@ -154,3 +154,12 @@ button {
     padding: 10px;
     border-bottom: solid lightgrey 1px; 
   }
+
+  .encours {
+    display: block;
+  }
+
+  .encours td {
+    width: 300px;
+    padding: 10px;
+  }

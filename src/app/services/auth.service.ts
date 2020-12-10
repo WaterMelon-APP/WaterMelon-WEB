@@ -123,4 +123,12 @@ export class AuthService {
   callInvitationsRefuse(id) {
     return (this.address + "invitations/refuseinvitation/" + id)
   }
+
+  callUpload(){
+    return (this.address + "profilepictures/Upload")
+  }
+
+  callPhotoUser(id){
+    return (this.address + "profilepictures/GetUserPicture/" + id)
+  }
 }
