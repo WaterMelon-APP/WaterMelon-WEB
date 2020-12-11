@@ -16,12 +16,12 @@ import { Event } from '../../models/event.model'
 export class SearchComponent implements OnInit {
 
   eventList;
-  eventListNoFilter;
   research;
   username;
   eventL: Array<Event>;
   header: Object;
   id: string;
+  visibilityList: Array<boolean> = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private auth: AuthService, private _snackBar: MatSnackBar) {
   }
@@ -57,10 +57,12 @@ export class SearchComponent implements OnInit {
           if (events.Owner != this.username) {
             if (events.Public == true) {
                 this.eventList.push(events);
+                this.visibilityList.push(true);
             }
           }
         }
         console.log(this.eventList);
+        console.log(this.visibilityList);
       },
         error => {
           this.openSnackBar("Une erreur est survenue", "Fermer");
@@ -199,5 +201,9 @@ export class SearchComponent implements OnInit {
     this._snackBar.open(message, action, {
       duration: 5000,
     });
+  }
+
+  hideEvent(i: number): void {
+    this.visibilityList[i] = false;
   }
 }

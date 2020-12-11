@@ -4,9 +4,9 @@
 
   <h3>Découvrir</h3>
   <h5>Evénements publics</h5>
-  <div *ngFor="let event of eventList" class="container-all">
+  <div *ngFor="let event of eventList; let i = index" class="container-all">
 
-    <div class="card-event-admin">
+    <div class="card-event-admin" *ngIf="visibilityList[i]">
       <div class="header" (click)="goToEvent(event.Id)">
         <h3>{{event.Name}}</h3>
       </div>
@@ -16,7 +16,7 @@
             <p>{{event.Address}}</p>
       </div>
       <div class="buttons">
-        <button class="mdc-fab icons dislike">
+        <button class="mdc-fab icons dislike" (click)="hideEvent(i)">
           <span class="mdc-fab__icon material-icons">clear</span>
         </button>
         <button class="mdc-fab icons like" (click)="joinEvent(event)">
@@ -24,6 +24,7 @@
         </button>
      </div>
     </div>
+
   </div>
 
   <!-- Publicité -->
