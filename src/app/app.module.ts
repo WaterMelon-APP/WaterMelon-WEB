@@ -20,6 +20,7 @@ import { EditEventComponent } from './components/event/edit-event.component';
 import { SearchComponent } from './components/search/search-page.component';
 import { ResetComponent } from './components/reset/reset.component';
 import { ChangePassComponent } from './components/reset/change-pass.component';
+import { SearchResultComponent } from './components/search-result/search-result.component'
 
 import { NotificationsComponent } from './components/notifications/notifications.component';
 
@@ -42,6 +43,7 @@ import { NotificationsComponent } from './components/notifications/notifications
     NotificationsComponent,
     ResetComponent,
     ChangePassComponent,
+    SearchResultComponent
 
   ],
   imports: [
