@@ -39,6 +39,16 @@ export class AuthService {
     return (header);
   }
 
+  getSecureFormDataHeader() {
+    let header = {
+      headers: new HttpHeaders({
+        Accept: 'multipart/formdata',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    };
+    return (header);
+  }
+
   getHeader() {
     let header = {
       headers: new HttpHeaders({

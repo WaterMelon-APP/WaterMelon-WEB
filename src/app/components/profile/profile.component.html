@@ -2,7 +2,9 @@
 
 <body>
   <div class="container">
-    <img src={{photo}} class="profile-picture">
+    <div *ngIf="userPhoto">
+      <img [src]="userPhoto" class="profile-picture">
+    </div>
     <br>
     <div class="col-md-6 offset-md-3">
       <h3>Choose File</h3>

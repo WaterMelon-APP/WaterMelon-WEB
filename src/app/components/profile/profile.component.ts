@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth.service'
 import { User } from '../../models/user.model'
 import { Photo } from '../../models/photo.model'
@@ -40,13 +40,17 @@ export class ProfileComponent implements OnInit {
   previewUrl: any = null;
   fileUploadProgress: string = null;
   uploadedFilePath: string = null;
+  formDataHeader;
+  userPhoto: any;
 
-  constructor(private http: HttpClient, private auth: AuthService, private _snackBar: MatSnackBar) { }
+  constructor(private http: HttpClient, private auth: AuthService, private _snackBar: MatSnackBar, private _domSanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.id = this.auth.getId();
     this.header = this.auth.getSecureHeader();
+    this.formDataHeader = this.auth.getSecureFormDataHeader();
     this.profileInit();
+    this.getProfilePicture();
   }
 
   async profileInit() {
@@ -59,7 +63,6 @@ export class ProfileComponent implements OnInit {
         this.birthdate = new Date(userResponse.Birthdate);
         this.phone = userResponse.Phone;
         this.events = userResponse.Events;
-        this.profile_picture = userResponse.ProfilePicture;
       },
         error => {
           this.openSnackBar("Une erreur est survenue", "Fermer");
@@ -132,22 +135,21 @@ export class ProfileComponent implements OnInit {
   onSubmit() {
     const userId = this.id;
     const formData = new FormData();
-    const image = {
-      uri: this.uploadedFilePath,
-      name: this.fileData.name,
-      type: 'multipart/form-data',
-      lenght: this.fileData.size,
-      size: this.fileData.size,
-      slice: this.fileData.slice
-    }
+
 
     formData.append('UserId', userId);
-    formData.append('File', image);
-
-    this.http.post(this.auth.callUpload(), formData, this.header)
+    formData.append('File', this.fileData, this.fileData.name);
+    this.http.post(this.auth.callUpload(), formData, this.formDataHeader)
       .subscribe(res => {
-        console.log(res);
-        alert('SUCCESS !!');
+        this.getProfilePicture();
+      })
+  }
+
+  async getProfilePicture() {
+    return this.http.get(this.auth.callPhotoUser(this.id), this.header)
+      .subscribe(res => {
+        let objectUrl = 'data:' + res["ImageExtension"] + ';base64,' + res["Content"];
+        this.userPhoto = this._domSanitizer.bypassSecurityTrustUrl(objectUrl);
       })
   }
 }
