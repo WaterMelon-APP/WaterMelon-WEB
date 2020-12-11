@@ -4,17 +4,21 @@
     margin-top: 10%;
     padding: 20px 40px;
     display: inline-block;
+    text-align: center;
 }
 
 .reset input {
     padding: 15px;
     width: 300px;
-    border: solid 1px #333;
+    border: solid 1px #FD5757;
 }
 
 .reset input::placeholder {
     color: #333;
 }
+
+
+
 
 button {
     margin-left: 20px;
