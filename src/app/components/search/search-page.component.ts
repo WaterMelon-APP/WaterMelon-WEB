@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { formatDate } from '@angular/common';
 import { AuthService } from '../../services/auth.service'
 import { Event } from '../../models/event.model'
 
@@ -16,6 +16,7 @@ import { Event } from '../../models/event.model'
 export class SearchComponent implements OnInit {
 
   eventList;
+  eventListNoFilter;
   research;
   username;
   eventL: Array<Event>;
@@ -45,19 +46,34 @@ export class SearchComponent implements OnInit {
 
   async EventListPublic() {
     let events: Array<Event>;
+    let today = new Date();
+    formatDate(today, 'yyyy-MM-dd', 'en');
     events = [];
     this.eventList = [];
     console.log('object :>> ', this.auth.callEventsSearch());
     this.http.get<Array<Event>>(this.auth.callEventsSearch(), this.header)
       .subscribe(eventResponse => {
-        this.eventList = eventResponse;
+        for (let events of eventResponse) {
+          if (events.Owner != this.username) {
+            if (events.Public == true) {
+                this.eventList.push(events);
+            }
+          }
+        }
+        console.log(this.eventList);
       },
         error => {
           this.openSnackBar("Une erreur est survenue", "Fermer");
         }
       );
-    for (let event of events) {
+    for (let event of this.eventList) {
       if (event.Owner == this.id) {
+        this.eventList.push(event);
+      }
+    }
+    /*for (let event of eventList) {
+      if (event.Owner == this.username) {
+        console.log(event.Owner);
         this.eventList.push(event);
       }
     }
@@ -145,11 +161,26 @@ export class SearchComponent implements OnInit {
   }
 
   async joinEvent(event) {
-    let memberL = event.Guests;
-    memberL.push(this.id);
-    const memberList = '{ "Guests": "' + memberL + '" }';
+    let guestsList: string = '[';
+    let a = 0;
+    event.Guests.push(this.username);
+    if (event.Guests) {
+      for (let guest of event.Guests) {
+        if (a) {
+          guestsList = guestsList + ", ";
+        }
+        guestsList = guestsList + '"' + guest + '"';
+        a = 1;
+        console.log('guestsList :>> ', guestsList);
+      }
+    }
+    guestsList = guestsList + "]";
+    console.log('guestsList :>> ', guestsList);
+    console.log(event);
+    console.log(event.Guests);
+    const memberList = '{ "Guests": ' + guestsList + '}';
     var jmemberList = JSON.parse(memberList);
-
+    console.log('jevent :>> ', jmemberList);
     this.http.put<Event>(this.auth.callEvents(event.Id), jmemberList, this.header)
       .subscribe(userResponse => {
         this.openSnackBar("Vous avez rejoint l'event", "Fermer");

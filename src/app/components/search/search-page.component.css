@@ -7,7 +7,7 @@ body {
 }
 
 h3 {
-    color: grey;
+    color: #fff;
 }
 
 .card-event-admin {
@@ -31,28 +31,28 @@ h3 {
       border-radius: 20px 20px 0 0;
       margin: -2px;
     }
-  
+
     .header h3 {
       padding-top: 10px;
     }
-    
+
     .primary-content {
-      margin-top: 10px;  
+      margin-top: 10px;
     }
-    
+
     .primary-content p {
       font-size: 14px;
     }
-    
+
     .date-time {
       font-weight: bold;
     }
-  
+
     .buttons {
       margin: 0 auto;
       margin-top: 70px;
   }
-  
+
   .buttons button {
     border-radius: 30px;
     padding: 10px 12px;;
