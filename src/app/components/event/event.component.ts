@@ -27,7 +27,8 @@ export class EventComponent implements OnInit {
   pseudoInvit = new FormControl('', [Validators.required, Validators.requiredTrue]);
   payeQuantity = new FormControl('', [Validators.required, Validators.requiredTrue]);
   giveQuantity = new FormControl('', [Validators.required, Validators.requiredTrue]);
-  formItem = new FormArray([]);
+  formItemQ = new FormArray([]);
+  formItemP = new FormArray([]);
   eventId;
   itemList: Array<Item>;
   event;
@@ -103,7 +104,8 @@ export class EventComponent implements OnInit {
           this.http.get<Item>(this.auth.callItems(item), this.header)
             .subscribe(userResponse => {
               this.itemList.push(userResponse);
-              this.formItem[userResponse.Id] = new FormControl('', [Validators.required, Validators.requiredTrue]);
+              this.formItemP[userResponse.Id] = new FormControl('', [Validators.required, Validators.requiredTrue]);
+              this.formItemQ[userResponse.Id] = new FormControl('', [Validators.required, Validators.requiredTrue]);
               if (userResponse.Bring && userResponse.Bring[this.id]) {
                 this.contributions.set(userResponse.Name, userResponse.Bring[this.id]);
               }
@@ -231,7 +233,7 @@ async delItem(item) {
 }
 
 async bringItem(item) {
-  let itemVal = this.formItem[item.Id].value as number;
+  let itemVal = this.formItemQ[item.Id].value as number;
 
   if (item.Bring && item.Bring[this.id]) {
     itemVal = itemVal + item.Bring[this.id]
@@ -253,7 +255,7 @@ async bringItem(item) {
 }
 
 async payItem(item) {
-  let itemVal = this.formItem[item.Id].value as number;
+  let itemVal = this.formItemP[item.Id].value as number;
 
   if (item.Pay && item.Pay[this.id]) {
     itemVal = itemVal + item.Pay[this.id]

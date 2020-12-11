@@ -59,11 +59,13 @@
         </tr>
         <tr *ngFor="let item of itemList">
           <td> {{item.Name}} </td>
-          <td> {{item.Price}} </td>
           <td> 
-            <input type="number" step=".01" min="1.0" max="{{item.QuantityLeft}}" value="{{item.QuantityLeft}}" placeholder="Prix" [formControl]="formItem[item.Id]" required> 
-            <button (click)="bringItem(item)" mat-button class="create">Apporter</button>
+            <input type="number" step=".01" min="{{item.Price}}" max="{{item.QuantityLeft * item.Price}}" value="{{item.Price}}" placeholder="Prix" [formControl]="formItemP[item.Id]" required>  
             <button (click)="payItem(item)" mat-button class="create">Payer</button>
+          </td>
+          <td> 
+            <input type="number" min="1" max="{{item.QuantityLeft}}" value="{{item.QuantityLeft}}" placeholder="Prix" [formControl]="formItemQ[item.Id]" required> 
+            <button (click)="bringItem(item)" mat-button class="create">Apporter</button>
           </td>
           <td> {{contributions.get(item.Name)}} </td>
           <td></td>
