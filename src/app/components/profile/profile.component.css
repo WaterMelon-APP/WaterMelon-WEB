@@ -18,6 +18,10 @@ body {
     border-radius: 100%;
 }
 
+.form-group{
+	text-align: center;
+}
+
 .upload {
     margin-left: 46%;
 	padding: 10px 15px;

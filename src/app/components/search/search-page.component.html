@@ -8,18 +8,18 @@
 
     <div class="card-event-admin">
       <div class="header" (click)="goToEvent(event.Id)">
-        <h3>{{event.Name}}</h3>                  
+        <h3>{{event.Name}}</h3>
       </div>
       <div class="primary-content">
             <br>
             <p class="date-time">{{event.Date | date: 'short'}}</p>
             <p>{{event.Address}}</p>
-      </div>                  
+      </div>
       <div class="buttons">
-        <button class="mdc-fab icons dislike" (click)="joinEvent(event.id)">
+        <button class="mdc-fab icons dislike">
           <span class="mdc-fab__icon material-icons">clear</span>
         </button>
-        <button class="mdc-fab icons like" aria-label="Favorite">
+        <button class="mdc-fab icons like" (click)="joinEvent(event)">
           <span class="mdc-fab__icon material-icons">done</span>
         </button>
      </div>

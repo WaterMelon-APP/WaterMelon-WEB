@@ -7,9 +7,8 @@
     </div>
     <br>
     <div class="col-md-6 offset-md-3">
-      <h3>Choose File</h3>
       <div class="form-group">
-        <input type="file" name="image" accept=".jpg" ngf-max-size="4MB" (change)="fileProgress($event)" />
+        <input class="input-image" type="file" name="image" accept=".jpg" ngf-max-size="4MB" (change)="fileProgress($event)" />
       </div>
       <div *ngIf="fileUploadProgress">
         Upload progress: {{ fileUploadProgress }}
@@ -18,14 +17,12 @@
         {{uploadedFilePath}}
       </div>
 
-      <div class="form-group">
-        <button class="btn btn-primary" (click)="onSubmit()">Submit</button>
-      </div>
+      <button mat-button class="upload" (click)="onSubmit()">
+        <mat-icon>upload</mat-icon>
+        Upload photo
+      </button>
     </div>
-    <button mat-button class="upload">
-      <mat-icon>upload</mat-icon>
-      Upload photo
-    </button>
+
     <form class="form-style-7">
       <ul>
         <li>
