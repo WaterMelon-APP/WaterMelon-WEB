@@ -25,7 +25,7 @@ export class EditEventComponent implements OnInit {
   itemEvent;
 
   eventId;
-  isPublic;
+  isPublic: boolean;
   header: Object;
   id: string;
 
@@ -36,7 +36,6 @@ export class EditEventComponent implements OnInit {
     this.id = this.auth.getId();
     this.header = this.auth.getSecureHeader();
     this.findEvent();
-    this.getPrivacy();
   }
 
   async findEvent() {
@@ -140,22 +139,28 @@ export class EditEventComponent implements OnInit {
   }
 
   async editPrivacy() {
-    const checkbox = document.getElementById('priv') as HTMLInputElement;
-    const ispublic = '{ "Id": "' + this.eventId + '", "Name": "' + this.nameEvent + '", "Owner": "' + this.id + '", "Date": "' + this.dateEvent.toISOString() + '", "Address": "' + this.addressEvent + '", "Guests": ' + this.clearGuests(this.guestsEvent) + ', "Public": ' + checkbox.checked + ', "ItemList": ' + this.clearGuests(this.itemEvent) + ' }';
-    console.log('ispublic :>> ', ispublic);
-    var jpublic = JSON.parse(ispublic);
-    console.log('jpublic :>> ', jpublic);
-    this.http.put<Event>(this.auth.callEvents(this.eventId), jpublic, this.header)
+    this.isPublic = !this.isPublic;
+    
+    const eventModified = '{ "Id": "' + this.eventId + 
+    '", "Name": "' + this.nameEvent + 
+    '", "Owner": "' + this.id + 
+    '", "Date": "' + this.dateEvent.toISOString() + 
+    '", "Address": "' + this.addressEvent + 
+    '", "Guests": ' + this.clearGuests(this.guestsEvent) + 
+    ', "Public": ' + this.isPublic + 
+    ', "ItemList": ' + this.clearGuests(this.itemEvent) + ' }';
+    
+    this.http.put<Event>(this.auth.callEvents(this.eventId), eventModified, this.header)
     .subscribe(eventResponse => {
       console.log('eventResponse :>> ', eventResponse);
         this.openSnackBar("L'événement a bien été modifié", "Fermer");
-        location.reload();
       },
       error => {
         this.openSnackBar("Une erreur est survenue", "Fermer");
       }
     );
-  }
+    }
+
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {
       duration: 5000,

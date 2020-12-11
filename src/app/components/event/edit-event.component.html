@@ -28,7 +28,7 @@
         <div class="buttons">
           <!-- select class active or non-active -->
           <div *ngIf="isPublic; else private">
-            <button class="public active">
+            <button class="public active" (click)="editPrivacy()">
               Public
             </button>
             <button class="prive non-active" (click)="editPrivacy()">
@@ -39,7 +39,7 @@
             <button class="public non-active" (click)="editPrivacy()">
               Public
             </button>
-            <button class="prive active">
+            <button class="prive active" (click)="editPrivacy()">
               Privé
             </button>  
           </ng-template>
