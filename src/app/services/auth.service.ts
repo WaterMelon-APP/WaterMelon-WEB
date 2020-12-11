@@ -131,4 +131,8 @@ export class AuthService {
   callPhotoUser(id){
     return (this.address + "profilepictures/GetUserPicture/" + id)
   }
+
+  callDelMember(id){
+    return (this.address + "events/removeguest/" + id)
+  }
 }

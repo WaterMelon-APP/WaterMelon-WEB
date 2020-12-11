@@ -10,7 +10,7 @@
     <div class="date-time">
       <span>{{dateEvent | date: 'short'}}</span>
     </div>
-    
+
     <!-- Facebook & Twitter -->
     <br>
 
@@ -97,7 +97,7 @@
               <td> {{membre}} </td>
               <td colspan="4"></td>
               <td style="text-align: right">
-                <button *ngIf="isOwner" class="trash" (click)="delMember()">
+                <button *ngIf="isAdmin" class="trash" (click)="delMember(membre)">
                   <mat-icon>delete</mat-icon>
                 </button>
               </td>
