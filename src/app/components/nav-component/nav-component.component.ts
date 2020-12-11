@@ -141,37 +141,37 @@ export class NavComponentComponent implements OnInit {
 
   async acceptInvite(notif) {
     this.http.post<String>(this.auth.callInvitationsAccept(notif.DataId), JSON.parse("{}"), this.header)
-      .subscribe(response => {
-        console.log('response :>> ', response);
-        this.http.delete<String>(this.auth.callNotifications(notif.Id), this.header)
-          .subscribe(response => {
-            console.log('response :>> ', response);
-          },
-          error => {
-            this.openSnackBar("Une erreur est survenue", "Fermer")
-          })
-        window.location.reload();
-      },
-      error => {
-        this.openSnackBar("Une erreur est survenue", "Fermer");
-      })
+    .subscribe(response => {
+      this.openSnackBar("Invitation accepté", "Fermer");
+    },
+    error => {
+      this.openSnackBar("Une erreur est survenue", "Fermer");
+    })
+    this.http.delete<String>(this.auth.callNotifications(notif.Id), this.header)
+    .subscribe(response => {
+      window.location.reload();
+    },
+    error => {
+      console.log('error');
+      this.openSnackBar("Une erreur est survenue", "Fermer")
+    })
   }
 
   async refuseInvite(notif) {
     this.http.post<String>(this.auth.callInvitationsRefuse(notif.DataId), JSON.parse("{}"), this.header)
     .subscribe(response => {
-      console.log('response :>> ', response);
-      this.http.delete<String>(this.auth.callNotifications(notif.Id), this.header)
-      .subscribe(response => {
-        console.log('response :>> ', response);
-      },
-      error => {
-        this.openSnackBar("Une erreur est survenue", "Fermer")
-      })
-    window.location.reload();
+      this.openSnackBar("Invitation refusé", "Fermer");
     },
     error => {
       this.openSnackBar("Une erreur est survenue", "Fermer");
+    })
+    this.http.delete<String>(this.auth.callNotifications(notif.Id), this.header)
+    .subscribe(response => {
+      window.location.reload();
+    },
+    error => {
+      console.log('error');
+      this.openSnackBar("Une erreur est survenue", "Fermer")
     })
   }
 

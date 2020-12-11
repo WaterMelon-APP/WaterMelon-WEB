@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AuthService } from '../../services/auth.service'
 import { Event } from '../../models/event.model'
@@ -17,6 +17,7 @@ export class SearchComponent implements OnInit {
 
   eventList;
   research;
+  username;
   eventL: Array<Event>;
   header: Object;
   id: string;
@@ -27,6 +28,10 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
     this.id = this.auth.getId();
     this.header = this.auth.getSecureHeader();
+    this.username = this.auth.getUsername();
+    /*
+    this.id = this.auth.getId();
+    this.header = this.auth.getSecureHeader();
     let search = this.route.snapshot.paramMap.get('id');
     const reg = /[_]+/m;
     search = search.replace(reg, " ");
@@ -34,11 +39,30 @@ export class SearchComponent implements OnInit {
     if (search == " ") {
       search = "";
     }
-    this.research = search;
+    this.research = search;*/
     this.EventListPublic();
   }
 
   async EventListPublic() {
+    let events: Array<Event>;
+    events = [];
+    this.eventList = [];
+    console.log('object :>> ', this.auth.callEventsSearch());
+    this.http.get<Array<Event>>(this.auth.callEventsSearch(), this.header)
+      .subscribe(eventResponse => {
+        this.eventList = eventResponse;
+      },
+        error => {
+          this.openSnackBar("Une erreur est survenue", "Fermer");
+        }
+      );
+    for (let event of events) {
+      if (event.Owner == this.id) {
+        this.eventList.push(event);
+      }
+    }
+
+    /*
     let nom: boolean;
     let lieu: boolean;
     if (this.research.length > 2) {
@@ -97,6 +121,7 @@ export class SearchComponent implements OnInit {
         }
       }
     }
+    */
   }
 
   isIn(event) {
@@ -126,13 +151,13 @@ export class SearchComponent implements OnInit {
     var jmemberList = JSON.parse(memberList);
 
     this.http.put<Event>(this.auth.callEvents(event.Id), jmemberList, this.header)
-    .subscribe(userResponse => {
-          this.openSnackBar("Vous avez rejoint l'event", "Fermer");
-        },
+      .subscribe(userResponse => {
+        this.openSnackBar("Vous avez rejoint l'event", "Fermer");
+      },
         error => {
           this.openSnackBar("Une erreur est survenue", "Fermer");
-      }
-    );
+        }
+      );
   }
 
   async goToEvent(id) {

@@ -18,6 +18,7 @@ import { Event } from '../../models/event.model'
 export class CreateEventComponent implements OnInit {
 
   eventname = new FormControl('', [Validators.required, Validators.requiredTrue]);
+  eventaddress = new FormControl('', [Validators.required, Validators.requiredTrue]);
   eventdate = new FormControl('', [Validators.required, Validators.requiredTrue]);
   dateEvent;
   header: Object;
@@ -35,13 +36,14 @@ export class CreateEventComponent implements OnInit {
 
   async createEvent() {
     const eventnameVal = this.eventname.value as string;
+    const eventaddressVal = this.eventaddress.value as string;
     const eventdateVal = this.dateEvent;
     const checkbox = document.getElementById('privCreate') as HTMLInputElement;
     let guests = [];
     guests.push(this.username);
 
     if (eventnameVal != null ||  eventdateVal != null) {
-      const event = '{ "Name": "' + eventnameVal + '", "Owner": "' + this.username + '", "Date": "' + eventdateVal.toISOString() + '", "Adress": "' + "" + '", "Guests": ["' + guests + '"], "Public": "' + !checkbox.checked + '", "ItemList": ' + "[]" +  ' }';
+      const event = '{ "Name": "' + eventnameVal + '", "Owner": "' + this.username + '", "Date": "' + eventdateVal.toISOString() + '", "Address": "' + eventaddressVal + '", "Guests": ["' + guests + '"], "Public": "' + !checkbox.checked + '", "ItemList": ' + "[]" +  ' }';
       var jevent = JSON.parse(event);
       console.log('jevent :>> ', jevent);
       this.http.post<Event>(this.auth.callEvents(""), jevent, this.header)

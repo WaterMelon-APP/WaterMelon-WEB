@@ -62,8 +62,9 @@ export class EditEventComponent implements OnInit {
     const eventnameVal = this.eventname.value as string;
 
     if (eventnameVal != null) {
-      const name = '{ "Id": "' + this.eventId + '", "Name": "' + eventnameVal + '", "Owner": "' + this.id + '", "Date": "' + this.dateEvent.toISOString() + '", "Adress": "' + this.addressEvent + '", "Guests": ' + this.clearGuests(this.guestsEvent) + ', "Public": ' + this.isPublic + ', "ItemList": ' + this.clearGuests(this.itemEvent) + ' }';
+      const name = '{ "Id": "' + this.eventId + '", "Name": "' + eventnameVal + '", "Owner": "' + this.id + '", "Date": "' + this.dateEvent.toISOString() + '", "Address": "' + this.addressEvent + '", "Guests": ' + this.clearGuests(this.guestsEvent) + ', "Public": ' + this.isPublic + ', "ItemList": ' + this.clearGuests(this.itemEvent) + ' }';
       var jname = JSON.parse(name);
+      console.log('jevent :>> ', jname);
       this.http.put<Event>(this.auth.callEvents(this.eventId), jname, this.header)
       .subscribe(eventResponse => {
         const text="Le nom a bien été changé à " + eventnameVal + " !";
@@ -79,7 +80,6 @@ export class EditEventComponent implements OnInit {
 
   async editDate() {
     const eventdateVal = this.dateEvent;
-
     if (eventdateVal != null) {
       const date = '{ "Id": "' + this.eventId + '", "Name": "' + this.nameEvent + '", "Owner": "' + this.id + '", "Date": "' + eventdateVal.toISOString() + '", "Address": "' + this.addressEvent + '", "Guests": ' + this.clearGuests(this.guestsEvent) + ', "Public": ' + this.isPublic + ', "ItemList": ' + this.clearGuests(this.itemEvent) + ' }';
       var jdate = JSON.parse(date);

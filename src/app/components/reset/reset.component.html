@@ -1,8 +1,17 @@
 <app-nav-component></app-nav-component>
 
 <div class="reset">
-    <input matInput placeholder="Votre adresse e-mail" required>
-    <button mat-button>
+  <p>
+    <mat-form-field>
+        <input class=inputRed matInput placeholder="Votre adresse e-mail" [formControl]="email" required>
+    </mat-form-field>
+    </p>
+    <p>
+    <mat-form-field>
+        <input class=inputRed matInput placeholder="Votre nom d'utilisateur" [formControl]="username" required>
+    </mat-form-field>
+    </p>
+    <button mat-button (click)="send()">
         Récupérer mot de passe
     </button>
 </div>

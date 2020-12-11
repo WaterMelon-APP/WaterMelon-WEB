@@ -99,6 +99,10 @@ export class AuthService {
     return (this.address + "users/login/")
   }
 
+  callUsersForgotPass() {
+    return (this.address + "users/forgotpasswd/")
+  }
+
   callItems(id) {
     return (this.address + "items/" + id)
   }
@@ -136,5 +140,9 @@ export class AuthService {
 
   callPhotoUser(id){
     return (this.address + "profilepictures/GetUserPicture/" + id)
+  }
+
+  callDelMember(id){
+    return (this.address + "events/removeguest/" + id)
   }
 }

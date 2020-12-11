@@ -19,6 +19,8 @@ import { CreateEventComponent } from './components/event/create-event.component'
 import { EditEventComponent } from './components/event/edit-event.component';
 import { SearchComponent } from './components/search/search-page.component';
 import { ResetComponent } from './components/reset/reset.component';
+import { ChangePassComponent } from './components/reset/change-pass.component';
+
 import { NotificationsComponent } from './components/notifications/notifications.component';
 
 @NgModule({
@@ -39,6 +41,7 @@ import { NotificationsComponent } from './components/notifications/notifications
     SearchComponent,
     NotificationsComponent,
     ResetComponent,
+    ChangePassComponent,
 
   ],
   imports: [

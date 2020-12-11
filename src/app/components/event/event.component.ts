@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import {FormControl, Validators} from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AuthService } from '../../services/auth.service'
 import { Event } from '../../models/event.model'
@@ -39,6 +39,7 @@ export class EventComponent implements OnInit {
   isPrivate;
   username: string;
   dateEvent: Date;
+  addressEvent: string;
   memberList: Array<string>;
   adminList: Array<string>;
   invitationList: Array<string>;
@@ -65,13 +66,13 @@ export class EventComponent implements OnInit {
     this.payed = [];
     this.isOwner = false;
     this.isAdmin = false;
-    this.findEvent().then(() => {this.privateBand();})
+    this.findEvent().then(() => { this.privateBand(); })
     console.log('this.itemList :', this.itemList);
   }
 
   async findEvent() {
     this.http.get<Event>(this.auth.callEvents(this.eventId), this.header)
-    .subscribe(eventResponse => {
+      .subscribe(eventResponse => {
         this.event = eventResponse;
         this.needsEvent = eventResponse.ItemList;
         this.nameEvent = eventResponse.Name;
@@ -79,6 +80,7 @@ export class EventComponent implements OnInit {
         this.isPrivate = eventResponse.Public;
         this.memberList = eventResponse.Guests;
         this.invitationList = eventResponse.InvitationList;
+        this.addressEvent = eventResponse.Address;
         //this.adminList = eventResponse.Guests;
         if (!this.needsEvent) {
           this.needsEvent = [];
@@ -90,7 +92,7 @@ export class EventComponent implements OnInit {
           this.invitationList = [];
         }
         //if (!this.adminList) {
-          this.adminList = [];
+        this.adminList = [];
         //}
         if (this.username == this.event.Owner) {
           this.isOwner = true;
@@ -113,15 +115,15 @@ export class EventComponent implements OnInit {
 
         for (let invitation of this.invitationList) {
           this.http.get<Invitation>(this.auth.callInvitations(invitation), this.header)
-          .subscribe(userResponse => {
+            .subscribe(userResponse => {
               if (!userResponse.Status) {
                 this.invites.push(userResponse.To);
               }
             },
-            error => {
-              this.openSnackBar("Une erreur est survenue", "Fermer");
-            }
-          );
+              error => {
+                this.openSnackBar("Une erreur est survenue", "Fermer");
+              }
+            );
         }
 
         /*for (let me of this.adminList) {
@@ -137,7 +139,7 @@ export class EventComponent implements OnInit {
 
         for (let item of this.needsEvent) {
           this.http.get<Item>(this.auth.callItems(item), this.header)
-          .subscribe(userResponse => {
+            .subscribe(userResponse => {
               this.itemList.push(userResponse);
               console.log('userResponse :>> ', userResponse);
               this.paye[userResponse.Id] = userResponse.Pay;
@@ -146,7 +148,7 @@ export class EventComponent implements OnInit {
               console.log('this.gived :>> ', this.gived);
               console.log('this.paye :>> ', this.paye);
               console.log('this.give :>> ', this.give);
-            if (this.paye[userResponse.Id]) {
+              if (this.paye[userResponse.Id]) {
                 this.payed[userResponse.Id] = true;
               }
               else if (!this.paye[userResponse.Id]) {
@@ -155,7 +157,7 @@ export class EventComponent implements OnInit {
               if (this.give[userResponse.Id]) {
                 this.gived[userResponse.Id] = true;
               }
-              else if (!this.give[userResponse.Id]){
+              else if (!this.give[userResponse.Id]) {
                 this.gived[userResponse.Id] = false;
               }
               console.log('this.payed :>> ', this.payed);
@@ -173,14 +175,14 @@ export class EventComponent implements OnInit {
             },
               error => {
                 this.openSnackBar("Une erreur est survenue", "Fermer");
-            }
-          );
+              }
+            );
         }
       },
-      error => {
+        error => {
           this.openSnackBar("Une erreur est survenue", "Fermer");
-      }
-    );
+        }
+      );
   }
 
   async editEvent() {
@@ -189,15 +191,15 @@ export class EventComponent implements OnInit {
 
   async delEvent() {
     this.http.delete(this.auth.callEvents(this.eventId), this.header)
-    .subscribe(userResponse => {
-          const text = "L'événement " + this.nameEvent + " a bien été supprimé.";
-          this.openSnackBar(text, "Fermer");
-          this.router.navigate(['/list-user']);
-        },
+      .subscribe(userResponse => {
+        const text = "L'événement " + this.nameEvent + " a bien été supprimé.";
+        this.openSnackBar(text, "Fermer");
+        this.router.navigate(['/list-user']);
+      },
         error => {
           this.openSnackBar("Une erreur est survenue", "Fermer");
-      }
-    );
+        }
+      );
   }
 
   isPersonIn(id) {
@@ -223,13 +225,13 @@ export class EventComponent implements OnInit {
         var jinvitation = JSON.parse(invitation);
         console.log('jinvitation :>> ', jinvitation);
         this.http.post<Invitation>(this.auth.callInvitations(""), jinvitation, this.header)
-        .subscribe(userResponse => {
-              this.openSnackBar('Invitation envoyé', "Fermer");
-            },
+          .subscribe(userResponse => {
+            this.openSnackBar('Invitation envoyé', "Fermer");
+          },
             error => {
               this.openSnackBar("Une erreur est survenue", "Fermer");
-          }
-        );
+            }
+          );
       }
     }
   }
@@ -256,83 +258,97 @@ export class EventComponent implements OnInit {
   async upMember() {
     if (this.selectedMember) {
       this.http.get<User>(this.auth.callUsersByName(this.selectedMember), this.header)
-      .subscribe(userResponse => {
-        if (userResponse) {
-          if (!this.isPersonIn(userResponse.Id)) {
-            this.admins.push(this.selectedMember);
-            this.adminList.push(userResponse.Id);
-            this.lessMember(this.selectedMember, userResponse.Id);
+        .subscribe(userResponse => {
+          if (userResponse) {
+            if (!this.isPersonIn(userResponse.Id)) {
+              this.admins.push(this.selectedMember);
+              this.adminList.push(userResponse.Id);
+              this.lessMember(this.selectedMember, userResponse.Id);
 
-            const adminList = '{ "Guests": "' + this.memberList + '", "Admins": "' + this.adminList + '" }';
-            var jadminList = JSON.parse(adminList);
+              const adminList = '{ "Guests": "' + this.memberList + '", "Admins": "' + this.adminList + '" }';
+              var jadminList = JSON.parse(adminList);
 
-            this.http.put<Event>(this.auth.callEvents(this.eventId), jadminList, this.header)
-            .subscribe(userResponse => {
+              this.http.put<Event>(this.auth.callEvents(this.eventId), jadminList, this.header)
+                .subscribe(userResponse => {
                   this.openSnackBar('Membre passé admin !', "Fermer");
                 },
-                error => {
-                  this.openSnackBar("Une erreur est survenue", "Fermer");
-              }
-            );
-        }}
-      },
-        error => {
-          this.openSnackBar("Cet utilisateur n'existe pas", "Fermer");
-        }
-      );
+                  error => {
+                    this.openSnackBar("Une erreur est survenue", "Fermer");
+                  }
+                );
+            }
+          }
+        },
+          error => {
+            this.openSnackBar("Cet utilisateur n'existe pas", "Fermer");
+          }
+        );
     }
   }
 
-  async delMember() {
-    if (this.selectedMember) {
-      this.http.get<User>(this.auth.callUsersByName(this.selectedMember), this.header)
-      .subscribe(userResponse => {
-        if (userResponse) {
-          if (!this.isPersonIn(userResponse.Id)) {
-            this.lessMember(this.selectedMember, userResponse.Id);
+  async delMember(membre) {
 
-            const memberList = '{ "Guests": "' + this.memberList + '" }';
-            var jmemberList = JSON.parse(memberList);
-
-            this.http.put<Event>(this.auth.callEvents(this.eventId), jmemberList, this.header)
+    /*
+        if (this.selectedMember) {
+          this.http.get<User>(this.auth.callUsersByName(this.selectedMember), this.header)
             .subscribe(userResponse => {
-                  this.openSnackBar("Membre supprimé de l'event", "Fermer");
-                },
-                error => {
-                  this.openSnackBar("Une erreur est survenue", "Fermer");
-              }
-            );
-        }}
+              if (userResponse) {
+                if (!this.isPersonIn(userResponse.Id)) {
+                  this.lessMember(this.selectedMember, userResponse.Id);
+
+                              const memberList = '{ "Guests": "' + this.memberList + '" }';
+                              var jmemberList = JSON.parse(memberList);
+
+                              this.http.put<Event>(this.auth.callEvents(this.eventId), jmemberList, this.header)
+                              .subscribe(userResponse => {
+                                */
+    console.log(membre);
+    membre = '{ "guestname": "' + membre + '" }';
+    console.log(membre);
+    var jevent = JSON.parse(membre);
+    console.log('jevent :>> ', jevent);
+    this.http.post(this.auth.callDelMember(this.eventId), membre, this.header)
+      .subscribe(userResponse => {
+        this.openSnackBar("Membre supprimé de l'event", "Fermer");
+        location.reload();
       },
         error => {
-          this.openSnackBar("Cet utilisateur n'existe pas", "Fermer");
+          this.openSnackBar("Une erreur est survenue", "Fermer");
         }
       );
-    }
   }
+  /*
+}
+},
+error => {
+  this.openSnackBar("Cet utilisateur n'existe pas", "Fermer");
+}
+);
+}
+}*/
 
-  lessAdmin(admin, id) {
-    let a = 0;
-    for (let i of this.admins) {
-      if (i == admin) {
-        this.admins.splice(a, 1);
-        break;
-      }
-      a = a + 1;
+lessAdmin(admin, id) {
+  let a = 0;
+  for (let i of this.admins) {
+    if (i == admin) {
+      this.admins.splice(a, 1);
+      break;
     }
-    a = 0;
-    for (let i of this.adminList) {
-      if (i == id) {
-        this.adminList.splice(a, 1);
-        break;
-      }
-      a = a + 1;
-    }
+    a = a + 1;
   }
+  a = 0;
+  for (let i of this.adminList) {
+    if (i == id) {
+      this.adminList.splice(a, 1);
+      break;
+    }
+    a = a + 1;
+  }
+}
 
-  async downAdmin() {
-    if (this.selectedAdmin) {
-      this.http.get<User>(this.auth.callUsersByName(this.selectedMember), this.header)
+async downAdmin() {
+  if (this.selectedAdmin) {
+    this.http.get<User>(this.auth.callUsersByName(this.selectedMember), this.header)
       .subscribe(userResponse => {
         if (userResponse) {
           if (!this.isPersonIn(userResponse.Id)) {
@@ -344,25 +360,26 @@ export class EventComponent implements OnInit {
             var jadminList = JSON.parse(adminList);
 
             this.http.put<Event>(this.auth.callEvents(this.eventId), jadminList, this.header)
-            .subscribe(userResponse => {
-                  this.openSnackBar("Admin rétrogradé !", "Fermer");
-                },
+              .subscribe(userResponse => {
+                this.openSnackBar("Admin rétrogradé !", "Fermer");
+              },
                 error => {
                   this.openSnackBar("Une erreur est survenue", "Fermer");
-              }
-            );
-        }}
+                }
+              );
+          }
+        }
       },
         error => {
           this.openSnackBar("Cet utilisateur n'existe pas", "Fermer");
         }
       );
-    }
   }
+}
 
-  async delAdmin() {
-    if (this.selectedAdmin) {
-      this.http.get<User>(this.auth.callUsersByName(this.selectedMember), this.header)
+async delAdmin() {
+  if (this.selectedAdmin) {
+    this.http.get<User>(this.auth.callUsersByName(this.selectedMember), this.header)
       .subscribe(userResponse => {
         if (userResponse) {
           if (!this.isPersonIn(userResponse.Id)) {
@@ -372,150 +389,148 @@ export class EventComponent implements OnInit {
             var jadminList = JSON.parse(adminList);
 
             this.http.put<Event>(this.auth.callEvents(this.eventId), jadminList, this.header)
-            .subscribe(userResponse => {
-                  this.openSnackBar("Admin supprimé de l'event", "Fermer");
-                },
+              .subscribe(userResponse => {
+                this.openSnackBar("Admin supprimé de l'event", "Fermer");
+              },
                 error => {
                   this.openSnackBar("Une erreur est survenue", "Fermer");
-              }
-            );
-        }}
+                }
+              );
+          }
+        }
       },
         error => {
           this.openSnackBar("Cet utilisateur n'existe pas", "Fermer");
         }
       );
-    }
   }
+}
 
-  async createNeeds() {
-    const needsnameVal = this.needsname.value as string;
-    const needspriceVal = parseFloat(this.needsprice.value as string);
-    const needsquantVal = parseInt(this.needsquant.value as string);
+async createNeeds() {
+  const needsnameVal = this.needsname.value as string;
+  const needspriceVal = parseFloat(this.needsprice.value as string);
+  const needsquantVal = parseInt(this.needsquant.value as string);
 
-    if (needsnameVal != null && needspriceVal != null && needsquantVal != null) {
-      const needs = '{ "Name": "' + needsnameVal + '", "Quantity": ' + needsquantVal + ', "Price": ' + needspriceVal + ', "About": "' + "" + '", "FromEvent": "' + this.eventId + '", "QuantityLeft": ' + needsquantVal + ' }';
-      var jneeds = JSON.parse(needs);
-
-      this.http.post<Item>(this.auth.callItems(""), jneeds, this.header)
-      .subscribe(itemResponse => {
-            this.needsEvent.push(itemResponse.Id);
-            this.openSnackBar('Votre objet a été ajouté avec succès!', "Fermer");
-            location.reload();
-          },
-          error => {
-            this.openSnackBar("Une erreur est survenue", "Fermer");
-        }
-      );
-    }
-  }
-
-  async delItem(item){
-    this.http.delete(this.auth.callItems(item.Id), this.header)
-    .subscribe(userResponse => {
-          this.openSnackBar("L'item a bien été supprimé.", "Fermer");
-          location.reload();
-        },
-        error => {
-          this.openSnackBar("Une erreur est survenue", "Fermer");
-      }
-    );
-  }
-
-  async bringItem(item) {
-    let payTab = item.Paye;
-    if (!payTab) {
-      payTab = new Array();
-    }
-    let giveTab = item.Bring;
-    if (!giveTab) {
-      giveTab = new Array();
-    }
-
-    if (this.payed[item.id] == true) {
-      var reponse = window.confirm("Votre choix?");
-      if (reponse) {
-        payTab[0] = this.id;
-        let price = item.Quantity * item.Price;
-        const text="Paiement de " + item.Quantity + " " + item.Name + " d'une valeur de " + price.toString() + "€.";
-        this.openSnackBar(text, "Fermer");
-      }
-      else {
-        this.payed[item.Id] = false;
-        if (payTab[0]) {
-          this.openSnackBar("Remboursement", "Fermer");
-        }
-        else {
-          this.openSnackBar("Paiement annulé", "Fermer");
-        }
-        payTab[0] = "";
-      }
-    }
-    else {
-      if (payTab[0]) {
-        let price = item.Quantity * item.Price;
-        const text="Remboursement de " + item.Quantity + " " + item.Name + " d'une valeur de " + price.toString() + "€.";
-        this.openSnackBar(text, "Fermer");
-      }
-    payTab[0] = "";
-    }
-    if (this.gived[item.Id] == true) {
-      giveTab[0] = this.id;
-    }
-    else {
-      giveTab[0] = "";
-    }
-    const needs = '{ "userId": "' + this.id + '", "Quantity": ' + item.Quantity + ' }'
-    console.log('needs :>> ', needs);
+  if (needsnameVal != null && needspriceVal != null && needsquantVal != null) {
+    const needs = '{ "Name": "' + needsnameVal + '", "Quantity": ' + needsquantVal + ', "Price": ' + needspriceVal + ', "About": "' + "" + '", "FromEvent": "' + this.eventId + '", "QuantityLeft": ' + needsquantVal + ' }';
     var jneeds = JSON.parse(needs);
 
-    if (this.payed[item.Id] == true) {
-      console.log('this.auth.callItemPay(item.Id) :>> ', this.auth.callItemPay(item.Id));
-      this.http.put<Item>(this.auth.callItemPay(item.Id), jneeds, this.header)
+    this.http.post<Item>(this.auth.callItems(""), jneeds, this.header)
       .subscribe(itemResponse => {
-            console.log('Maj item list');
-          },
-          error => {
-            this.openSnackBar("Une erreur est survenue", "Fermer");
+        this.needsEvent.push(itemResponse.Id);
+        this.openSnackBar('Votre objet a été ajouté avec succès!', "Fermer");
+        location.reload();
+      },
+        error => {
+          this.openSnackBar("Une erreur est survenue", "Fermer");
         }
       );
+  }
+}
+
+async delItem(item) {
+  this.http.delete(this.auth.callItems(item.Id), this.header)
+    .subscribe(userResponse => {
+      this.openSnackBar("L'item a bien été supprimé.", "Fermer");
+      location.reload();
+    },
+      error => {
+        this.openSnackBar("Une erreur est survenue", "Fermer");
+      }
+    );
+}
+
+async bringItem(item) {
+  let payTab = item.Paye;
+  if (!payTab) {
+    payTab = new Array();
+  }
+  let giveTab = item.Bring;
+  if (!giveTab) {
+    giveTab = new Array();
+  }
+
+  if (this.payed[item.id] == true) {
+    var reponse = window.confirm("Votre choix?");
+    if (reponse) {
+      payTab[0] = this.id;
+      let price = item.Quantity * item.Price;
+      const text = "Paiement de " + item.Quantity + " " + item.Name + " d'une valeur de " + price.toString() + "€.";
+      this.openSnackBar(text, "Fermer");
     }
-    else if (this.gived[item.Id] == true) {
-      this.http.put<Item>(this.auth.callItemGive(item.Id), jneeds, this.header)
+    else {
+      this.payed[item.Id] = false;
+      if (payTab[0]) {
+        this.openSnackBar("Remboursement", "Fermer");
+      }
+      else {
+        this.openSnackBar("Paiement annulé", "Fermer");
+      }
+      payTab[0] = "";
+    }
+  }
+  else {
+    if (payTab[0]) {
+      let price = item.Quantity * item.Price;
+      const text = "Remboursement de " + item.Quantity + " " + item.Name + " d'une valeur de " + price.toString() + "€.";
+      this.openSnackBar(text, "Fermer");
+    }
+    payTab[0] = "";
+  }
+  if (this.gived[item.Id] == true) {
+    giveTab[0] = this.id;
+  }
+  else {
+    giveTab[0] = "";
+  }
+  const needs = '{ "userId": "' + this.id + '", "Quantity": ' + item.Quantity + ' }'
+  console.log('needs :>> ', needs);
+  var jneeds = JSON.parse(needs);
+
+  if (this.payed[item.Id] == true) {
+    console.log('this.auth.callItemPay(item.Id) :>> ', this.auth.callItemPay(item.Id));
+    this.http.put<Item>(this.auth.callItemPay(item.Id), jneeds, this.header)
       .subscribe(itemResponse => {
-            console.log('Maj item list');
-          },
-          error => {
-            this.openSnackBar("Une erreur est survenue", "Fermer");
+        console.log('Maj item list');
+      },
+        error => {
+          this.openSnackBar("Une erreur est survenue", "Fermer");
         }
       );
-    }
   }
+  else if (this.gived[item.Id] == true) {
+    this.http.put<Item>(this.auth.callItemGive(item.Id), jneeds, this.header)
+      .subscribe(itemResponse => {
+        console.log('Maj item list');
+      },
+        error => {
+          this.openSnackBar("Une erreur est survenue", "Fermer");
+        }
+      );
+  }
+}
 
-  async privateBand(){
-    const band = document.getElementById("grayBandPrivacy");
-    if(this.isPrivate == true)
-    {
-      band.style.visibility="visible";
-      console.log("visible");
-    }
-    if(this.isPrivate == false)
-    {
-      band.style.visibility="hidden";
-      console.log("hidden");
-    }
+async privateBand() {
+  const band = document.getElementById("grayBandPrivacy");
+  if (this.isPrivate == true) {
+    band.style.visibility = "visible";
+    console.log("visible");
   }
+  if (this.isPrivate == false) {
+    band.style.visibility = "hidden";
+    console.log("hidden");
+  }
+}
 
-  async sendTweet()
-  {
-    const link = "https://watermelonapp.azurewebsites.net/"; //+ //add le lien de l event
-    var text = "Hey%2C%20je%20viens%20de%20cr%C3%A9er%20mon%20%C3%A9v%C3%A9nement%20" + this.nameEvent + "%20rejoint%20moi%20!" + link;
-    const tweet_url = "http://twitter.com/intent/tweet?text=" + text;
-    window.open(tweet_url, "_blank");
-  }
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      duration: 5000,
-    });
-  }
+async sendTweet() {
+  const link = "https://watermelonapp.azurewebsites.net/"; //+ //add le lien de l event
+  var text = "Hey%2C%20je%20viens%20de%20cr%C3%A9er%20mon%20%C3%A9v%C3%A9nement%20" + this.nameEvent + "%20rejoint%20moi%20!" + link;
+  const tweet_url = "http://twitter.com/intent/tweet?text=" + text;
+  window.open(tweet_url, "_blank");
+}
+openSnackBar(message: string, action: string) {
+  this._snackBar.open(message, action, {
+    duration: 5000,
+  });
+}
 }
