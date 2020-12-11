@@ -13,10 +13,19 @@ import { User } from '../../models/user.model';
   styleUrls: ['./change-pass.component.css']
 })
 export class ChangePassComponent {
-
+  hide = true;
   new_pass = new FormControl('', [Validators.required, Validators.requiredTrue]);
+  user: User;
+  header: Object;
+  id: string;
 
   constructor(private router: Router, private _snackBar: MatSnackBar, private http: HttpClient, private auth: AuthService) {}
+
+  ngOnInit() {
+    this.id = this.auth.getId();
+    this.header = this.auth.getSecureHeader();
+    this.profileInit();
+  }
 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {
@@ -24,25 +33,33 @@ export class ChangePassComponent {
     });
   }
 
-  async send() {
-    /*const emailVal = this.email.value as string;
-    const usernameVal = this.username.value as string;
-    if (emailVal != null || usernameVal != null) {
+  async profileInit() {
 
-      const header: Object = this.auth.getHeader();
-      const user = '{ "Username": "' + usernameVal + '", "Email": "' + emailVal + '" }';
-      var juser = JSON.parse(user);
-      console.log('juser :>> ', juser);
-      this.http.post<User>(this.auth.callUsersForgotPass(), juser, header)
-      .subscribe(response => {
-          this.auth.logIn(response.Id, response.Token, response.Username);
-          console.log('reponse :>> ', response);
-          this.router.navigate(['/change-pass/', response.Id])
-        },
+    this.http.get<User>(this.auth.callUsers(this.id), this.header)
+      .subscribe(userResponse => {
+        this.user = userResponse;
+        console.log('this.user :>> ', this.user);
+      },
         error => {
           this.openSnackBar("Une erreur est survenue", "Fermer");
         }
       );
-    }*/
+  }
+
+  async send() {
+    const passwordVal = this.new_pass.value as string;
+    const user = '{ "Password": "' + passwordVal + '", "Name": "' + this.user.Name + '", "Username": "' + this.user.Username + '", "Email": "' + this.user.Email + '", "FirstName": "' + this.user.FirstName + '", "LastName": "' + this.user.LastName + '", "Phone": "' + this.user.Phone + '", "Birthdate": "' + this.user.Birthdate + '", "ProfilePicture": "' + "" + '", "Events": ' + this.user.Events + ' }';
+    var juser = JSON.parse(user);
+    console.log('juser :>> ', juser);
+
+    this.http.put<User>(this.auth.callUsers(this.id), juser, this.header)
+      .subscribe(userResponse => {
+        this.openSnackBar('Les changements ont bien été enregistré !', "Fermer");
+        this.router.navigate(['/']);
+      },
+        error => {
+          this.openSnackBar("Une erreur est survenue", "Fermer");
+        }
+      );
   }
 }
