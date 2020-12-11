@@ -52,7 +52,7 @@
         <tr>
             <th>Description</th>
             <th>Prix</th>
-            <th>Quantité</th>
+            <th>Quantité restante</th>
             <th>Contribution</th>
             <th>Contributeur</th>
             <th></th>
@@ -60,8 +60,12 @@
         <tr *ngFor="let item of itemList">
           <td> {{item.Name}} </td>
           <td> {{item.Price}} </td>
-          <td> {{item.Quantity}} </td>
-          <td></td>
+          <td> 
+            <input type="number" step=".01" min="1.0" max="{{item.QuantityLeft}}" value="{{item.QuantityLeft}}" placeholder="Prix" [formControl]="formItem[item.Id]" required> 
+            <button (click)="bringItem(item)" mat-button class="create">Apporter</button>
+            <button (click)="payItem(item)" mat-button class="create">Payer</button>
+          </td>
+          <td> {{contributions.get(item.Name)}} </td>
           <td></td>
           <td style="text-align: right">
             <button *ngIf="isOwner" class="trash" (click)="delItem(item)">
@@ -69,10 +73,10 @@
             </button>
           </td>
         </tr>
-        <tr *ngIf="isAdmin" class="first">
+        <tr *ngIf="isOwner" class="first">
           <td colspan="6">Ajouter un objet</td>
         </tr>
-        <tr *ngIf="isAdmin" class="add-object">
+        <tr *ngIf="isOwner" class="add-object">
           <td><input placeholder="Nom de l'objet" [formControl]="needsname" required></td>
           <td><input type="number" min="1" value="1" placeholder="Prix" [formControl]="needsprice" required></td>
           <td><input type="number" min="1" value="1" placeholder="Quantité" [formControl]="needsquant" required></td>
@@ -97,7 +101,7 @@
               <td> {{membre}} </td>
               <td colspan="4"></td>
               <td style="text-align: right">
-                <button *ngIf="isAdmin" class="trash" (click)="delMember(membre)">
+                <button *ngIf="isOwner" class="trash" (click)="delMember(membre)">
                   <mat-icon>delete</mat-icon>
                 </button>
               </td>
@@ -106,10 +110,10 @@
 
         <br><br>
         <table width="300">
-          <tr *ngIf="isAdmin" class="first">
+          <tr *ngIf="isOwner" class="first">
             <td colspan="2"><b>Ajouter un(e) invité(e)</b></td>
           </tr>
-          <tr *ngIf="isAdmin" class="add-object">
+          <tr *ngIf="isOwner" class="add-object">
             <td><input placeholder="Pseudo" [formControl]="pseudoInvit" required></td>
             <td class="plus">
               <button (click)="addPerson()" class="add">+</button>
@@ -117,7 +121,7 @@
           </tr>
         </table>
         <br><br>
-        <table *ngIf="isAdmin" class="encours" width="300">
+        <table *ngIf="isOwner" class="encours" width="300">
           <tr class="first">
             <td><b>Invitations en cours</b></td>
           </tr>

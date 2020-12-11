@@ -40,7 +40,7 @@ export class ListEventUserPageComponent implements OnInit {
         invites = eventResponse;
       },
       error => {
-          this.openSnackBar("Une erreur est survenue", "Fermer");
+        this.openSnackBar("Une erreur est survenue", "Fermer");
       }
     );
     for (let invite of invites) {
@@ -98,18 +98,11 @@ export class ListEventUserPageComponent implements OnInit {
     return (guestsList);
   }
 
-  /*-----------
-  A modifier admin
-  -----------*/
   async quitEvent(event) {
     let memberList = event.Guests;
-    //let adminList = event.Admins;
     if (!memberList) {
       memberList = [];
     }
-    /*if (!adminList) {
-      adminList = [];
-    }*/
 
     let a = 0;
     for (let i of memberList) {
@@ -119,16 +112,8 @@ export class ListEventUserPageComponent implements OnInit {
       }
       ++a;
     }
-    /*a = 0;
-    for (let i of adminList) {
-      if (i == this.id) {
-        adminList.splice(a, 1);
-        break;
-      }
-      ++a;
-    }*/
 
-    const guest = '{ "Guests": "' + this.clearGuests(memberList) + /*'", "Admins": "' + adminList +*/ '" }';
+    const guest = '{ "Guests": "' + this.clearGuests(memberList) + '" }';
     var jguest = JSON.parse(guest);
     this.http.put<Event>(this.auth.callEvents(event.Id), jguest, this.header)
     .subscribe(eventResponse => {

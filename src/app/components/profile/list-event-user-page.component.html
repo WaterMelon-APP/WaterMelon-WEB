@@ -14,20 +14,20 @@
             <p class="date-time">{{event.Date | date: 'short'}}</p>
             <p>{{event.Address}}</p>
       </div>                  
-      <div class="buttons">
-           <button class="mdc-fab icons delete" (click)="delEvent(event.Id)">
-             <span class="mdc-fab__icon material-icons">delete_outline</span>
-           </button>
-           <button class="mdc-fab icons edit" (click)="editEvent(event.Id)">
-             <span class="mdc-fab__icon material-icons">edit</span>
-           </button>
+      <div *ngIf="event.Owner == username" class="buttons">
+        <button class="mdc-fab icons delete" (click)="delEvent(event.Id)">
+          <span class="mdc-fab__icon material-icons">delete_outline</span>
+        </button>
+        <button class="mdc-fab icons edit" (click)="editEvent(event.Id)">
+          <span class="mdc-fab__icon material-icons">edit</span>
+        </button>
       </div>
     </div>
   </div>
 
   <!-- Publicité -->
   <div class="card-event-admin publicite">
-     <p>Publicité</p>
+    <p>Publicité</p>
   </div>
   <br>
 

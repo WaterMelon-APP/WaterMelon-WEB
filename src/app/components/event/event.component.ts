@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -27,31 +27,25 @@ export class EventComponent implements OnInit {
   pseudoInvit = new FormControl('', [Validators.required, Validators.requiredTrue]);
   payeQuantity = new FormControl('', [Validators.required, Validators.requiredTrue]);
   giveQuantity = new FormControl('', [Validators.required, Validators.requiredTrue]);
+  formItem = new FormArray([]);
   eventId;
   itemList: Array<Item>;
   event;
   nameEvent;
   needsEvent: Array<string>;
-  payed;
-  paye;
-  gived;
-  give;
   isPrivate;
   username: string;
   dateEvent: Date;
   addressEvent: string;
   memberList: Array<string>;
-  adminList: Array<string>;
   invitationList: Array<string>;
   membres: Array<string>;
-  admins: Array<string>;
   invites: Array<string>;
   selectedMember;
-  selectedAdmin;
   isOwner;
-  isAdmin;
   header: Object;
   id: string;
+  contributions: Map<string, number>;
 
   ngOnInit() {
     this.id = this.auth.getId();
@@ -60,12 +54,8 @@ export class EventComponent implements OnInit {
     let id = this.route.snapshot.paramMap.get('id');
     this.eventId = id;
     this.itemList = [];
-    this.paye = new Array<Array<Bring>>();
-    this.give = new Array<Array<Bring>>();
-    this.gived = [];
-    this.payed = [];
+    this.contributions = new Map();
     this.isOwner = false;
-    this.isAdmin = false;
     this.findEvent().then(() => { this.privateBand(); })
     console.log('this.itemList :', this.itemList);
   }
@@ -81,7 +71,6 @@ export class EventComponent implements OnInit {
         this.memberList = eventResponse.Guests;
         this.invitationList = eventResponse.InvitationList;
         this.addressEvent = eventResponse.Address;
-        //this.adminList = eventResponse.Guests;
         if (!this.needsEvent) {
           this.needsEvent = [];
         }
@@ -91,27 +80,11 @@ export class EventComponent implements OnInit {
         if (!this.invitationList) {
           this.invitationList = [];
         }
-        //if (!this.adminList) {
-        this.adminList = [];
-        //}
         if (this.username == this.event.Owner) {
           this.isOwner = true;
-          this.isAdmin = true;
         }
 
-        //this.membres = [];
-        //this.admins = [];
         this.invites = [];
-        /*for (let me of this.memberList) {
-          this.http.get<User>(this.auth.callUsers(me), this.header)
-          .subscribe(userResponse => {
-                this.membres.push(userResponse.Username);
-              },
-              error => {
-                this.openSnackBar("Une erreur est survenue");
-            }
-          );
-        }*/
 
         for (let invitation of this.invitationList) {
           this.http.get<Invitation>(this.auth.callInvitations(invitation), this.header)
@@ -126,52 +99,25 @@ export class EventComponent implements OnInit {
             );
         }
 
-        /*for (let me of this.adminList) {
-          this.http.get<UserResponse>("https://watermelon-api20200526035653.azurewebsites.net/api/users/" + me, this.header)
-          .subscribe(userResponse => {
-                this.admins.push(userResponse.Name);
-              },
-              error => {
-                this.openSnackBar("Une erreur est survenue");
-            }
-          );
-        }*/
-
         for (let item of this.needsEvent) {
           this.http.get<Item>(this.auth.callItems(item), this.header)
             .subscribe(userResponse => {
               this.itemList.push(userResponse);
-              console.log('userResponse :>> ', userResponse);
-              this.paye[userResponse.Id] = userResponse.Pay;
-              this.give[userResponse.Id] = userResponse.Bring;
-              console.log('this.payed :>> ', this.payed);
-              console.log('this.gived :>> ', this.gived);
-              console.log('this.paye :>> ', this.paye);
-              console.log('this.give :>> ', this.give);
-              if (this.paye[userResponse.Id]) {
-                this.payed[userResponse.Id] = true;
+              this.formItem[userResponse.Id] = new FormControl('', [Validators.required, Validators.requiredTrue]);
+              if (userResponse.Bring && userResponse.Bring[this.id]) {
+                this.contributions.set(userResponse.Name, userResponse.Bring[this.id]);
               }
-              else if (!this.paye[userResponse.Id]) {
-                this.payed[userResponse.Id] = false;
+              else {
+                this.contributions.set(userResponse.Name, 0);
               }
-              if (this.give[userResponse.Id]) {
-                this.gived[userResponse.Id] = true;
+              if (userResponse.Pay && userResponse.Pay[this.id]) {
+                if (this.contributions.has(userResponse.Name)) {
+                  this.contributions.set(userResponse.Name, this.contributions.get(userResponse.Name) + (userResponse.Pay[this.id] / userResponse.Price))
+                }
+                else {
+                  this.contributions.set(userResponse.Name, userResponse.Pay[this.id] / userResponse.Price)
+                }
               }
-              else if (!this.give[userResponse.Id]) {
-                this.gived[userResponse.Id] = false;
-              }
-              console.log('this.payed :>> ', this.payed);
-              console.log('this.gived :>> ', this.gived);
-              console.log('this.paye :>> ', this.paye);
-              console.log('this.give :>> ', this.give);
-              /*if (userResponse.get("Pay") != null && userResponse.get("Pay")[0] != "") {
-                this.payed[userResponse.Id] = true;
-              }
-              this.gived[userResponse.Id] = false;
-              if (userResponse.get("Give") != null && userResponse.get("Give")[0] != "") {
-                this.gived[userResponse.Id] = true;
-              }*/
-
             },
               error => {
                 this.openSnackBar("Une erreur est survenue", "Fermer");
@@ -183,7 +129,8 @@ export class EventComponent implements OnInit {
           this.openSnackBar("Une erreur est survenue", "Fermer");
         }
       );
-  }
+      console.log('this.contributions :>> ', this.contributions);
+    }
 
   async editEvent() {
     this.router.navigate(['/event-edit', this.eventId])
@@ -204,11 +151,6 @@ export class EventComponent implements OnInit {
 
   isPersonIn(id) {
     for (let user of this.memberList) {
-      if (user == id) {
-        return true;
-      }
-    }
-    for (let user of this.adminList) {
       if (user == id) {
         return true;
       }
@@ -236,72 +178,8 @@ export class EventComponent implements OnInit {
     }
   }
 
-  lessMember(member, id) {
-    let a = 0;
-    for (let i of this.membres) {
-      if (i == member) {
-        this.membres.splice(a, 1);
-        break;
-      }
-      ++a;
-    }
-    a = 0;
-    for (let i of this.memberList) {
-      if (i == id) {
-        this.memberList.splice(a, 1);
-        break;
-      }
-      ++a;
-    }
-  }
-
-  async upMember() {
-    if (this.selectedMember) {
-      this.http.get<User>(this.auth.callUsersByName(this.selectedMember), this.header)
-        .subscribe(userResponse => {
-          if (userResponse) {
-            if (!this.isPersonIn(userResponse.Id)) {
-              this.admins.push(this.selectedMember);
-              this.adminList.push(userResponse.Id);
-              this.lessMember(this.selectedMember, userResponse.Id);
-
-              const adminList = '{ "Guests": "' + this.memberList + '", "Admins": "' + this.adminList + '" }';
-              var jadminList = JSON.parse(adminList);
-
-              this.http.put<Event>(this.auth.callEvents(this.eventId), jadminList, this.header)
-                .subscribe(userResponse => {
-                  this.openSnackBar('Membre passé admin !', "Fermer");
-                },
-                  error => {
-                    this.openSnackBar("Une erreur est survenue", "Fermer");
-                  }
-                );
-            }
-          }
-        },
-          error => {
-            this.openSnackBar("Cet utilisateur n'existe pas", "Fermer");
-          }
-        );
-    }
-  }
-
   async delMember(membre) {
 
-    /*
-        if (this.selectedMember) {
-          this.http.get<User>(this.auth.callUsersByName(this.selectedMember), this.header)
-            .subscribe(userResponse => {
-              if (userResponse) {
-                if (!this.isPersonIn(userResponse.Id)) {
-                  this.lessMember(this.selectedMember, userResponse.Id);
-
-                              const memberList = '{ "Guests": "' + this.memberList + '" }';
-                              var jmemberList = JSON.parse(memberList);
-
-                              this.http.put<Event>(this.auth.callEvents(this.eventId), jmemberList, this.header)
-                              .subscribe(userResponse => {
-                                */
     console.log(membre);
     membre = '{ "guestname": "' + membre + '" }';
     console.log(membre);
@@ -317,94 +195,6 @@ export class EventComponent implements OnInit {
         }
       );
   }
-  /*
-}
-},
-error => {
-  this.openSnackBar("Cet utilisateur n'existe pas", "Fermer");
-}
-);
-}
-}*/
-
-lessAdmin(admin, id) {
-  let a = 0;
-  for (let i of this.admins) {
-    if (i == admin) {
-      this.admins.splice(a, 1);
-      break;
-    }
-    a = a + 1;
-  }
-  a = 0;
-  for (let i of this.adminList) {
-    if (i == id) {
-      this.adminList.splice(a, 1);
-      break;
-    }
-    a = a + 1;
-  }
-}
-
-async downAdmin() {
-  if (this.selectedAdmin) {
-    this.http.get<User>(this.auth.callUsersByName(this.selectedMember), this.header)
-      .subscribe(userResponse => {
-        if (userResponse) {
-          if (!this.isPersonIn(userResponse.Id)) {
-            this.membres.push(this.selectedAdmin);
-            this.memberList.push(userResponse.Id);
-            this.lessAdmin(this.selectedAdmin, userResponse.Id);
-
-            const adminList = '{ "Guests": "' + this.memberList + '", "Admins": "' + this.adminList + '" }';
-            var jadminList = JSON.parse(adminList);
-
-            this.http.put<Event>(this.auth.callEvents(this.eventId), jadminList, this.header)
-              .subscribe(userResponse => {
-                this.openSnackBar("Admin rétrogradé !", "Fermer");
-              },
-                error => {
-                  this.openSnackBar("Une erreur est survenue", "Fermer");
-                }
-              );
-          }
-        }
-      },
-        error => {
-          this.openSnackBar("Cet utilisateur n'existe pas", "Fermer");
-        }
-      );
-  }
-}
-
-async delAdmin() {
-  if (this.selectedAdmin) {
-    this.http.get<User>(this.auth.callUsersByName(this.selectedMember), this.header)
-      .subscribe(userResponse => {
-        if (userResponse) {
-          if (!this.isPersonIn(userResponse.Id)) {
-            this.lessAdmin(this.selectedMember, userResponse.Id);
-
-            const adminList = '{ "Admin": "' + this.adminList + '" }';
-            var jadminList = JSON.parse(adminList);
-
-            this.http.put<Event>(this.auth.callEvents(this.eventId), jadminList, this.header)
-              .subscribe(userResponse => {
-                this.openSnackBar("Admin supprimé de l'event", "Fermer");
-              },
-                error => {
-                  this.openSnackBar("Une erreur est survenue", "Fermer");
-                }
-              );
-          }
-        }
-      },
-        error => {
-          this.openSnackBar("Cet utilisateur n'existe pas", "Fermer");
-        }
-      );
-  }
-}
 
 async createNeeds() {
   const needsnameVal = this.needsname.value as string;
@@ -441,67 +231,41 @@ async delItem(item) {
 }
 
 async bringItem(item) {
-  let payTab = item.Paye;
-  if (!payTab) {
-    payTab = new Array();
-  }
-  let giveTab = item.Bring;
-  if (!giveTab) {
-    giveTab = new Array();
+  let itemVal = this.formItem[item.Id].value as number;
+
+  if (item.Bring && item.Bring[this.id]) {
+    itemVal = itemVal + item.Bring[this.id]
   }
 
-  if (this.payed[item.id] == true) {
-    var reponse = window.confirm("Votre choix?");
-    if (reponse) {
-      payTab[0] = this.id;
-      let price = item.Quantity * item.Price;
-      const text = "Paiement de " + item.Quantity + " " + item.Name + " d'une valeur de " + price.toString() + "€.";
-      this.openSnackBar(text, "Fermer");
-    }
-    else {
-      this.payed[item.Id] = false;
-      if (payTab[0]) {
-        this.openSnackBar("Remboursement", "Fermer");
-      }
-      else {
-        this.openSnackBar("Paiement annulé", "Fermer");
-      }
-      payTab[0] = "";
-    }
-  }
-  else {
-    if (payTab[0]) {
-      let price = item.Quantity * item.Price;
-      const text = "Remboursement de " + item.Quantity + " " + item.Name + " d'une valeur de " + price.toString() + "€.";
-      this.openSnackBar(text, "Fermer");
-    }
-    payTab[0] = "";
-  }
-  if (this.gived[item.Id] == true) {
-    giveTab[0] = this.id;
-  }
-  else {
-    giveTab[0] = "";
-  }
-  const needs = '{ "userId": "' + this.id + '", "Quantity": ' + item.Quantity + ' }'
-  console.log('needs :>> ', needs);
-  var jneeds = JSON.parse(needs);
-
-  if (this.payed[item.Id] == true) {
-    console.log('this.auth.callItemPay(item.Id) :>> ', this.auth.callItemPay(item.Id));
-    this.http.put<Item>(this.auth.callItemPay(item.Id), jneeds, this.header)
+  if (itemVal != null) {
+    const sendItem = '{ "userId": "' + this.id + '", "Quantity": ' + Math.round(itemVal) + ' }';
+    var jitem = JSON.parse(sendItem);
+    this.http.put<Item>(this.auth.callItemGive(item.Id), jitem, this.header)
       .subscribe(itemResponse => {
-        console.log('Maj item list');
+        this.openSnackBar('Contribution prise en compte !', "Fermer");
+        location.reload();
       },
         error => {
           this.openSnackBar("Une erreur est survenue", "Fermer");
         }
       );
   }
-  else if (this.gived[item.Id] == true) {
-    this.http.put<Item>(this.auth.callItemGive(item.Id), jneeds, this.header)
+}
+
+async payItem(item) {
+  let itemVal = this.formItem[item.Id].value as number;
+
+  if (item.Pay && item.Pay[this.id]) {
+    itemVal = itemVal + item.Pay[this.id]
+  }
+
+  if (itemVal != null) {
+    const sendItem = '{ "userId": "' + this.id + '", "Amount": ' + Math.round(itemVal) + ' }';
+    var jitem = JSON.parse(sendItem);
+    this.http.put<Item>(this.auth.callItemPay(item.Id), jitem, this.header)
       .subscribe(itemResponse => {
-        console.log('Maj item list');
+        this.openSnackBar('Contribution prise en compte !', "Fermer");
+        location.reload();
       },
         error => {
           this.openSnackBar("Une erreur est survenue", "Fermer");
@@ -528,6 +292,7 @@ async sendTweet() {
   const tweet_url = "http://twitter.com/intent/tweet?text=" + text;
   window.open(tweet_url, "_blank");
 }
+
 openSnackBar(message: string, action: string) {
   this._snackBar.open(message, action, {
     duration: 5000,
