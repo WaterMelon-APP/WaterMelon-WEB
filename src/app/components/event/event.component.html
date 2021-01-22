@@ -43,6 +43,9 @@
     <button class="social delete" *ngIf="isOwner" (click)="delEvent()">
       <span class="mdc-fab__icon material-icons">delete</span>
     </button>
+    <button class="social delete" *ngIf="!isOwner" (click)="quitEvent()">
+      <span class="mdc-fab__icon material-icons">cancel</span>
+    </button>
 </section>
 <br>
 

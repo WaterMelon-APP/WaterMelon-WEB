@@ -30,17 +30,6 @@ export class SearchComponent implements OnInit {
     this.id = this.auth.getId();
     this.header = this.auth.getSecureHeader();
     this.username = this.auth.getUsername();
-    /*
-    this.id = this.auth.getId();
-    this.header = this.auth.getSecureHeader();
-    let search = this.route.snapshot.paramMap.get('id');
-    const reg = /[_]+/m;
-    search = search.replace(reg, " ");
-    search = search.trim();
-    if (search == " ") {
-      search = "";
-    }
-    this.research = search;*/
     this.EventListPublic();
   }
 
@@ -73,73 +62,6 @@ export class SearchComponent implements OnInit {
         this.eventList.push(event);
       }
     }
-    /*for (let event of eventList) {
-      if (event.Owner == this.username) {
-        console.log(event.Owner);
-        this.eventList.push(event);
-      }
-    }
-
-    /*
-    let nom: boolean;
-    let lieu: boolean;
-    if (this.research.length > 2) {
-      if (this.research[0] == '1') {
-        nom = true;
-      }
-      else {
-        nom = false;
-      }
-      if (this.research[1] == '1') {
-        lieu = true;
-      }
-      else {
-        lieu = false;
-      }
-      this.research = this.research.slice(2);
-    }
-    else if (this.research.length == 0) {
-      nom = true;
-      lieu = true;
-    }
-    else {
-      nom = false;
-      lieu = false;
-    }
-
-
-    this.http.get<Array<Event>>(this.auth.callEventsSearch(), this.header)
-    .subscribe(eventResponse => {
-        this.eventL = eventResponse;
-      },
-      error => {
-          this.openSnackBar("Une erreur est survenue", "Fermer");
-      }
-    );
-
-    this.eventList = [];
-    let i = 0;
-    for (let event of this.eventL) {
-      if (i >= 10) {
-        break;
-      }
-      if (event.Owner != this.id && !this.isIn(event)) {
-        let eventName = event.Name.toLowerCase();
-        let eventPlace = event.Address;
-        if (eventPlace) {
-          eventPlace = eventPlace.toLowerCase();
-        }
-        if (nom && eventName.includes(this.research)) {
-          this.eventList.push(event);
-          ++i;
-        }
-        else if (lieu && eventPlace && eventPlace.includes(this.research)) {
-          this.eventList.push(event);
-          ++i;
-        }
-      }
-    }
-    */
   }
 
   isIn(event) {
@@ -178,12 +100,12 @@ export class SearchComponent implements OnInit {
     }
     guestsList = guestsList + "]";
     console.log('guestsList :>> ', guestsList);
-    console.log(event);
-    console.log(event.Guests);
-    const memberList = '{ "Guests": ' + guestsList + '}';
+    console.log("here", event);
+    console.log("here2", event.Guests);
+    const memberList = '{ "guestname": "' + this.username + '" }';
     var jmemberList = JSON.parse(memberList);
     console.log('jevent :>> ', jmemberList);
-    this.http.put<Event>(this.auth.callEvents(event.Id), jmemberList, this.header)
+    this.http.post<Event>(this.auth.callAddMember(event.Id), jmemberList, this.header)
       .subscribe(userResponse => {
         this.openSnackBar("Vous avez rejoint l'event", "Fermer");
       },

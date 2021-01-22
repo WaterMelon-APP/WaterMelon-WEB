@@ -145,4 +145,8 @@ export class AuthService {
   callDelMember(id){
     return (this.address + "events/removeguest/" + id)
   }
+
+  callAddMember(id){
+    return (this.address + "events/addguest/" + id)
+  }
 }

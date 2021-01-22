@@ -198,19 +198,32 @@ export class EventComponent implements OnInit {
       );
   }
 
-async createNeeds() {
-  const needsnameVal = this.needsname.value as string;
-  const needspriceVal = parseFloat(this.needsprice.value as string);
-  const needsquantVal = parseInt(this.needsquant.value as string);
+  async createNeeds() {
+    const needsnameVal = this.needsname.value as string;
+    const needspriceVal = parseFloat(this.needsprice.value as string);
+    const needsquantVal = parseInt(this.needsquant.value as string);
 
-  if (needsnameVal != null && needspriceVal != null && needsquantVal != null) {
-    const needs = '{ "Name": "' + needsnameVal + '", "Quantity": ' + needsquantVal + ', "Price": ' + needspriceVal + ', "About": "' + "" + '", "FromEvent": "' + this.eventId + '", "QuantityLeft": ' + needsquantVal + ' }';
-    var jneeds = JSON.parse(needs);
+    if (needsnameVal != null && needspriceVal != null && needsquantVal != null) {
+      const needs = '{ "Name": "' + needsnameVal + '", "Quantity": ' + needsquantVal + ', "Price": ' + needspriceVal + ', "About": "' + "" + '", "FromEvent": "' + this.eventId + '", "QuantityLeft": ' + needsquantVal + ' }';
+      var jneeds = JSON.parse(needs);
 
-    this.http.post<Item>(this.auth.callItems(""), jneeds, this.header)
-      .subscribe(itemResponse => {
-        this.needsEvent.push(itemResponse.Id);
-        this.openSnackBar('Votre objet a été ajouté avec succès!', "Fermer");
+      this.http.post<Item>(this.auth.callItems(""), jneeds, this.header)
+        .subscribe(itemResponse => {
+          this.needsEvent.push(itemResponse.Id);
+          this.openSnackBar('Votre objet a été ajouté avec succès!', "Fermer");
+          location.reload();
+        },
+          error => {
+            this.openSnackBar("Une erreur est survenue", "Fermer");
+          }
+        );
+    }
+  }
+
+  async delItem(item) {
+    this.http.delete(this.auth.callItems(item.Id), this.header)
+      .subscribe(userResponse => {
+        this.openSnackBar("L'item a bien été supprimé.", "Fermer");
         location.reload();
       },
         error => {
@@ -218,86 +231,78 @@ async createNeeds() {
         }
       );
   }
-}
 
-async delItem(item) {
-  this.http.delete(this.auth.callItems(item.Id), this.header)
-    .subscribe(userResponse => {
-      this.openSnackBar("L'item a bien été supprimé.", "Fermer");
-      location.reload();
-    },
-      error => {
-        this.openSnackBar("Une erreur est survenue", "Fermer");
-      }
-    );
-}
+  async bringItem(item) {
+    let itemVal = this.formItemQ[item.Id].value as number;
 
-async bringItem(item) {
-  let itemVal = this.formItemQ[item.Id].value as number;
+    if (item.Bring && item.Bring[this.id]) {
+      itemVal = itemVal + item.Bring[this.id]
+    }
 
-  if (item.Bring && item.Bring[this.id]) {
-    itemVal = itemVal + item.Bring[this.id]
+    if (itemVal != null) {
+      const sendItem = '{ "userId": "' + this.id + '", "Quantity": ' + Math.round(itemVal) + ' }';
+      var jitem = JSON.parse(sendItem);
+      this.http.put<Item>(this.auth.callItemGive(item.Id), jitem, this.header)
+        .subscribe(itemResponse => {
+          this.openSnackBar('Contribution prise en compte !', "Fermer");
+          location.reload();
+        },
+          error => {
+            this.openSnackBar("Une erreur est survenue", "Fermer");
+          }
+        );
+    }
   }
 
-  if (itemVal != null) {
-    const sendItem = '{ "userId": "' + this.id + '", "Quantity": ' + Math.round(itemVal) + ' }';
-    var jitem = JSON.parse(sendItem);
-    this.http.put<Item>(this.auth.callItemGive(item.Id), jitem, this.header)
-      .subscribe(itemResponse => {
-        this.openSnackBar('Contribution prise en compte !', "Fermer");
-        location.reload();
-      },
-        error => {
-          this.openSnackBar("Une erreur est survenue", "Fermer");
-        }
-      );
+  async payItem(item) {
+    let itemVal = this.formItemP[item.Id].value as number;
+
+    if (item.Pay && item.Pay[this.id]) {
+      itemVal = itemVal + item.Pay[this.id]
+    }
+
+    if (itemVal != null) {
+      const sendItem = '{ "userId": "' + this.id + '", "Amount": ' + Math.round(itemVal) + ' }';
+      var jitem = JSON.parse(sendItem);
+      this.http.put<Item>(this.auth.callItemPay(item.Id), jitem, this.header)
+        .subscribe(itemResponse => {
+          this.openSnackBar('Contribution prise en compte !', "Fermer");
+          location.reload();
+        },
+          error => {
+            this.openSnackBar("Une erreur est survenue", "Fermer");
+          }
+        );
+    }
   }
-}
 
-async payItem(item) {
-  let itemVal = this.formItemP[item.Id].value as number;
-
-  if (item.Pay && item.Pay[this.id]) {
-    itemVal = itemVal + item.Pay[this.id]
+  async privateBand() {
+    const band = document.getElementById("grayBandPrivacy");
+    if (this.isPrivate == true) {
+      band.style.visibility = "visible";
+      console.log("visible");
+    }
+    if (this.isPrivate == false) {
+      band.style.visibility = "hidden";
+      console.log("hidden");
+    }
   }
 
-  if (itemVal != null) {
-    const sendItem = '{ "userId": "' + this.id + '", "Amount": ' + Math.round(itemVal) + ' }';
-    var jitem = JSON.parse(sendItem);
-    this.http.put<Item>(this.auth.callItemPay(item.Id), jitem, this.header)
-      .subscribe(itemResponse => {
-        this.openSnackBar('Contribution prise en compte !', "Fermer");
-        location.reload();
-      },
-        error => {
-          this.openSnackBar("Une erreur est survenue", "Fermer");
-        }
-      );
+  async sendTweet() {
+    const link = "https://watermelonapp.azurewebsites.net/"; //+ //add le lien de l event
+    var text = "Hey%2C%20je%20viens%20de%20cr%C3%A9er%20mon%20%C3%A9v%C3%A9nement%20" + this.nameEvent + "%20rejoint%20moi%20!" + link;
+    const tweet_url = "http://twitter.com/intent/tweet?text=" + text;
+    window.open(tweet_url, "_blank");
   }
-}
 
-async privateBand() {
-  const band = document.getElementById("grayBandPrivacy");
-  if (this.isPrivate == true) {
-    band.style.visibility = "visible";
-    console.log("visible");
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 5000,
+    });
   }
-  if (this.isPrivate == false) {
-    band.style.visibility = "hidden";
-    console.log("hidden");
+
+  async quitEvent() {
+    this.delMember(this.username);
+    this.router.navigate(['/list-user']);
   }
-}
-
-async sendTweet() {
-  const link = "https://watermelonapp.azurewebsites.net/"; //+ //add le lien de l event
-  var text = "Hey%2C%20je%20viens%20de%20cr%C3%A9er%20mon%20%C3%A9v%C3%A9nement%20" + this.nameEvent + "%20rejoint%20moi%20!" + link;
-  const tweet_url = "http://twitter.com/intent/tweet?text=" + text;
-  window.open(tweet_url, "_blank");
-}
-
-openSnackBar(message: string, action: string) {
-  this._snackBar.open(message, action, {
-    duration: 5000,
-  });
-}
 }
